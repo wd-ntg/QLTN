@@ -350,7 +350,7 @@
                       <Font name="Segoe UI" size="24" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Ph&#xe2;n c&#xf4;ng"/>
+                    <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i n&#x1b0;&#x1edb;c"/>
                   </Properties>
                 </Component>
               </SubComponents>

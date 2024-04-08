@@ -170,7 +170,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jlbAddWaterCategory.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbAddWaterCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbAddWaterCategory.setText("Phân công");
+        jlbAddWaterCategory.setText("Loại nước");
 
         javax.swing.GroupLayout jpnAddWaterCategoryLayout = new javax.swing.GroupLayout(jpnAddWaterCategory);
         jpnAddWaterCategory.setLayout(jpnAddWaterCategoryLayout);
