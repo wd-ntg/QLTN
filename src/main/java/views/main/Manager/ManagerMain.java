@@ -26,6 +26,8 @@ public class ManagerMain extends javax.swing.JFrame {
         listItem.add(new DanhMucModel("Nhân viên", jpnBill, jlbBill));
         
         listItem.add(new DanhMucModel("Phân công", jpnChangePassword, jlbChangePassword));
+        
+        listItem.add(new DanhMucModel("Thêm loại nước", jpnAddWaterCategory, jlbAddWaterCategory));
 
         controller.setEvent(listItem);
     }
@@ -53,6 +55,8 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnLogOut = new javax.swing.JPanel();
         jlbLogOut = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jpnAddWaterCategory = new javax.swing.JPanel();
+        jlbAddWaterCategory = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -111,7 +115,7 @@ public class ManagerMain extends javax.swing.JFrame {
             jpnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jlbInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
         );
         jpnInfoLayout.setVerticalGroup(
             jpnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +133,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnChangePassword.setLayout(jpnChangePasswordLayout);
         jpnChangePasswordLayout.setHorizontalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpnChangePasswordLayout.setVerticalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +165,26 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
+        jpnAddWaterCategory.setBackground(new java.awt.Color(255, 255, 255));
+        jpnAddWaterCategory.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jlbAddWaterCategory.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbAddWaterCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbAddWaterCategory.setText("Phân công");
+
+        javax.swing.GroupLayout jpnAddWaterCategoryLayout = new javax.swing.GroupLayout(jpnAddWaterCategory);
+        jpnAddWaterCategory.setLayout(jpnAddWaterCategoryLayout);
+        jpnAddWaterCategoryLayout.setHorizontalGroup(
+            jpnAddWaterCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddWaterCategoryLayout.createSequentialGroup()
+                .addComponent(jlbAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpnAddWaterCategoryLayout.setVerticalGroup(
+            jpnAddWaterCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
@@ -175,7 +199,8 @@ public class ManagerMain extends javax.swing.JFrame {
                     .addComponent(jpnBill, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpnChangePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jpnMenuLayout.setVerticalGroup(
@@ -191,7 +216,9 @@ public class ManagerMain extends javax.swing.JFrame {
                 .addComponent(jpnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jpnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,11 +317,13 @@ public class ManagerMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jlbAddWaterCategory;
     private javax.swing.JLabel jlbBill;
     private javax.swing.JLabel jlbChangePassword;
     private javax.swing.JLabel jlbHome;
     private javax.swing.JLabel jlbInfo;
     private javax.swing.JLabel jlbLogOut;
+    private javax.swing.JPanel jpnAddWaterCategory;
     private javax.swing.JPanel jpnBill;
     private javax.swing.JPanel jpnChangePassword;
     private javax.swing.JPanel jpnHome;
