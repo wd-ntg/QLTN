@@ -173,7 +173,9 @@ public class AddWaterCategory extends javax.swing.JPanel {
 
         txtPhiTre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        btnLamMoi.setBackground(new java.awt.Color(0, 153, 153));
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnLamMoi.setText("Làm mới");
         btnLamMoi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -184,7 +186,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnThemLoaiNuoc.setBackground(new java.awt.Color(0, 204, 51));
+        btnThemLoaiNuoc.setBackground(new java.awt.Color(0, 102, 204));
         btnThemLoaiNuoc.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnThemLoaiNuoc.setForeground(new java.awt.Color(255, 255, 255));
         btnThemLoaiNuoc.setText("Thêm");
@@ -367,7 +369,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnThemDinhMuc.setBackground(new java.awt.Color(0, 204, 51));
+        btnThemDinhMuc.setBackground(new java.awt.Color(0, 102, 204));
         btnThemDinhMuc.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnThemDinhMuc.setForeground(new java.awt.Color(255, 255, 255));
         btnThemDinhMuc.setText("Thêm");
@@ -435,7 +437,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(52, 52, 52)
-                        .addComponent(txtTenLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
+                        .addComponent(txtTenLoai))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -452,7 +454,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                             .addComponent(jLabel11))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtChiSoDau, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                            .addComponent(txtChiSoDau)
                             .addComponent(txtChiSoSau))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,7 +462,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                             .addComponent(jLabel10))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDonGia, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(txtDonGia)
                             .addComponent(txtThue))
                         .addGap(124, 124, 124))
                     .addGroup(jPanel5Layout.createSequentialGroup()
