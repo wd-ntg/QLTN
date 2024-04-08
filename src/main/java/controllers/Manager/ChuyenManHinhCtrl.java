@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import models.Client.DanhMucModel;
+import views.main.Manager.AddWaterCategory;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
 
@@ -72,6 +73,9 @@ public class ChuyenManHinhCtrl {
                     break;
                 case "Phân công":
                     node = new TrangPhanCong();
+                    break;
+                case "Thêm loại nước":
+                    node = new AddWaterCategory();
                     break;
                 default:
                     node = new TrangNhanVien();
