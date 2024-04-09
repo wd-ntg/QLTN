@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
-import models.Client.ClientBillModel;
-import models.Client.ClientChartModel;
-import models.Client.ClientHouseholdModel;
-import models.Client.ClientInfoModel;
+import models.Client.HoaDonModel;
+import models.Client.ThongKeModel;
+import models.Client.HoModel;
+import models.Client.ThongTinCaNhanModel;
 //import models.PersonData;
 //import models.PersonModel;
 import org.jfree.chart.ChartFactory;
@@ -43,8 +43,8 @@ public class ClientCtrl {
     public static String maChuHo;
 
     // Home
-    public static List<ClientBillModel> hienThiCacHoaDonChuaTra() throws ClassNotFoundException {
-        List<ClientBillModel> dsHoaDon = new ArrayList<>();
+    public static List<HoaDonModel> hienThiCacHoaDonChuaTra() throws ClassNotFoundException {
+        List<HoaDonModel> dsHoaDon = new ArrayList<>();
         String sql = "SELECT HD.MAHOADON, HD.TIEUTHU, HD.TONGTIEN, HD.THANHTOAN, "
                 + "HD.NGAYDENHAN, HD.NGAYTRA, HD.NGAYTAO, "
                 + "NVLHD.MANV AS MANVLHD, NVLHD.HOTEN AS TENNVLHD, "
@@ -67,7 +67,7 @@ public class ClientCtrl {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClientBillModel bill = new ClientBillModel(
+                HoaDonModel bill = new HoaDonModel(
                         resultSet.getString("MAHOADON"),
                         resultSet.getString("MANVLHD"),
                         resultSet.getString("MAGHI"),
@@ -100,8 +100,8 @@ public class ClientCtrl {
         return dsHoaDon;
     }
 
-    public static List<ClientBillModel> hienThiCacHoaDonChuaTraTheoDiaChi(String DetailAddressId) throws ClassNotFoundException {
-        List<ClientBillModel> dsHoaDon = new ArrayList<>();
+    public static List<HoaDonModel> hienThiCacHoaDonChuaTraTheoDiaChi(String DetailAddressId) throws ClassNotFoundException {
+        List<HoaDonModel> dsHoaDon = new ArrayList<>();
         String sql = "SELECT HD.MAHOADON, HD.TIEUTHU, HD.TONGTIEN, HD.THANHTOAN, "
                 + "HD.NGAYDENHAN, HD.NGAYTRA, HD.NGAYTAO, "
                 + "NVLHD.MANV AS MANVLHD, NVLHD.HOTEN AS TENNVLHD, "
@@ -124,7 +124,7 @@ public class ClientCtrl {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClientBillModel bill = new ClientBillModel(
+                HoaDonModel bill = new HoaDonModel(
                         resultSet.getString("MAHOADON"),
                         resultSet.getString("MANVLHD"),
                         resultSet.getString("MAGHI"),
@@ -157,11 +157,11 @@ public class ClientCtrl {
         return dsHoaDon;
     }
 
-    public static List<ClientBillModel> sapXepTheoGiaTien(List<ClientBillModel> dsHoaDon, boolean tangDan) {
+    public static List<HoaDonModel> sapXepTheoGiaTien(List<HoaDonModel> dsHoaDon, boolean tangDan) {
         if (tangDan) {
-            Collections.sort(dsHoaDon, Comparator.comparing(ClientBillModel::getTongTien));
+            Collections.sort(dsHoaDon, Comparator.comparing(HoaDonModel::getTongTien));
         } else {
-            Collections.sort(dsHoaDon, Comparator.comparing(ClientBillModel::getTongTien).reversed());
+            Collections.sort(dsHoaDon, Comparator.comparing(HoaDonModel::getTongTien).reversed());
         }
         return dsHoaDon;
     }
@@ -181,18 +181,18 @@ public class ClientCtrl {
     }
 
     //Info
-    public static ClientInfoModel hienThiChuHo() throws ClassNotFoundException {
+    public static ThongTinCaNhanModel hienThiChuHo() throws ClassNotFoundException {
         String sql = "SELECT CH.MACH, CH.HOTEN, CH.SDT, CH.CCCD, "
                 + "CH.DIACHITT, CH.GIOITINH, TK.EMAIL  "
                 + "FROM CHUHO AS CH "
                 + "JOIN TAIKHOAN AS TK ON TK.MATK = CH.MACH "
                 + "WHERE CH.MACH = ?";
-        ClientInfoModel ch = null;
+        ThongTinCaNhanModel ch = null;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                ch = new ClientInfoModel(
+                ch = new ThongTinCaNhanModel(
                         resultSet.getString("MACH"),
                         resultSet.getString("HOTEN"),
                         resultSet.getString("SDT"),
@@ -208,8 +208,8 @@ public class ClientCtrl {
         return null;
     }
 
-    public static List<ClientHouseholdModel> hienThiCacHoDangSuDungDichVu() throws ClassNotFoundException {
-        List<ClientHouseholdModel> dsCacHo = new ArrayList<>();
+    public static List<HoModel> hienThiCacHoDangSuDungDichVu() throws ClassNotFoundException {
+        List<HoModel> dsCacHo = new ArrayList<>();
         String sql = "SELECT CTKV.MACTKV, CTKV.TENCHITIET, KV.MAKHUVUC, KV.TENKHUVUC, "
                 + "DH.MADH, DH.TENDH, LN.MALOAI, LN.TENLOAI "
                 + "FROM CHITIETKHUVUC AS CTKV "
@@ -223,7 +223,7 @@ public class ClientCtrl {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClientHouseholdModel house = new ClientHouseholdModel(
+                HoModel house = new HoModel(
                         resultSet.getString("MACTKV"), 
                         resultSet.getString("TENCHITIET"),
                         resultSet.getString("MAKHUVUC"),
@@ -317,8 +317,8 @@ public class ClientCtrl {
     }
 
     //Bill
-    public static List<ClientBillModel> hienThiHoaDon() throws ClassNotFoundException {
-        List<ClientBillModel> dsHoaDon = new ArrayList<>();
+    public static List<HoaDonModel> hienThiHoaDon() throws ClassNotFoundException {
+        List<HoaDonModel> dsHoaDon = new ArrayList<>();
         String sql = "SELECT HD.MAHOADON, HD.TIEUTHU, HD.TONGTIEN, HD.THANHTOAN, "
                 + "HD.NGAYDENHAN, HD.NGAYTRA, HD.NGAYTAO, "
                 + "NVLHD.MANV AS MANVLHD, NVLHD.HOTEN AS TENNVLHD, "
@@ -341,7 +341,7 @@ public class ClientCtrl {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClientBillModel bill = new ClientBillModel(
+                HoaDonModel bill = new HoaDonModel(
                         resultSet.getString("MAHOADON"),
                         resultSet.getString("MANVLHD"),
                         resultSet.getString("MAGHI"),
@@ -374,8 +374,8 @@ public class ClientCtrl {
         return dsHoaDon;
     }
 
-    public static List<ClientBillModel> hienThiHoaDonTheoDiaChi(String maDiaChi) throws ClassNotFoundException {
-        List<ClientBillModel> dsHoaDon = new ArrayList<>();
+    public static List<HoaDonModel> hienThiHoaDonTheoDiaChi(String maDiaChi) throws ClassNotFoundException {
+        List<HoaDonModel> dsHoaDon = new ArrayList<>();
         String sql = "SELECT HD.MAHOADON, HD.TIEUTHU, HD.TONGTIEN, HD.THANHTOAN, "
                 + "HD.NGAYDENHAN, HD.NGAYTRA, HD.NGAYTAO, "
                 + "NVLHD.MANV AS MANVLHD, NVLHD.HOTEN AS TENNVLHD, "
@@ -399,7 +399,7 @@ public class ClientCtrl {
             statement.setString(2, maDiaChi);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClientBillModel bill = new ClientBillModel(
+                HoaDonModel bill = new HoaDonModel(
                         resultSet.getString("MAHOADON"),
                         resultSet.getString("MANVLHD"),
                         resultSet.getString("MAGHI"),
@@ -432,13 +432,13 @@ public class ClientCtrl {
         return dsHoaDon;
     }
 
-    public static List<ClientBillModel> sapXepTheoTienTangDan(List<ClientBillModel> dsHoaDon) throws ClassNotFoundException {
-        dsHoaDon.sort(Comparator.comparing(ClientBillModel::getTongTien));
+    public static List<HoaDonModel> sapXepTheoTienTangDan(List<HoaDonModel> dsHoaDon) throws ClassNotFoundException {
+        dsHoaDon.sort(Comparator.comparing(HoaDonModel::getTongTien));
         return dsHoaDon;
     }
 
-    public static List<ClientBillModel> sapXepTheoTienGiamDan(List<ClientBillModel> dsHoaDon) throws ClassNotFoundException {
-        dsHoaDon.sort(Comparator.comparing(ClientBillModel::getTongTien).reversed());
+    public static List<HoaDonModel> sapXepTheoTienGiamDan(List<HoaDonModel> dsHoaDon) throws ClassNotFoundException {
+        dsHoaDon.sort(Comparator.comparing(HoaDonModel::getTongTien).reversed());
         return dsHoaDon;
     }
 
@@ -507,8 +507,8 @@ public class ClientCtrl {
 //    }
 
     // Chart
-    public static List<ClientChartModel> layDuLieuThongKe(String maDiaChi) throws ClassNotFoundException {
-        List<ClientChartModel> list = new ArrayList<>();
+    public static List<ThongKeModel> layDuLieuThongKe(String maDiaChi) throws ClassNotFoundException {
+        List<ThongKeModel> list = new ArrayList<>();
         String sql = "SELECT GN.CSC, GN.CSM, GN.KI, HD.TONGTIEN "
                 + "FROM HOADON AS HD "
                 + "JOIN GHINUOC AS GN ON HD.MAGHI = GN.MAGHI "
@@ -522,7 +522,7 @@ public class ClientCtrl {
             ResultSet resultSet = statement.executeQuery();
             int count = 0;
             while (resultSet.next() && count < 6) {
-                ClientChartModel chart = new ClientChartModel();
+                ThongKeModel chart = new ThongKeModel();
                 int chiSoCu = resultSet.getInt("CSC");
                 int chiSoMoi = resultSet.getInt("CSM");
                 int soNuocTieuThu = chiSoMoi - chiSoCu;
@@ -541,12 +541,12 @@ public class ClientCtrl {
 
     public static void thongKe(JPanel jpnItem1, JPanel jpnItem2, String maDiaChi) {
         try {
-            List<ClientChartModel> listItem = layDuLieuThongKe(maDiaChi);
+            List<ThongKeModel> listItem = layDuLieuThongKe(maDiaChi);
             if (listItem != null && !listItem.isEmpty()) {
                 DefaultCategoryDataset datasetWater = new DefaultCategoryDataset();
                 DefaultCategoryDataset datasetMoney = new DefaultCategoryDataset();
 
-                for (ClientChartModel item : listItem) {
+                for (ThongKeModel item : listItem) {
                     datasetWater.addValue(item.getSoNuocTieuThu(), "Số nước tiêu thụ", item.getKi());
                     datasetMoney.addValue(item.getSoTienPhaiTra(), "Số tiền phải trả", item.getKi());
                 }

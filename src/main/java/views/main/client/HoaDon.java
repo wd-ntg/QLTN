@@ -7,30 +7,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.Client.ClientBillModel;
-import models.Client.ClientHouseholdModel;
+import models.Client.HoaDonModel;
+import models.Client.HoModel;
 /**
  *
  * @author Phu Bao
  */
-public class ClientBill extends javax.swing.JPanel {
+public class HoaDon extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientBills
      */
     DefaultTableModel tableModel;
-    List<ClientBillModel> dsHoaDon = new ArrayList<>();
-    private List<ClientHouseholdModel> dsCacHo;
+    List<HoaDonModel> dsHoaDon = new ArrayList<>();
+    private List<HoModel> dsCacHo;
     private String maHo = null;
 
-    public ClientBill() {
+    public HoaDon() {
         initComponents();
         tableModel = (DefaultTableModel) tblDanhSachHoaDon.getModel();
         try {
             hienThiHoaDon();
             hienThiDSCacHo();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientBill.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class ClientBill extends javax.swing.JPanel {
                 cboDSCacHo.addItem(diaChi);
             });
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientChart.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -66,7 +66,7 @@ public class ClientBill extends javax.swing.JPanel {
         });
     }
 
-    private void hienThiHoaDon_TangDanTheoGiaTien(List<ClientBillModel> list) throws ClassNotFoundException {
+    private void hienThiHoaDon_TangDanTheoGiaTien(List<HoaDonModel> list) throws ClassNotFoundException {
         dsHoaDon = ClientCtrl.sapXepTheoTienTangDan(list);
         tableModel.setRowCount(0);
         dsHoaDon.forEach(hd -> {
@@ -75,7 +75,7 @@ public class ClientBill extends javax.swing.JPanel {
         });
     }
 
-    private void hienThiHoaDon_GiamDanTheoGiaTien(List<ClientBillModel> list) throws ClassNotFoundException {
+    private void hienThiHoaDon_GiamDanTheoGiaTien(List<HoaDonModel> list) throws ClassNotFoundException {
         dsHoaDon = ClientCtrl.sapXepTheoTienGiamDan(list);
         tableModel.setRowCount(0);
         dsHoaDon.forEach(hd -> {
@@ -544,7 +544,7 @@ public class ClientBill extends javax.swing.JPanel {
         lamMoi();
         int selectedIndex = tblDanhSachHoaDon.getSelectedRow();
         if (selectedIndex >= 0) {
-            ClientBillModel hoaDon = dsHoaDon.get(selectedIndex);
+            HoaDonModel hoaDon = dsHoaDon.get(selectedIndex);
             txtMaHoaDon.setText(hoaDon.getMaHoaDon());
             txtTenNVGhiNuoc.setText(hoaDon.getTenNhanVienGhiNuoc());
             txtTenNVLapHoaDon.setText(hoaDon.getTenNhanVienLapHoaDon());
@@ -587,7 +587,7 @@ public class ClientBill extends javax.swing.JPanel {
             try {
                 hienThiHoaDon();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             int index = cboDSCacHo.getSelectedIndex();
@@ -597,7 +597,7 @@ public class ClientBill extends javax.swing.JPanel {
                 try {
                     hienThiHoaDonTheoDiaChi(maHo);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Lỗi tải dữ liệu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -616,21 +616,21 @@ public class ClientBill extends javax.swing.JPanel {
                         hienThiHoaDonTheoDiaChi(maHo);
                     }
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientBill.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             case 1 -> {
                 try {
                     hienThiHoaDon_TangDanTheoGiaTien(dsHoaDon);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientBill.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             case 2 -> {
                 try {
                     hienThiHoaDon_GiamDanTheoGiaTien(dsHoaDon);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientBill.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             default -> {
@@ -650,7 +650,7 @@ public class ClientBill extends javax.swing.JPanel {
             cboDSCacHo.setSelectedIndex(0);
             cboSapXep.setSelectedIndex(0);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientBill.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLamMoiActionPerformed
 

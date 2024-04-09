@@ -134,9 +134,9 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="24" style="0"/>
+              <Font name="Segoe UI" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p email v&#xe0; m&#x1ead;t kh&#x1ea9;u &#x111;&#x1ec3; &#x111;&#x103;ng nh&#x1ead;p!"/>
+            <Property name="text" type="java.lang.String" value="C&#xf4;ng ty qu&#x1ea3;n l&#xfd; thu ti&#x1ec1;n n&#x1b0;&#x1edb;c Qu&#x1ead;n 9"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="cboHienThiMatKhau">

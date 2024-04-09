@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.ConsumptionQuotaModel;
+import models.DinhMucNuocModel;
 import models.WaterCategoryModel;
 import utils.GenerateCode;
 
-public class WaterCategoryCtrl {
+public class LoaiNuocCtrl {
 
     // Loại nước 
     public static List<WaterCategoryModel> hienThiLoaiNuoc() throws ClassNotFoundException {
@@ -32,7 +32,7 @@ public class WaterCategoryCtrl {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, "Error fetching water categories", ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, "Error fetching water categories", ex);
         }
         return dsLoaiNuoc;
     }
@@ -46,7 +46,7 @@ public class WaterCategoryCtrl {
             statement.setDouble(3, loai.getPhiTre());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,7 +60,7 @@ public class WaterCategoryCtrl {
 
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -71,13 +71,13 @@ public class WaterCategoryCtrl {
             xoaDinhMucTheoMaLoai(maLoaiNuoc);
             statement.executeUpdate();    
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     // Định mức
-    public static List<ConsumptionQuotaModel> hienThiDinhMuc(String maLoai) throws ClassNotFoundException {
-        List<ConsumptionQuotaModel> dsLoaiNuoc = new ArrayList<>();
+    public static List<DinhMucNuocModel> hienThiDinhMuc(String maLoai) throws ClassNotFoundException {
+        List<DinhMucNuocModel> dsLoaiNuoc = new ArrayList<>();
         String sql = "SELECT D.MADINHMUC, D.MALOAI, L.TENLOAI, D.SODAU, "
                 + "D.SOCUOI, D.THUE, D.DONGIA FROM DINHMUC AS D "
                 + "JOIN LOAI AS L ON D.MALOAI = L.MALOAI "
@@ -87,7 +87,7 @@ public class WaterCategoryCtrl {
             preparedStatement.setString(1, maLoai);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                ConsumptionQuotaModel dinhMuc = new ConsumptionQuotaModel(
+                DinhMucNuocModel dinhMuc = new DinhMucNuocModel(
                         resultSet.getString("MADINHMUC"),
                         resultSet.getString("MALOAI"),
                         resultSet.getString("TENLOAI"),
@@ -98,7 +98,7 @@ public class WaterCategoryCtrl {
                 dsLoaiNuoc.add(dinhMuc);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, "Error fetching water categories", ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, "Error fetching water categories", ex);
         }
         return dsLoaiNuoc;
     }
@@ -115,7 +115,7 @@ public class WaterCategoryCtrl {
                 rowCount = resultSet.getInt("row_count");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, "Error fetching row count", ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, "Error fetching row count", ex);
         }
         return rowCount;
     }
@@ -135,13 +135,13 @@ public class WaterCategoryCtrl {
                     chiSoCuoi = resultSet.getInt("max_value");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, "Error fetching max value", ex);
+                Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, "Error fetching max value", ex);
             }
             return chiSoCuoi;
         }
     }
 
-    public static void themDinhMuc(ConsumptionQuotaModel dinhMuc) throws ClassNotFoundException {
+    public static void themDinhMuc(DinhMucNuocModel dinhMuc) throws ClassNotFoundException {
         String sql = "INSERT INTO DINHMUC(MADINHMUC, MALOAI, SODAU, SOCUOI, THUE, DONGIA) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             String maDinhMuc = GenerateCode.generateMa("DM");
@@ -153,7 +153,7 @@ public class WaterCategoryCtrl {
             statement.setInt(6, dinhMuc.getDonGia());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -164,16 +164,16 @@ public class WaterCategoryCtrl {
             int rowsAffected = preparedStatement.executeUpdate();
             System.out.println("Số lượng hàng đã bị xóa: " + rowsAffected);
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, "Error deleting consumption quotas", ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, "Error deleting consumption quotas", ex);
         }
     }
 
-    public static boolean kiemTraChisoSauLonNhat(ConsumptionQuotaModel dinhMuc) throws ClassNotFoundException {
+    public static boolean kiemTraChisoSauLonNhat(DinhMucNuocModel dinhMuc) throws ClassNotFoundException {
         int chiSoCuoiMax = hienThiChiSoCuoiLonNhat(dinhMuc.getMaLoai());
         return dinhMuc.getSoCuoi() == chiSoCuoiMax;
     }
     
-    public static void capNhatDinhMuc(ConsumptionQuotaModel dinhMuc) throws ClassNotFoundException {
+    public static void capNhatDinhMuc(DinhMucNuocModel dinhMuc) throws ClassNotFoundException {
         String sql = "UPDATE DINHMUC SET SOCUOI=?, THUE=?, DONGIA=? WHERE MADINHMUC=?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, dinhMuc.getSoCuoi());
@@ -182,7 +182,7 @@ public class WaterCategoryCtrl {
             statement.setString(4, dinhMuc.getMaDinhMuc());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -192,7 +192,7 @@ public class WaterCategoryCtrl {
             statement.setString(1, maDinhMuc);
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controllers.Manager.LoaiNuocCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

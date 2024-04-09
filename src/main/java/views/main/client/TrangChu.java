@@ -9,23 +9,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.Client.ClientBillModel;
-import models.Client.ClientHouseholdModel;
+import models.Client.HoaDonModel;
+import models.Client.HoModel;
 
 /**
  *
  * @author Phu Bao
  */
-public class ClientHome extends javax.swing.JPanel {
+public class TrangChu extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientHome
      */
     DefaultTableModel tableModel;
-    List<ClientBillModel> dsHoaDon = new ArrayList<>();
-    private List<ClientHouseholdModel> dsCacHo;
+    List<HoaDonModel> dsHoaDon = new ArrayList<>();
+    private List<HoModel> dsCacHo;
 
-    public ClientHome() {
+    public TrangChu() {
         initComponents();
         tableModel = (DefaultTableModel) tblDanhSachHoaDonChuaTra.getModel();
         try {
@@ -34,7 +34,7 @@ public class ClientHome extends javax.swing.JPanel {
             datThongBao();
             lblTrangThaiThanhToan.setVisible(false);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -48,7 +48,7 @@ public class ClientHome extends javax.swing.JPanel {
                 cboDSCacHo.addItem(diaChi);
             });
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientChart.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -416,7 +416,7 @@ public class ClientHome extends javax.swing.JPanel {
         int selectedIndex = tblDanhSachHoaDonChuaTra.getSelectedRow();
         if (selectedIndex >= 0) {
             btnThanhToan.setEnabled(true);
-            ClientBillModel hoaDon = dsHoaDon.get(selectedIndex);
+            HoaDonModel hoaDon = dsHoaDon.get(selectedIndex);
             txtMaHoaDon.setText(hoaDon.getMaHoaDon());
             txtNgayDenHan.setText(String.valueOf(hoaDon.getNgayDenHan()));
             int chiSoCu = hoaDon.getChiSoCu();
@@ -453,7 +453,7 @@ public class ClientHome extends javax.swing.JPanel {
         try {
             hienThiHoaDon();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -474,7 +474,7 @@ public class ClientHome extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 refresh();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -485,7 +485,7 @@ public class ClientHome extends javax.swing.JPanel {
             try {
                 hienThiHoaDon();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             int index = cboDSCacHo.getSelectedIndex();
@@ -495,7 +495,7 @@ public class ClientHome extends javax.swing.JPanel {
                 try {
                     hienThiDSCacHoaDonTheoDiaChi(maHo);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientHome.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Lỗi tải dữ liệu!", "Thông báo", JOptionPane.ERROR_MESSAGE);

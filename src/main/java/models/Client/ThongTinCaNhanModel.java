@@ -4,13 +4,13 @@ package models.Client;
  *
  * @author Phu Bao
  */
-public class ClientInfoModel {
+public class ThongTinCaNhanModel {
     private String maCH, hoTen, sdt, cccd, diaChi, gioiTinh, email;
 
-    public ClientInfoModel() {
+    public ThongTinCaNhanModel() {
     }
 
-    public ClientInfoModel(String maCH, String hoTen, String sdt, String cccd, String diaChi, String gioiTinh, String email) {
+    public ThongTinCaNhanModel(String maCH, String hoTen, String sdt, String cccd, String diaChi, String gioiTinh, String email) {
         this.maCH = maCH;
         this.hoTen = hoTen;
         this.sdt = sdt;

@@ -10,12 +10,12 @@ import javax.swing.JOptionPane;
  *
  * @author Phu Bao
  */
-public class ClientVerifyEmail extends javax.swing.JFrame {
+public class MaXacNhan extends javax.swing.JFrame {
 
     /**
      * Creates new form ClientVerifyEmail
      */
-    public ClientVerifyEmail() {
+    public MaXacNhan() {
         initComponents();
         setTitle("QUÊN MẬT KHẨU");
     }
@@ -134,11 +134,11 @@ public class ClientVerifyEmail extends javax.swing.JFrame {
 
     private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
         // TODO add your handling code here:
-        String maXacNhan = ClientLogin.verifyCode;
+        String maXacNhan = DangNhap.verifyCode;
         String maNhap = txtMaXacNhan.getText();
         if (maXacNhan.equals(maNhap)) {
             this.setVisible(false);
-            new ClientCreateNewPassword().setVisible(true);
+            new TaoMatKhauMoi().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Mã không hợp lệ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         }
@@ -147,7 +147,7 @@ public class ClientVerifyEmail extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new ClientLogin().setVisible(true);
+        new DangNhap().setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
@@ -167,20 +167,21 @@ public class ClientVerifyEmail extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientVerifyEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaXacNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientVerifyEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaXacNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientVerifyEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaXacNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientVerifyEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaXacNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientVerifyEmail().setVisible(true);
+                new MaXacNhan().setVisible(true);
             }
         });
     }
