@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
  *
  * @author Phu Bao
  */
-public class ClientChangePassword extends javax.swing.JPanel {
+public class DoiMatKhau extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientChangePassword
      */
-    public ClientChangePassword() {
+    public DoiMatKhau() {
         initComponents();
     }
 
@@ -262,7 +262,7 @@ public class ClientChangePassword extends javax.swing.JPanel {
                     }
                 }
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ClientChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoiMatKhau.class.getName()).log(Level.SEVERE, null, ex);
                 
             }
         }

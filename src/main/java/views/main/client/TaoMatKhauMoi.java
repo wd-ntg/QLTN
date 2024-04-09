@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
  *
  * @author Phu Bao
  */
-public class ClientCreateNewPassword extends javax.swing.JFrame {
+public class TaoMatKhauMoi extends javax.swing.JFrame {
 
     /**
      * Creates new form ClientCreateNewPassword
      */
-    public ClientCreateNewPassword() {
+    public TaoMatKhauMoi() {
         initComponents();
         setTitle("QUÊN MẬT KHẨU");
     }
@@ -151,11 +151,11 @@ public class ClientCreateNewPassword extends javax.swing.JFrame {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
-        String email = ClientLogin.currentEmail;
+        String email = DangNhap.currentEmail;
         try {
             ClientCtrl.ganMaChuHo(email);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientCreateNewPassword.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TaoMatKhauMoi.class.getName()).log(Level.SEVERE, null, ex);
         }
         char[] matKhauMoiChars = txtMatKhauMoi.getPassword();
         String matKhauMoi = String.valueOf(matKhauMoiChars);
@@ -171,9 +171,9 @@ public class ClientCreateNewPassword extends javax.swing.JFrame {
                     ClientCtrl.doiMatKhau(matKhauMoi);
                     JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công, đăng nhập lại vào hệ thống!");
                     this.setVisible(false);
-                    new ClientLogin().setVisible(true);
+                    new DangNhap().setVisible(true);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ClientCreateNewPassword.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TaoMatKhauMoi.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Nhập lại không giống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -198,20 +198,21 @@ public class ClientCreateNewPassword extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientCreateNewPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaoMatKhauMoi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientCreateNewPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaoMatKhauMoi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientCreateNewPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaoMatKhauMoi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientCreateNewPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaoMatKhauMoi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientCreateNewPassword().setVisible(true);
+                new TaoMatKhauMoi().setVisible(true);
             }
         });
     }

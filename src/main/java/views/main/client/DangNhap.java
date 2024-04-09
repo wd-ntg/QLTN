@@ -14,18 +14,15 @@ import models.Worker.GlobalData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-<<<<<<< HEAD
 import views.main.Manager.ManagerMain;
-=======
 import views.main.Worker.workerMain;
->>>>>>> 0a9553698d87005d6890445ba9c4849eca530de9
 //import views.worker.workerMain;
 
 /**
  *
  * @author Phu Bao
  */
-public class ClientLogin extends javax.swing.JFrame {
+public class DangNhap extends javax.swing.JFrame {
 
     /**
      * Creates new form ClientLogin
@@ -34,7 +31,7 @@ public class ClientLogin extends javax.swing.JFrame {
     public static String verifyCode;
 //    public PersonModel personModel;
 
-    public ClientLogin() {
+    public DangNhap() {
         initComponents();
         setTitle("ĐĂNG NHẬP");
         txtEmail.addActionListener(new ActionListener() {
@@ -95,8 +92,8 @@ public class ClientLogin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Mật khẩu");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("Nhập email và mật khẩu để đăng nhập!");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Công ty quản lý thu tiền nước Quận 9");
 
         cboHienThiMatKhau.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         cboHienThiMatKhau.setText("Hiện mật khẩu");
@@ -242,7 +239,7 @@ public class ClientLogin extends javax.swing.JFrame {
 
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnDangNhapActionPerformed
@@ -262,15 +259,15 @@ public class ClientLogin extends javax.swing.JFrame {
                     currentEmail = email;
                     SendEmail.sendEmail(verifyCode, email);
                     System.out.println(verifyCode);
-                    new ClientVerifyEmail().setVisible(true);
+                    new MaXacNhan().setVisible(true);
                     this.setVisible(false);
                 } catch (MessagingException | UnsupportedEncodingException ex) {
-                    Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_lblQuenMatKhauMouseClicked
@@ -296,20 +293,21 @@ public class ClientLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientLogin().setVisible(true);
+                new DangNhap().setVisible(true);
             }
         });
     }

@@ -4,16 +4,16 @@ import java.sql.Date;
 
 
 
-public class ClientBillModel {
+public class HoaDonModel {
     private String maHoaDon, maNhanVienLapHoaDon, maGhi, maDongHo, maNhanVienGhiNuoc, tenNhanVienLapHoaDon, tenNhanVienGhiNuoc, tenDongHo, maLoai, tenLoai, ki, maCTKV, tenChiTiet, maKhuVuc, tenKhuVuc;
     private int tieuThu, tongTien, chiSoCu, chiSoMoi;
     private Date ngayDenHan, ngayTra, ngayTao, ngayGhi;
     private boolean thanhToan;
 
-    public ClientBillModel() {
+    public HoaDonModel() {
     }
 
-    public ClientBillModel(String maHoaDon, String maNhanVienLapHoaDon, String maGhi, String maDongHo, String maNhanVienGhiNuoc, String tenNhanVienLapHoaDon, String tenNhanVienGhiNuoc, String tenDongHo, String maLoai, String tenLoai, String ki, String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, int tieuThu, int tongTien, boolean thanhToan, int chiSoCu, int chiSoMoi, Date ngayDenHan, Date ngayTra, Date ngayTao, Date ngayGhi) {
+    public HoaDonModel(String maHoaDon, String maNhanVienLapHoaDon, String maGhi, String maDongHo, String maNhanVienGhiNuoc, String tenNhanVienLapHoaDon, String tenNhanVienGhiNuoc, String tenDongHo, String maLoai, String tenLoai, String ki, String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, int tieuThu, int tongTien, boolean thanhToan, int chiSoCu, int chiSoMoi, Date ngayDenHan, Date ngayTra, Date ngayTao, Date ngayGhi) {
         this.maHoaDon = maHoaDon;
         this.maNhanVienLapHoaDon = maNhanVienLapHoaDon;
         this.maGhi = maGhi;

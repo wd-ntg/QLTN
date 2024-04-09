@@ -13,12 +13,12 @@ import views.main.Manager.AddWaterCategory;
 import views.main.Manager.DangNhapView;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
-import views.main.client.ClientBill;
-import views.main.client.ClientChangePassword;
-import views.main.client.ClientChart;
-import views.main.client.ClientHome;
-import views.main.client.ClientInfo;
-import views.main.client.ClientLogin;
+import views.main.client.HoaDon;
+import views.main.client.DoiMatKhau;
+import views.main.client.ThongKe;
+import views.main.client.TrangChu;
+import views.main.client.ThongTinCaNhan;
+import views.main.client.DangNhap;
 /**
  *
  * @author Phu Bao
@@ -40,7 +40,7 @@ public class ChuyenManHinhCtrl {
         jlbItem.setBackground(new Color(230, 255, 255));
         root.removeAll();
         root.setLayout(new BorderLayout());
-        root.add(new ClientHome());
+        root.add(new TrangChu());
         root.validate();
         root.repaint();
     }
@@ -80,13 +80,13 @@ public class ChuyenManHinhCtrl {
                     node = new TrangPhanCong();
                     break;
                 case "LogOut":
-                    node = new ClientHome();
+                    node = new TrangChu();
                     break;
 //                case "Chart":
 //                    node = new ClientChart();
 //                    break;                 
                 default:
-                    node = new ClientHome();
+                    node = new TrangChu();
                     break;
             }
             root.removeAll();
