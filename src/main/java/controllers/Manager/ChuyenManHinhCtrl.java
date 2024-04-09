@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controllers.Manager;
 
+import controllers.Manager.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -13,14 +10,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import models.Client.DanhMucModel;
 import views.main.Manager.AddWaterCategory;
+import views.main.Manager.DangNhapView;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
-
-
-
+import views.main.client.ClientBill;
+import views.main.client.ClientChangePassword;
+import views.main.client.ClientChart;
+import views.main.client.ClientHome;
+import views.main.client.ClientInfo;
+import views.main.client.ClientLogin;
 /**
  *
- * @author GIANG
+ * @author Phu Bao
  */
 public class ChuyenManHinhCtrl {
 
@@ -34,12 +35,12 @@ public class ChuyenManHinhCtrl {
     }
 
     public void setView(JPanel jpnItem, JLabel jlbItem) {
-        kindSelected = "Nhân Viên";
+        kindSelected = "Home";
         jpnItem.setBackground(new Color(230, 255, 255));
         jlbItem.setBackground(new Color(230, 255, 255));
         root.removeAll();
         root.setLayout(new BorderLayout());
-//        root.add(new ClientHome());
+        root.add(new ClientHome());
         root.validate();
         root.repaint();
     }
@@ -68,17 +69,24 @@ public class ChuyenManHinhCtrl {
         @Override
         public void mouseClicked(MouseEvent e) {
             switch (kind) {
-                 case "Nhân viên":
+                case "Nhan vien":
                     node = new TrangNhanVien();
                     break;
-                case "Phân công":
-                    node = new TrangPhanCong();
-                    break;
-                case "Thêm loại nước":
+               case "Thêm loại nước":
                     node = new AddWaterCategory();
                     break;
+                
+                case "Phan cong":
+                    node = new TrangPhanCong();
+                    break;
+                case "LogOut":
+                    node = new ClientHome();
+                    break;
+//                case "Chart":
+//                    node = new ClientChart();
+//                    break;                 
                 default:
-                    node = new TrangNhanVien();
+                    node = new ClientHome();
                     break;
             }
             root.removeAll();

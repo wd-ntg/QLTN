@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.DataGlobal;
@@ -77,12 +78,13 @@ public class TrangNhanVien extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        jPanel2.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Danh sách nhân viên");
 
         AddWorker.setBackground(new java.awt.Color(0, 153, 255));
+        AddWorker.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         AddWorker.setForeground(new java.awt.Color(255, 255, 255));
         AddWorker.setText("Thêm nhân viên");
         AddWorker.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +94,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
         });
 
         UpdateInfoWorker.setBackground(new java.awt.Color(0, 153, 255));
+        UpdateInfoWorker.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         UpdateInfoWorker.setForeground(new java.awt.Color(255, 255, 255));
         UpdateInfoWorker.setText("Sửa thông tin");
         UpdateInfoWorker.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +104,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
         });
 
         DeleteWorker.setBackground(new java.awt.Color(0, 153, 255));
+        DeleteWorker.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         DeleteWorker.setForeground(new java.awt.Color(255, 255, 255));
         DeleteWorker.setText("Xóa");
         DeleteWorker.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +135,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
         jScrollPane1.setViewportView(listWorkerTable);
 
         ReloadPage.setBackground(new java.awt.Color(0, 153, 255));
+        ReloadPage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ReloadPage.setForeground(new java.awt.Color(255, 255, 255));
         ReloadPage.setText("Làm mới");
         ReloadPage.addActionListener(new java.awt.event.ActionListener() {
@@ -153,16 +158,16 @@ public class TrangNhanVien extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(AddWorker)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(UpdateInfoWorker)
                                 .addGap(18, 18, 18)
+                                .addComponent(UpdateInfoWorker)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(DeleteWorker)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(12, 12, 12)
                                 .addComponent(ReloadPage)
                                 .addGap(9, 9, 9)))
                         .addGap(18, 18, 18))))
@@ -223,10 +228,10 @@ public class TrangNhanVien extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,7 +251,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
 
         // Hiển thị cửa sổ AddUser
         addUserWindow.setVisible(true);
-
+        addUserWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         try {
             hienThiDSNhanVien();
         } catch (ClassNotFoundException ex) {
@@ -260,7 +265,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
         CapNhatNhanVienView updateWorkerWindow = new CapNhatNhanVienView();
 
         updateWorkerWindow.setVisible(true);
-
+        updateWorkerWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_UpdateInfoWorkerActionPerformed
 
     private void DeleteWorkerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteWorkerActionPerformed

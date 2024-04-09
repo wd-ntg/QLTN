@@ -27,6 +27,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
 import models.KhuVucModel;
 import models.NhanVienModel;
 import models.PhanCongModel;
@@ -510,6 +511,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             DataGlobal.getDataGLobal.dataGlobal.setTimeAssign(TimeSelect);
             CapNhatPhanCongChiTietView updateAssignmentEmployDetail = new CapNhatPhanCongChiTietView();
             updateAssignmentEmployDetail.setVisible(true);
+             updateAssignmentEmployDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         } else {
             JOptionPane.showMessageDialog(null, "Ngoài thời gian phân công, không được chỉnh sửa phân công !!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 

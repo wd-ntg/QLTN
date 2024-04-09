@@ -1,4 +1,8 @@
-package views.main.client;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package views.main.Manager;
 
 import controllers.Client.ClientCtrl;
 import java.awt.event.ActionEvent;
@@ -8,29 +12,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
-//import models.PersonData;
-//import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-import views.main.Manager.ManagerMain;
-//import views.worker.workerMain;
+import views.main.client.ClientLogin;
+import views.main.client.ClientMain;
+import views.main.client.ClientVerifyEmail;
 
 /**
  *
- * @author Phu Bao
+ * @author GIANG
  */
-public class ClientLogin extends javax.swing.JFrame {
+public class DangNhapView extends javax.swing.JPanel {
 
     /**
-     * Creates new form ClientLogin
+     * Creates new form DangNhapView
      */
     public static String currentEmail;
     public static String verifyCode;
-//    public PersonModel personModel;
-
-    public ClientLogin() {
+    public DangNhapView() {
         initComponents();
-        setTitle("ĐĂNG NHẬP");
+       
         txtEmail.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,9 +67,6 @@ public class ClientLogin extends javax.swing.JFrame {
         btnDangNhap = new javax.swing.JButton();
         txtMatKhau = new javax.swing.JPasswordField();
         Background = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -175,13 +173,33 @@ public class ClientLogin extends javax.swing.JFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 580, 570));
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/LoginClient.png"))); // NOI18N
-        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 610));
 
-        pack();
-        setLocationRelativeTo(null);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(20, 26, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 476, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(20, 26, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 26, Short.MAX_VALUE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
@@ -196,49 +214,6 @@ public class ClientLogin extends javax.swing.JFrame {
             txtMatKhau.setEchoChar('*');
         }
     }//GEN-LAST:event_cboHienThiMatKhauActionPerformed
-
-    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        // TODO add your handling code here:
-        String email = txtEmail.getText();
-        char[] passwordChars = txtMatKhau.getPassword();
-        String password = String.valueOf(passwordChars);
-        if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không được để trống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-        } else try {
-            if (!ClientCtrl.kiemTraEmailCoTonTai(email)) {
-                JOptionPane.showMessageDialog(this, "Email không có trong hệ thống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            } else if (!ClientCtrl.kiemTraMatKhauCoChinhXac(email, password)) {
-                JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không đúng!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-            } else {
-                String flag = ClientCtrl.dangNhap(email, password);
-                switch (flag) {
-                    case "R3" -> {
-                        //Đăng nhập cho Chủ hộ
-                        ClientCtrl.ganMaChuHo(email);
-                        new ClientMain().setVisible(true);
-                        this.dispose();
-                    }
-                    case "R2" -> {
-                        // Đăng nhập cho Nhân viên
-//                        PersonData.getInstance().setPersonInfo(ClientCtrl.getInforPersonbyEmail(email));
-//                        new workerMain().setVisible(true);
-//                        this.dispose();
-                    }
-                    case "R1" -> {
-                        new ManagerMain().setVisible(true);
-                        this.dispose();
-
-                    }
-                    default ->
-                        JOptionPane.showMessageDialog(this, "Lỗi đăng nhập!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                }
-
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void lblQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseClicked
         // TODO add your handling code here:
@@ -265,47 +240,54 @@ public class ClientLogin extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_lblQuenMatKhauMouseClicked
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        // TODO add your handling code here:
+        String email = txtEmail.getText();
+        char[] passwordChars = txtMatKhau.getPassword();
+        String password = String.valueOf(passwordChars);
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không được để trống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else try {
+            if (!ClientCtrl.kiemTraEmailCoTonTai(email)) {
+                JOptionPane.showMessageDialog(this, "Email không có trong hệ thống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            } else if (!ClientCtrl.kiemTraMatKhauCoChinhXac(email, password)) {
+                JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không đúng!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            } else {
+                String flag = ClientCtrl.dangNhap(email, password);
+                switch (flag) {
+                    case "R3" -> {
+                        //Đăng nhập cho Chủ hộ
+                        ClientCtrl.ganMaChuHo(email);
+                        new ClientMain().setVisible(true);
+                        
+                    }
+                    case "R2" -> {
+                        // Đăng nhập cho Nhân viên
+                        //                        PersonData.getInstance().setPersonInfo(ClientCtrl.getInforPersonbyEmail(email));
+                        //                        new workerMain().setVisible(true);
+                        //                        this.dispose();
+                    }
+                    case "R1" -> {
+                        new ManagerMain().setVisible(true);
+                        
+
+                    }
+                    default ->
+                    JOptionPane.showMessageDialog(this, "Lỗi đăng nhập!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMatKhauActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ClientLogin().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
