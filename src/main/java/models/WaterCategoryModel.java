@@ -6,17 +6,17 @@ package models;
  */
 public class WaterCategoryModel {
     private String maLoai, tenLoai;
-    private int phiTre;
+    private double phiTre;
 
     public WaterCategoryModel() {
     }
 
-    public WaterCategoryModel(String tenLoai, int phiTre) {
+    public WaterCategoryModel(String tenLoai, double phiTre) {
         this.tenLoai = tenLoai;
         this.phiTre = phiTre;
     }
 
-    public WaterCategoryModel(String maLoai, String tenLoai, int phiTre) {
+    public WaterCategoryModel(String maLoai, String tenLoai, double phiTre) {
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;
         this.phiTre = phiTre;
@@ -38,11 +38,11 @@ public class WaterCategoryModel {
         this.tenLoai = tenLoai;
     }
 
-    public int getPhiTre() {
+    public double getPhiTre() {
         return phiTre;
     }
 
-    public void setPhiTre(int phiTre) {
+    public void setPhiTre(double phiTre) {
         this.phiTre = phiTre;
     }
     

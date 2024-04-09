@@ -611,7 +611,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
         } else {
             if (txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
-                    int phiTre = Integer.parseInt(phiTreStr);
+                    double phiTre = Double.parseDouble(phiTreStr);
                     WaterCategoryModel loai = new WaterCategoryModel(tenLoaiNuoc, phiTre);
                     WaterCategoryCtrl.themLoaiNuoc(loai);
                     lamMoi();
@@ -636,7 +636,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
         } else {
             if (!txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
-                    int phiTre = Integer.parseInt(phiTreStr);
+                    double phiTre = Double.parseDouble(phiTreStr);
                     WaterCategoryModel loai = new WaterCategoryModel(maLoaiNuoc, tenLoaiNuoc, phiTre);
                     WaterCategoryCtrl.capNhatLoaiNuoc(loai);
                     lamMoi();
@@ -712,7 +712,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                     int chiSoDau = Integer.parseInt(chiSoDauStr);
                     int chiSoSau = Integer.parseInt(chiSoSauStr);
                     int donGia = Integer.parseInt(donGiaStr);
-                    int thue = Integer.parseInt(thueStr);
+                    double thue = Double.parseDouble(thueStr);
                     if (chiSoDau < 0 || chiSoDau < 0 || donGia < 0 || thue < 0) {
                         JOptionPane.showMessageDialog(this, "Vui lòng nhập các số liệu là số lớn hơn 0", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     } else if (chiSoDau > chiSoSau) {
@@ -749,7 +749,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                     int chiSoDau = Integer.parseInt(chiSoDauStr);
                     int chiSoSau = Integer.parseInt(chiSoSauStr);
                     int donGia = Integer.parseInt(donGiaStr);
-                    int thue = Integer.parseInt(thueStr);
+                    double thue = Double.parseDouble(thueStr);
                     if (chiSoDau < 0 || chiSoDau < 0 || donGia < 0 || thue < 0) {
                         JOptionPane.showMessageDialog(this, "Vui lòng nhập các số liệu là số lớn hơn 0", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     } else if (chiSoDau > chiSoSau) {
