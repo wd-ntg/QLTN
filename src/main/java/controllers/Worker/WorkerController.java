@@ -41,7 +41,7 @@ public class WorkerController {
                         resultSet.getString("SDT"), 
                         resultSet.getString("CCCD"),
                         resultSet.getString("GIOITINH"), 
-                        resultSet.getString("MAKV") );
+                        resultSet.getString("MAKHUVUC") );
                 nhanVienModel.setEmail(resultSet.getString("EMAIL"));
                 nhanVienModel.setPassword(resultSet.getString("MATKHAU"));
 
@@ -72,7 +72,7 @@ public class WorkerController {
                         resultSet.getString("SDT"), 
                         resultSet.getString("CCCD"),
                         resultSet.getString("GIOITINH"), 
-                        resultSet.getString("MAKV") );
+                        resultSet.getString("MAKHUVUC") );
                 nhanVienModel.setEmail(resultSet.getString("EMAIL"));
                 nhanVienModel.setPassword(resultSet.getString("MATKHAU"));
 
