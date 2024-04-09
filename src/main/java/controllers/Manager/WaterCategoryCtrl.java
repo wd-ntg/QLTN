@@ -1,20 +1,15 @@
 package controllers.Manager;
 
-import static controllers.Client.ClientCtrl.maChuHo;
 import database.ConnectDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Client.ClientBillModel;
 import models.ConsumptionQuotaModel;
 import models.WaterCategoryModel;
 import utils.GenerateCode;
@@ -48,7 +43,7 @@ public class WaterCategoryCtrl {
             String maLoai = GenerateCode.generateMa("LN");
             statement.setString(1, maLoai);
             statement.setString(2, loai.getTenLoai());
-            statement.setInt(3, loai.getPhiTre());
+            statement.setDouble(3, loai.getPhiTre());
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(controllers.Manager.WaterCategoryCtrl.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,7 +55,7 @@ public class WaterCategoryCtrl {
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, loai.getTenLoai());
-            statement.setInt(2, loai.getPhiTre());
+            statement.setDouble(2, loai.getPhiTre());
             statement.setString(3, loai.getMaLoai());
 
             statement.executeUpdate();
@@ -154,7 +149,7 @@ public class WaterCategoryCtrl {
             statement.setString(2, dinhMuc.getMaLoai());
             statement.setInt(3, dinhMuc.getSoDau());
             statement.setInt(4, dinhMuc.getSoCuoi());
-            statement.setInt(5, dinhMuc.getThue());
+            statement.setDouble(5, dinhMuc.getThue());
             statement.setInt(6, dinhMuc.getDonGia());
             statement.executeUpdate();
         } catch (SQLException ex) {
@@ -182,7 +177,7 @@ public class WaterCategoryCtrl {
         String sql = "UPDATE DINHMUC SET SOCUOI=?, THUE=?, DONGIA=? WHERE MADINHMUC=?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, dinhMuc.getSoCuoi());
-            statement.setInt(2, dinhMuc.getThue());
+            statement.setDouble(2, dinhMuc.getThue());
             statement.setInt(3, dinhMuc.getDonGia());
             statement.setString(4, dinhMuc.getMaDinhMuc());
             statement.executeUpdate();
