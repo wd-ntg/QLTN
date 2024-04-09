@@ -1,6 +1,7 @@
 package views.main.client;
 
 import controllers.Client.ClientCtrl;
+import controllers.Worker.WorkerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.UnsupportedEncodingException;
@@ -8,11 +9,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+import models.Worker.GlobalData;
 //import models.PersonData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
+<<<<<<< HEAD
 import views.main.Manager.ManagerMain;
+=======
+import views.main.Worker.workerMain;
+>>>>>>> 0a9553698d87005d6890445ba9c4849eca530de9
 //import views.worker.workerMain;
 
 /**
@@ -220,9 +226,10 @@ public class ClientLogin extends javax.swing.JFrame {
                     }
                     case "R2" -> {
                         // Đăng nhập cho Nhân viên
-//                        PersonData.getInstance().setPersonInfo(ClientCtrl.getInforPersonbyEmail(email));
-//                        new workerMain().setVisible(true);
-//                        this.dispose();
+                        GlobalData.getInstance().setNhanVienModel(new WorkerController().getInforNVbyEmail(email));
+                        GlobalData.getInstance().setBranch(new WorkerController().getBranchWork(GlobalData.getInstance().getNhanVienModel().getMaKV()));
+                        new workerMain().setVisible(true);
+                        this.dispose();
                     }
                     case "R1" -> {
                         new ManagerMain().setVisible(true);

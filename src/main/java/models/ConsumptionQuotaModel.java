@@ -6,19 +6,20 @@ package models;
  */
 public class ConsumptionQuotaModel {
     private String maDinhMuc, maLoai, tenLoai;
-    private int soDau, soCuoi, thue, donGia;
+    private int soDau, soCuoi, donGia;
+    private double thue;
 
     public ConsumptionQuotaModel() {
     }
 
-    public ConsumptionQuotaModel(String maDinhMuc, int soCuoi, int thue, int donGia) {
+    public ConsumptionQuotaModel(String maDinhMuc, int soCuoi, double thue, int donGia) {
         this.maDinhMuc = maDinhMuc;
         this.soCuoi = soCuoi;
         this.thue = thue;
         this.donGia = donGia;
     }
 
-    public ConsumptionQuotaModel(String maLoai, String tenLoai, int soDau, int soCuoi, int thue, int donGia) {
+    public ConsumptionQuotaModel(String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;
         this.soDau = soDau;
@@ -27,7 +28,7 @@ public class ConsumptionQuotaModel {
         this.donGia = donGia;
     }
     
-    public ConsumptionQuotaModel(String maDinhMuc, String maLoai, String tenLoai, int soDau, int soCuoi, int thue, int donGia) {
+    public ConsumptionQuotaModel(String maDinhMuc, String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
         this.maDinhMuc = maDinhMuc;
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;
@@ -77,11 +78,11 @@ public class ConsumptionQuotaModel {
         this.soCuoi = soCuoi;
     }
 
-    public int getThue() {
+    public double getThue() {
         return thue;
     }
 
-    public void setThue(int thue) {
+    public void setThue(double thue) {
         this.thue = thue;
     }
 
