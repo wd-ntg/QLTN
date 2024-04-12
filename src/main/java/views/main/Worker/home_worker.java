@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import models.Worker.GhiNuocModel;
 import models.Worker.GlobalData;
 import models.Worker.HoaDonModel;
 import models.Worker.NhanVienModel;
@@ -43,6 +44,15 @@ public class home_worker extends javax.swing.JPanel {
             return false;
         }
     };
+    private DefaultTableModel tblModel_userGhiNuoc = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            if(column == 6){
+                return true;
+            }
+            return false;
+        }
+    };
     private int priceCurrentMonth = 0;
     private workerMain wMain;
 
@@ -61,7 +71,7 @@ public class home_worker extends javax.swing.JPanel {
         button_pre.setEnabled(true);
         button_next.setEnabled(false);
         LocalDate currentDate = LocalDate.now();
-        lb_year.setText("Năm " + currentDate.getYear());
+        lb_GhiNuoc.setText("Bảng Ghi Nước");
         lb_totalUser.setText(String.valueOf(workerController.getTotalUser(GlobalData.getInstance().getBranch())));
 //        lb_payYear.setText(String.valueOf(workerController.getTotalPriceYear(GlobalData.getInstance().getBranch())) + " vnd");
         lb_diachicty.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-home-24.png"));
@@ -73,51 +83,36 @@ public class home_worker extends javax.swing.JPanel {
         lb_imgUser.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-group-48.png"));
         lb_tablePending.setText("Bảng người dùng chưa thanh toán");
         
-//        setDefaultBarchart();
         setDefaultPieChart(calendar.get(Calendar.MONTH) + 1);
         
         initTable_userPendingPay();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         fillTableInforUser("");
-        setingUITablePending ();
+        setingUITablePending();
         
-        txt_search.addEventOptionSelected(new SearchOptinEvent() {
-            @Override
-            public void optionSelected(SearchOption option, int index) {
-                txt_search.setHint("Tìm kiếm theo " + option.getName() + "...");
-            }
+        initTable_userGhiNuoc();
+        TableCustom.apply(jScrollPane2, TableCustom.TableType.MULTI_LINE);
+        fillTableGhiNuocUser("");
+        setingUITableGhiNuoc();
+        
+        txt_search.addEventOptionSelected((SearchOption option, int index) -> {
+            txt_search.setHint("Tìm kiếm theo " + option.getName() + "...");
         });
         txt_search.removeAllOption();
         txt_search.addOption(new SearchOption("Tên", new ImageIcon(("src\\main\\java\\images\\Worker\\user_1.png"))));
         txt_search.addOption(new SearchOption("Địa chỉ", new ImageIcon(("src\\main\\java\\images\\Worker\\address.png"))));
         txt_search.addOption(new SearchOption("Kì", new ImageIcon(("src\\main\\java\\images\\Worker\\icons8-group-24.png"))));
+        
+        txt_search_bill.addEventOptionSelected((SearchOption option, int index) -> {
+            txt_search_bill.setHint("Tìm kiếm theo " + option.getName() + "...");
+        });
+        txt_search_bill.removeAllOption();
+        txt_search_bill.addOption(new SearchOption("Tên", new ImageIcon(("src\\main\\java\\images\\Worker\\user_1.png"))));
+        txt_search_bill.addOption(new SearchOption("Địa chỉ", new ImageIcon(("src\\main\\java\\images\\Worker\\address.png"))));
+        txt_search_bill.addOption(new SearchOption("Mã Đồng Hồ", new ImageIcon(("src\\main\\java\\images\\Worker\\icons8-group-24.png"))));
+        
     }
     
-    
-//    private void setDefaultBarchart(){
-//        chart.clear();
-//        chart.addLegend("Income", new Color(245, 189, 135));
-//        Calendar calendar = Calendar.getInstance();
-//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-//        
-//        Map<Integer, Double> pricePerMonthMap = workerController.getSumPricePerMonth(GlobalData.getInstance().getBranch());
-//        if(pricePerMonthMap.get(currentMonth) != null){
-//            priceCurrentMonth = pricePerMonthMap.get(currentMonth).intValue();
-//        }else{
-//             priceCurrentMonth = 0;
-//        }
-//        
-//        Set<Integer> keys =  pricePerMonthMap.keySet();
-//        for(int month = 1; month <= 12; month ++){
-//            if (!keys.contains(month)){
-//                chart.addData(new ModelChart(String.valueOf(month), new double[]{0}));
-//            }
-//            else{
-//                chart.addData(new ModelChart(String.valueOf(month), new double[]{pricePerMonthMap.get(month)}));
-//            }
-//        }
-//        chart.start();
-//    }
     
     private void setDefaultPieChart(int month){
         pieChart1.clearData();
@@ -185,11 +180,13 @@ public class home_worker extends javax.swing.JPanel {
     }
     
     private void initTable_userPendingPay() {
-        String[] header = new String[]{"ID Bill","Họ Và Tên", "Địa Chỉ","Kì","Hạn TT", "Tổng Tiền"," "};
+        String[] header = new String[]{"Mã HĐ","Họ Và Tên", "Địa Chỉ","Kì","Hạn TT", "Tổng Tiền"," "};
         tblModel_userPendingPay.setColumnIdentifiers(header);
         table.setModel(tblModel_userPendingPay);
         table.getTableHeader().setFont(new Font("Times New Roman",Font.PLAIN, 18));
     }
+    
+    
     private void fillTableInforUser(String where, Object ... text){
         tblModel_userPendingPay.setRowCount(0);
         List<HoaDonModel> lsBills;
@@ -291,20 +288,117 @@ public class home_worker extends javax.swing.JPanel {
         // ----- end table -----
     }
     
-//        private void setingUITable(){
-//        TableColumn column1 = table.getColumnModel().getColumn(0);
-//        column1.setPreferredWidth(10);
-//        TableColumn column2 = table.getColumnModel().getColumn(1);
-//        column2.setPreferredWidth(75);
-//        TableColumn column3 = table.getColumnModel().getColumn(2);
-//        column3.setPreferredWidth(200);
-//        TableColumn column4 = table.getColumnModel().getColumn(3);
-//        column4.setPreferredWidth(50);
-//        TableColumn column5 = table.getColumnModel().getColumn(4);
-//        column5.setPreferredWidth(50);
-//        TableColumn column6 = table.getColumnModel().getColumn(5);
-//        column6.setPreferredWidth(30);
-//    }
+    private void initTable_userGhiNuoc() {
+        String[] header = new String[]{"Mã Ghi","Mã ĐH","Họ Và Tên", "Địa Chỉ","Kì","Hạn Ghi"," "};
+        tblModel_userGhiNuoc.setColumnIdentifiers(header);
+        table_ghiNuoc.setModel(tblModel_userGhiNuoc);
+        table_ghiNuoc.getTableHeader().setFont(new Font("Times New Roman",Font.PLAIN, 18));
+    }
+    
+    private void fillTableGhiNuocUser(String where, Object ... text){
+        tblModel_userGhiNuoc.setRowCount(0);
+        List<GhiNuocModel> lsGhiNuoc;
+        lsGhiNuoc = workerController.getGhiNuocNV(GlobalData.getInstance().getNhanVienModel().getMaNV(),where,text);
+        GlobalData.getInstance().setLsGhiNuoc(lsGhiNuoc);
+            for (GhiNuocModel pm : lsGhiNuoc) {
+                String hanGhi = "Từ " + pm.getNgayBatDauGhi() + " Đến " + pm.getNgayHanGhi();
+                tblModel_userGhiNuoc.addRow(new String[]{
+                    String.valueOf(pm.getMaGhi()),
+                    pm.getMaDH(),
+                    workerController.getInforCHbyMADH(pm.getMaDH()).getHoTen(), 
+                    workerController.getInforCHbyMADH(pm.getMaDH()).getDiaChiDatNuoc(),
+                    pm.getKi().substring(0, 7),
+                    hanGhi,
+                });
+            }
+        
+        tblModel_userGhiNuoc.fireTableDataChanged();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                String maGHINUOC = String.valueOf(table_ghiNuoc.getValueAt(row, 0));
+                for(GhiNuocModel pm: GlobalData.getInstance().getLsGhiNuoc()){
+                    if(pm.getMaGhi().equals(maGHINUOC)){
+                        LocalDate currentDate = LocalDate.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                        String formattedDate = currentDate.format(formatter);
+                        
+                        int startDay = Integer.parseInt(pm.getNgayBatDauGhi().substring(0, 2));
+                        int startMonth = Integer.parseInt(pm.getNgayBatDauGhi().substring(3, 5));
+                        int startYear = Integer.parseInt(pm.getNgayBatDauGhi().substring(6));
+                        int endDay = Integer.parseInt(pm.getNgayHanGhi().substring(0, 2));
+                        int endMonth = Integer.parseInt(pm.getNgayHanGhi().substring(3, 5));
+                        int endYear = Integer.parseInt(pm.getNgayHanGhi().substring(6));
+                        int ngayGhi = Integer.parseInt(formattedDate.substring(3, 5));
+                        int thangGhi = Integer.parseInt(formattedDate.substring(0, 2));
+                        int namGhi = Integer.parseInt(formattedDate.substring(6));
+                        String message = "Đã quá hạn ghi nước, vui lòng liên hệ quản lý để xử lý!";
+                        if(namGhi > endYear || namGhi > startYear){
+                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
+                            return;
+                        }
+                        if(thangGhi > endMonth || thangGhi <startMonth){
+                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
+                            return;
+                        }
+                        if(ngayGhi > endDay || ngayGhi < startDay){
+                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
+                            return;
+                        }
+                        wMain.setChuHoInfor_DienSoNuoc(workerController.getInforCHbyMADH(pm.getMaDH()));
+                        break;
+                    }
+                }
+                GlobalData.getInstance().setStack("TRANGCHU");
+                wMain.setVisibleAllFalse();
+                wMain.setVisibleGhiDienSoNuoc(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (table_ghiNuoc.isEditing()) {
+                    table_ghiNuoc.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) table_ghiNuoc.getModel();
+                model.removeRow(row);
+            }
+
+            @Override
+            public void onView(int row) {
+                String maGHINUOC = String.valueOf(table_ghiNuoc.getValueAt(row, 0));
+                for(GhiNuocModel pm: GlobalData.getInstance().getLsGhiNuoc()){
+                    if(pm.getMaGhi().equals(maGHINUOC)){
+                        wMain.setBillsChuHo_DienSoNuoc(workerController.getInforCHbyMADH(pm.getMaDH()));
+                        break;
+                    }
+                }
+                GlobalData.getInstance().setStack("TRANGCHU");
+                wMain.setVisibleAllFalse();
+                wMain.setVisibleDienSoNuoc(true);
+            }
+        };
+        table_ghiNuoc.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
+        table_ghiNuoc.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
+        // ----- end table -----
+    }
+    
+        private void setingUITableGhiNuoc(){
+        TableColumn column1 = table_ghiNuoc.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(20);
+        TableColumn column2 = table_ghiNuoc.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(20);
+        TableColumn column3 = table_ghiNuoc.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(40);
+        TableColumn column4 = table_ghiNuoc.getColumnModel().getColumn(3);
+        column4.setPreferredWidth(200);
+        TableColumn column5 = table_ghiNuoc.getColumnModel().getColumn(4);
+        column5.setPreferredWidth(15);
+        TableColumn column6 = table_ghiNuoc.getColumnModel().getColumn(5);
+        column6.setPreferredWidth(40);
+        TableColumn column7 = table_ghiNuoc.getColumnModel().getColumn(6);
+        column7.setPreferredWidth(5);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -321,7 +415,10 @@ public class home_worker extends javax.swing.JPanel {
         lb_totalUser = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        lb_year = new javax.swing.JLabel();
+        lb_GhiNuoc = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_ghiNuoc = new javax.swing.JTable();
+        txt_search_bill = new utils.customCode.TextField.TextFieldSearchOption();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         panelLegend = new javax.swing.JPanel();
@@ -359,7 +456,7 @@ public class home_worker extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Trang chủ");
 
-        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch.setText("Chi nhánh Tân Phú");
 
@@ -394,7 +491,7 @@ public class home_worker extends javax.swing.JPanel {
         lb_imgUser.setPreferredSize(new java.awt.Dimension(48, 48));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel4.setText("User");
+        jLabel4.setText("Người dùng");
 
         lb_totalUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lb_totalUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -468,26 +565,54 @@ public class home_worker extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
 
-        lb_year.setBackground(new java.awt.Color(255, 255, 255));
-        lb_year.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lb_year.setForeground(new java.awt.Color(0, 255, 255));
-        lb_year.setText("Năm 2024");
+        lb_GhiNuoc.setBackground(new java.awt.Color(255, 255, 255));
+        lb_GhiNuoc.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lb_GhiNuoc.setForeground(new java.awt.Color(0, 255, 255));
+        lb_GhiNuoc.setText("Hello World");
+
+        table_ghiNuoc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Họ Và Tên", "Địa Chỉ", "Nhóm", ""
+            }
+        ));
+        table_ghiNuoc.setRowHeight(30);
+        jScrollPane2.setViewportView(table_ghiNuoc);
+
+        txt_search_bill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_search_billActionPerformed(evt);
+            }
+        });
+        txt_search_bill.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_search_billKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(lb_year)
-                .addGap(306, 306, 306))
+                .addComponent(lb_GhiNuoc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_search_bill, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lb_year, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_GhiNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_bill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -623,7 +748,7 @@ public class home_worker extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -844,7 +969,7 @@ public class home_worker extends javax.swing.JPanel {
             switch (option) {
                 case 0 -> fillTableInforUser("and HOTEN like ?", text);
                 case 1 -> fillTableInforUser("and TENCHITIET like ?", text);
-                case 3 -> fillTableInforUser("and KI like ?", text);
+                case 2 -> fillTableInforUser("and KI like ?", text);
                 default -> {
                 }
             }
@@ -854,6 +979,24 @@ public class home_worker extends javax.swing.JPanel {
     private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_searchActionPerformed
+
+    private void txt_search_billActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_search_billActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_search_billActionPerformed
+
+    private void txt_search_billKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_billKeyReleased
+        if(txt_search_bill.isSelected()){
+            int option = txt_search_bill.getSelectedIndex();
+            String text = "%" + txt_search_bill.getText().trim() +"%";
+            switch (option) {
+                case 0 -> fillTableGhiNuocUser("and HOTEN like ?", text);
+                case 1 -> fillTableGhiNuocUser("and TENCHITIET like ?", text);
+                case 2 -> fillTableGhiNuocUser("and dh.MADH like ?", text);
+                default -> {
+                }
+            }
+        }
+    }//GEN-LAST:event_txt_search_billKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -877,8 +1020,10 @@ public class home_worker extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private utils.customCode.BarChar.LabelColor labelColor1;
     private utils.customCode.BarChar.LabelColor labelColor2;
+    private javax.swing.JLabel lb_GhiNuoc;
     private javax.swing.JLabel lb_branch;
     private javax.swing.JLabel lb_copyright;
     private javax.swing.JLabel lb_diachicty;
@@ -889,10 +1034,11 @@ public class home_worker extends javax.swing.JPanel {
     private javax.swing.JLabel lb_tablePending;
     private javax.swing.JLabel lb_totalUser;
     private javax.swing.JLabel lb_www;
-    private javax.swing.JLabel lb_year;
     private javax.swing.JPanel panelLegend;
     private utils.customCode.PieChar.PieChart pieChart1;
     private javax.swing.JTable table;
+    private javax.swing.JTable table_ghiNuoc;
     private utils.customCode.TextField.TextFieldSearchOption txt_search;
+    private utils.customCode.TextField.TextFieldSearchOption txt_search_bill;
     // End of variables declaration//GEN-END:variables
 }

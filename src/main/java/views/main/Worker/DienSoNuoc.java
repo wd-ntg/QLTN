@@ -89,13 +89,11 @@ public class DienSoNuoc extends javax.swing.JPanel {
         TableColumn column7 = table.getColumnModel().getColumn(6);
         column7.setPreferredWidth(60);
         TableColumn column8 = table.getColumnModel().getColumn(7);
-        column8.setPreferredWidth(60);
-        TableColumn column9 = table.getColumnModel().getColumn(8);
-        column9.setPreferredWidth(60);
+        column8.setPreferredWidth(120);
     }
     
     private void initTable() {
-        String[] header = new String[]{"Mã Ghi","Mã NV","Tên NV Ghi", "CS Trước", "CS Sau", "Ngày Ghi", "Kì", "Ngày Bắt Đầu Ghi","Ngày Hạn Ghi"};
+        String[] header = new String[]{"Mã Ghi","Mã NV","Tên NV Ghi", "CS Trước", "CS Sau", "Ngày Ghi", "Kì", "Hạn ghi"};
         tblModel.setColumnIdentifiers(header);
         table.setModel(tblModel);
         table.getTableHeader().setFont(new Font("Times New Roman",Font.PLAIN, 18));
@@ -108,6 +106,7 @@ public class DienSoNuoc extends javax.swing.JPanel {
                     for(GhiNuocModel bm: lsBillModels){
                         String ki = bm.getKi().substring(0, 7);
                         NhanVienModel workerBill = workerController.getInforNVbyID(bm.getMaNV());
+                        String hanGhi = "Từ " + bm.getNgayBatDauGhi() + " Đến " + bm.getNgayHanGhi();
                         tblModel.addRow(new String[]{
                             String.valueOf(bm.getMaGhi()),
                             workerBill==null?"":workerBill.getMaNV(),
@@ -116,8 +115,7 @@ public class DienSoNuoc extends javax.swing.JPanel {
                             bm.getCSM()==0?"":String.valueOf(bm.getCSM()),
                             bm.getNgayGhi().equals("null")?"":bm.getNgayGhi(),
                             ki,
-                            bm.getNgayBatDauGhi(),
-                            bm.getNgayHanGhi()
+                            hanGhi,
                             });
                     }
                 }
@@ -157,7 +155,7 @@ public class DienSoNuoc extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Ghi Nước Chủ Hộ");
 
-        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch.setText("Chi nhánh Tân Phú");
 
@@ -211,7 +209,7 @@ public class DienSoNuoc extends javax.swing.JPanel {
                 .addGap(29, 29, 29))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 7, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(235, 239, 254));

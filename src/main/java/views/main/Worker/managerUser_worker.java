@@ -182,7 +182,7 @@ public class managerUser_worker extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Quản lý chủ hộ");
 
-        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch.setText("Chi nhánh Tân Phú");
 

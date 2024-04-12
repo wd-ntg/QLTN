@@ -69,7 +69,7 @@ public class profile_worker extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        lb_branch2.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch2.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch2.setText("Chi nhánh Tân Phú");
 

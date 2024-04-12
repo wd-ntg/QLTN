@@ -91,7 +91,7 @@ public class editPassword_worker extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Thay đổi mật khẩu");
 
-        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch.setText("Chi nhánh Tân Phú");
 
@@ -298,7 +298,7 @@ public class editPassword_worker extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
