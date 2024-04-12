@@ -116,7 +116,7 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(235, 239, 254));
 
-        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
         lb_branch.setText("Chi nhánh Tân Phú");
 
@@ -127,7 +127,7 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lb_branch)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -12,6 +12,8 @@ public class GhiNuocModel {
     private String ki = "";
     private String ngayBatDauGhi = "";
     private String ngayHanGhi = "";
+    
+    private ChuHoModel chuHoModel = new ChuHoModel();
 
     public GhiNuocModel() {
     }
@@ -28,6 +30,15 @@ public class GhiNuocModel {
         this.ngayHanGhi = ngayHanGhi;
     }
 
+    public ChuHoModel getChuHoModel() {
+        return chuHoModel;
+    }
+
+    public void setChuHoModel(ChuHoModel chuHoModel) {
+        this.chuHoModel = chuHoModel;
+    }
+
+    
     public String getMaGhi() {
         return maGhi;
     }
