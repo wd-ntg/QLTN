@@ -24,6 +24,8 @@ public class ManagerMain extends javax.swing.JFrame {
         listItem.add(new DanhMucModel("Trang chủ", jpnHome, jlbHome));
 
         listItem.add(new DanhMucModel("Nhan vien", jpnBill, jlbBill));
+        
+        listItem.add(new DanhMucModel("Quan li chu ho", jpnInfo, jlbInfo));
 
         listItem.add(new DanhMucModel("Phan cong", jpnChangePassword, jlbChangePassword));
 

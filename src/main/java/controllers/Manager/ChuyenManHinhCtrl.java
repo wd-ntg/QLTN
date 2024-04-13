@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import models.Client.DanhMucModel;
 import views.main.Manager.AddWaterCategory;
 import views.main.Manager.DangNhapView;
+import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
 import views.main.client.HoaDon;
@@ -74,6 +75,9 @@ public class ChuyenManHinhCtrl {
                     break;
                case "Thêm loại nước":
                     node = new AddWaterCategory();
+                    break;
+                case "Quan li chu ho":
+                    node = new QuanLiChuHoPanel();
                     break;
                 
                 case "Phan cong":
