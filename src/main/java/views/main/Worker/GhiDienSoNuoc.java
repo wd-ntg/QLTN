@@ -402,8 +402,8 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Số nước nhập vào phải là số!", "Thông báo", JOptionPane.OK_OPTION);
             return false;
         }
-        
-        if(Integer.parseInt(String.valueOf(text_preIndex.getText())) >= Integer.parseInt(String.valueOf(text_currentIndex.getText()))){
+        int currentIndex = (int) Math.ceil(Double.parseDouble(String.valueOf(text_currentIndex.getText())));
+        if(Integer.parseInt(String.valueOf(text_preIndex.getText())) >= currentIndex){
             JOptionPane.showMessageDialog(this, "Số nước mới không hợp lệ!", "Thông báo", JOptionPane.OK_OPTION);
             return false;
         }
@@ -439,14 +439,13 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
             int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn lưu không?","Thông báo",JOptionPane.OK_CANCEL_OPTION);
             if(option == JOptionPane.OK_OPTION){
                 GhiNuocModel ghiNuocModel = workerController.getGhiNuocMoiNhat(chuHoModel.getMaDH());
-                
-                ghiNuocModel.setCSM(Integer.parseInt(text_currentIndex.getText()));
+                int currentIndex = (int) Math.ceil(Double.parseDouble(String.valueOf(text_currentIndex.getText())));
+                ghiNuocModel.setCSM(currentIndex);
                 LocalDate currentDate = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                 ghiNuocModel.setNgayGhi(currentDate.format(formatter));
                 ghiNuocModel.setMaNV(GlobalData.getInstance().getNhanVienModel().getMaNV());
-                System.out.println(ghiNuocModel.getMaNV());
-                
+
                 workerController.recordGhiNuocHoDan(ghiNuocModel);
                 JOptionPane.showMessageDialog(this, "Thành Công!", "Thông báo",JOptionPane.OK_OPTION);
                 
