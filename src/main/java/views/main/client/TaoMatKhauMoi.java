@@ -1,6 +1,5 @@
 package views.main.client;
 
-import Login.*;
 import views.main.client.*;
 import controllers.Client.ClientCtrl;
 import java.util.logging.Level;
