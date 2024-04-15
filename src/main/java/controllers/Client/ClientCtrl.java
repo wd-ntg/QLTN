@@ -243,7 +243,7 @@ public class ClientCtrl {
     //Log in
     public static String dangNhap(String email, String matKhau) throws ClassNotFoundException {
         String sql = "SELECT MATKHAU, MAPQ FROM TAIKHOAN AS TK "
-                + "WHERE EMAIL = ? ";
+                + "WHERE EMAIL = ? AND TRANGTHAI = 1";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -275,7 +275,7 @@ public class ClientCtrl {
     public static boolean kiemTraEmailCoTonTai(String email) throws ClassNotFoundException {
         boolean flag = false;
         //  RolePerson = 'R3' 
-        String sql = "SELECT EMAIL FROM TAIKHOAN WHERE EMAIL = ? ";
+        String sql = "SELECT EMAIL FROM TAIKHOAN WHERE EMAIL = ? AND TRANGTHAI = 1";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
