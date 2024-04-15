@@ -4,7 +4,6 @@
  */
 package views.main.client;
 
-import Login.*;
 import views.main.client.*;
 import javax.swing.JOptionPane;
 
