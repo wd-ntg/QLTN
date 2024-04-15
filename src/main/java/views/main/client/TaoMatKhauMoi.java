@@ -1,5 +1,7 @@
 package views.main.client;
 
+import Login.*;
+import views.main.client.*;
 import controllers.Client.ClientCtrl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,6 +208,12 @@ public class TaoMatKhauMoi extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TaoMatKhauMoi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

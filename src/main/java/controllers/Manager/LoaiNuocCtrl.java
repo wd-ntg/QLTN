@@ -27,7 +27,7 @@ public class LoaiNuocCtrl {
                     WaterCategoryModel loai = new WaterCategoryModel(
                             resultSet.getString("MALOAI"),
                             resultSet.getString("TENLOAI"),
-                            resultSet.getInt("PHITRE"));
+                            resultSet.getDouble("PHITRE"));
                     dsLoaiNuoc.add(loai);
                 }
             }
@@ -93,7 +93,7 @@ public class LoaiNuocCtrl {
                         resultSet.getString("TENLOAI"),
                         resultSet.getInt("SODAU"),
                         resultSet.getInt("SOCUOI"),
-                        resultSet.getInt("THUE"),
+                        resultSet.getDouble("THUE"),
                         resultSet.getInt("DONGIA"));
                 dsLoaiNuoc.add(dinhMuc);
             }

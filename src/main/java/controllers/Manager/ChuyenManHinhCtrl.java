@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import models.Client.DanhMucModel;
-import views.main.Manager.AddWaterCategory;
+import views.main.Manager.LoaiNuocView;
 import views.main.Manager.DangNhapView;
 import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
@@ -74,7 +74,7 @@ public class ChuyenManHinhCtrl {
                     node = new TrangNhanVien();
                     break;
                case "Thêm loại nước":
-                    node = new AddWaterCategory();
+                    node = new LoaiNuocView();
                     break;
                 case "Quan li chu ho":
                     node = new QuanLiChuHoPanel();
