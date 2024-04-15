@@ -10,30 +10,28 @@ import javax.swing.table.DefaultTableModel;
 import models.DinhMucNuocModel;
 import models.WaterCategoryModel;
 
-
-public class AddWaterCategory extends javax.swing.JPanel {
+public class LoaiNuocView extends javax.swing.JPanel {
 
     /**
      * Creates new form AddWaterCategory
      */
-    
     DefaultTableModel tableModel1;
     List<WaterCategoryModel> dsLoaiNuoc = new ArrayList<>();
-    
+
     DefaultTableModel tableModel2;
     List<DinhMucNuocModel> dsDinhMuc = new ArrayList<>();
-    
-    public AddWaterCategory() {
+
+    public LoaiNuocView() {
         initComponents();
         tableModel1 = (DefaultTableModel) tblLoaiNuoc.getModel();
         tableModel2 = (DefaultTableModel) tblDinhMuc.getModel();
         try {
             hienThiCacLoaiNuoc();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void hienThiCacLoaiNuoc() throws ClassNotFoundException {
         dsLoaiNuoc = LoaiNuocCtrl.hienThiLoaiNuoc();
         tableModel1.setRowCount(0);
@@ -41,7 +39,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
             tableModel1.addRow(new Object[]{loai.getMaLoai(), loai.getTenLoai(), loai.getPhiTre()});
         });
     }
-    
+
     private void hienThiDinhMuc(String maLoai) throws ClassNotFoundException {
         dsDinhMuc = LoaiNuocCtrl.hienThiDinhMuc(maLoai);
         tableModel2.setRowCount(0);
@@ -568,7 +566,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                 int chiSoCuoi = LoaiNuocCtrl.hienThiChiSoCuoiLonNhat(loai.getMaLoai());
                 txtChiSoDau.setText(String.valueOf(chiSoCuoi));
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.out.println("Chưa có dòng nào được chọn");
@@ -591,14 +589,14 @@ public class AddWaterCategory extends javax.swing.JPanel {
         btnXoaDinhMuc.setEnabled(false);
         txtChiSoSau.setEnabled(true);
     }
-    
+
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
         lamMoi();
         try {
             hienThiCacLoaiNuoc();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
@@ -608,6 +606,8 @@ public class AddWaterCategory extends javax.swing.JPanel {
         String phiTreStr = txtPhiTre.getText();
         if (tenLoaiNuoc.isEmpty() || phiTreStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!phiTreStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở phí trễ thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
             if (txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
@@ -617,7 +617,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                     lamMoi();
                     hienThiCacLoaiNuoc();
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
             } else {
@@ -633,6 +633,8 @@ public class AddWaterCategory extends javax.swing.JPanel {
         String phiTreStr = txtPhiTre.getText();
         if (tenLoaiNuoc.isEmpty() || phiTreStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!phiTreStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở phí trễ thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
             if (!txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
@@ -642,7 +644,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                     lamMoi();
                     hienThiCacLoaiNuoc();
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
             } else {
@@ -662,7 +664,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                 lamMoi();
                 hienThiCacLoaiNuoc();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnXoaLoaiNuocActionPerformed
@@ -682,14 +684,14 @@ public class AddWaterCategory extends javax.swing.JPanel {
                 txtChiSoSau.setText(String.valueOf(dinhMuc.getSoCuoi()));
                 txtThue.setText(String.valueOf(dinhMuc.getThue()));
                 txtDonGia.setText(String.valueOf(dinhMuc.getDonGia()));
-                if (LoaiNuocCtrl.kiemTraChisoSauLonNhat(dinhMuc)){
+                if (LoaiNuocCtrl.kiemTraChisoSauLonNhat(dinhMuc)) {
                     btnXoaDinhMuc.setEnabled(true);
                     txtChiSoSau.setEnabled(true);
                 } else {
                     txtChiSoSau.setEnabled(false);
                 }
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.out.println("Chưa có dòng nào được chọn");
@@ -706,6 +708,14 @@ public class AddWaterCategory extends javax.swing.JPanel {
         String thueStr = txtThue.getText();
         if (maLoai.isEmpty() || tenLoaiNuoc.isEmpty() || chiSoDauStr.isEmpty() || chiSoSauStr.isEmpty() || donGiaStr.isEmpty() || thueStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!chiSoDauStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!chiSoSauStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số sau thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!donGiaStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở đơn giá thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!thueStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở thuế thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
             if (txtMaDinhMuc.getText().isEmpty()) {
                 try {
@@ -724,7 +734,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                         hienThiDinhMuc(maLoai);
                     }
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
             } else {
@@ -743,6 +753,14 @@ public class AddWaterCategory extends javax.swing.JPanel {
         String thueStr = txtThue.getText();
         if (maDinhMuc.isEmpty() || chiSoSauStr.isEmpty() || donGiaStr.isEmpty() || thueStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!chiSoDauStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!chiSoSauStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số sau thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!donGiaStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở đơn giá thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else if (!thueStr.matches("\\d*\\.?\\d+")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở thuế thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
             if (!txtMaDinhMuc.getText().isEmpty()) {
                 try {
@@ -761,7 +779,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                         hienThiDinhMuc(maLoai);
                     }
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
             } else {
@@ -783,7 +801,7 @@ public class AddWaterCategory extends javax.swing.JPanel {
                 hienThiCacLoaiNuoc();
                 hienThiDinhMuc(maLoai);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AddWaterCategory1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnXoaDinhMucActionPerformed

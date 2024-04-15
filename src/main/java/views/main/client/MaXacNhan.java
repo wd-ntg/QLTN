@@ -4,6 +4,8 @@
  */
 package views.main.client;
 
+import Login.*;
+import views.main.client.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -175,6 +177,12 @@ public class MaXacNhan extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MaXacNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

@@ -1,5 +1,7 @@
 package views.main.client;
 
+import Login.*;
+import views.main.client.*;
 import controllers.Client.ClientCtrl;
 import controllers.Worker.WorkerController;
 import java.awt.event.ActionEvent;
@@ -301,6 +303,12 @@ public class DangNhap extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
