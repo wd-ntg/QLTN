@@ -14,9 +14,9 @@ import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-import views.main.client.ClientLogin;
+import views.main.client.DangNhap;
 import views.main.client.ClientMain;
-import views.main.client.ClientVerifyEmail;
+import views.main.client.MaXacNhan;
 
 /**
  *
@@ -230,15 +230,15 @@ public class DangNhapView extends javax.swing.JPanel {
                     currentEmail = email;
                     SendEmail.sendEmail(verifyCode, email);
                     System.out.println(verifyCode);
-                    new ClientVerifyEmail().setVisible(true);
+                    new MaXacNhan().setVisible(true);
                     this.setVisible(false);
                 } catch (MessagingException | UnsupportedEncodingException ex) {
-                    Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblQuenMatKhauMouseClicked
 
@@ -280,7 +280,7 @@ public class DangNhapView extends javax.swing.JPanel {
 
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 

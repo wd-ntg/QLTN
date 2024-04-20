@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import models.DataGlobal;
 import models.Worker.ChuHoModel;
 import models.Worker.GlobalData;
-import views.main.client.ClientLogin;
+import views.main.client.DangNhap;
 
 
 public class workerMain extends javax.swing.JFrame {
@@ -249,7 +249,7 @@ public class workerMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_logoutActionPerformed
-        new ClientLogin().setVisible(true);
+        new DangNhap().setVisible(true);
         GlobalData.getInstance().clearData();
         this.dispose();
     }//GEN-LAST:event_button_logoutActionPerformed

@@ -8,12 +8,12 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import models.Client.DanhMucModel;
-import views.main.client.ClientBill;
-import views.main.client.ClientChangePassword;
-import views.main.client.ClientChart;
-import views.main.client.ClientHome;
-import views.main.client.ClientInfo;
-import views.main.client.ClientLogin;
+import views.main.client.HoaDon;
+import views.main.client.DoiMatKhau;
+import views.main.client.ThongKe;
+import views.main.client.TrangChu;
+import views.main.client.ThongTinCaNhan;
+import views.main.client.DangNhap;
 /**
  *
  * @author Phu Bao
@@ -35,7 +35,7 @@ public class ChuyenManHinhCtrl {
         jlbItem.setBackground(new Color(230, 255, 255));
         root.removeAll();
         root.setLayout(new BorderLayout());
-        root.add(new ClientHome());
+        root.add(new TrangChu());
         root.validate();
         root.repaint();
     }
@@ -65,25 +65,25 @@ public class ChuyenManHinhCtrl {
         public void mouseClicked(MouseEvent e) {
             switch (kind) {
                 case "Home":
-                    node = new ClientHome();
+                    node = new TrangChu();
                     break;
                 case "Bill":
-                    node = new ClientBill();
+                    node = new HoaDon();
                     break;
                 case "Info":
-                    node = new ClientInfo();
+                    node = new ThongTinCaNhan();
                     break;
                 case "ChangePassword":
-                    node = new ClientChangePassword();
+                    node = new DoiMatKhau();
                     break;
                 case "LogOut":
-                    node = new ClientHome();
+                    node = new TrangChu();
                     break;
                 case "Chart":
-                    node = new ClientChart();
+                    node = new ThongKe();
                     break;                 
                 default:
-                    node = new ClientHome();
+                    node = new TrangChu();
                     break;
             }
             root.removeAll();

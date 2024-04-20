@@ -1,13 +1,13 @@
 package models.Client;
 
-public class ClientChartModel {
+public class ThongKeModel {
     private String ki;
     private int soNuocTieuThu, soTienPhaiTra;
 
-    public ClientChartModel() {
+    public ThongKeModel() {
     }
 
-    public ClientChartModel(String ki, int soNuocTieuThu, int soTienPhaiTra) {
+    public ThongKeModel(String ki, int soNuocTieuThu, int soTienPhaiTra) {
         this.ki = ki;
         this.soNuocTieuThu = soNuocTieuThu;
         this.soTienPhaiTra = soTienPhaiTra;

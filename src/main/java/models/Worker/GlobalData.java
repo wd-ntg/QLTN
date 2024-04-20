@@ -12,6 +12,7 @@ public class GlobalData {
     private NhanVienModel nhanVienModel = new NhanVienModel();
     private List<ChuHoModel> lsChuHoInfor = new ArrayList<>();
     private List<HoaDonModel> lsBill = new ArrayList<>();
+    private List<GhiNuocModel> lsGhiNuoc = new ArrayList<>();
     private String branch = "";
     Stack<String> stackPosition = new Stack<>();
 
@@ -39,8 +40,14 @@ public class GlobalData {
         this.lsBill = lsBill;
     }
 
-    
-    
+    public List<GhiNuocModel> getLsGhiNuoc() {
+        return lsGhiNuoc;
+    }
+
+    public void setLsGhiNuoc(List<GhiNuocModel> lsGhiNuoc) {
+        this.lsGhiNuoc = lsGhiNuoc;
+    }
+
     
     
     private GlobalData() {

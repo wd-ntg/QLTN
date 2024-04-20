@@ -22,6 +22,8 @@ public class DataGlobal {
     
     private NhanVienModel currentEditNhanVien;
     
+    private ChuHoModel currentEditChuHo;
+    
     private QuanLyModel phienQLHienTai;
 
     public QuanLyModel getPhienQLHienTai() {
@@ -63,6 +65,8 @@ public class DataGlobal {
         phienQLHienTai = new QuanLyModel();
         TimeAssign = "";
         EmployerNon = "";
+        
+        currentEditChuHo = new ChuHoModel();
     }
 
 
@@ -88,4 +92,11 @@ public class DataGlobal {
         public static DataGlobal dataGlobal = new DataGlobal();
     }
     
+    public ChuHoModel getCurrentEditChuHo() {
+        return currentEditChuHo;
+    }
+
+    public void setCurrentEditChuHo(ChuHoModel currentEditChuHo) {
+        this.currentEditChuHo = currentEditChuHo;
+    }
 }

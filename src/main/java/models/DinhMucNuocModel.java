@@ -4,22 +4,22 @@ package models;
  *
  * @author Phu Bao
  */
-public class ConsumptionQuotaModel {
+public class DinhMucNuocModel {
     private String maDinhMuc, maLoai, tenLoai;
     private int soDau, soCuoi, donGia;
     private double thue;
 
-    public ConsumptionQuotaModel() {
+    public DinhMucNuocModel() {
     }
 
-    public ConsumptionQuotaModel(String maDinhMuc, int soCuoi, double thue, int donGia) {
+    public DinhMucNuocModel(String maDinhMuc, int soCuoi, double thue, int donGia) {
         this.maDinhMuc = maDinhMuc;
         this.soCuoi = soCuoi;
         this.thue = thue;
         this.donGia = donGia;
     }
 
-    public ConsumptionQuotaModel(String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
+    public DinhMucNuocModel(String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;
         this.soDau = soDau;
@@ -28,7 +28,7 @@ public class ConsumptionQuotaModel {
         this.donGia = donGia;
     }
     
-    public ConsumptionQuotaModel(String maDinhMuc, String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
+    public DinhMucNuocModel(String maDinhMuc, String maLoai, String tenLoai, int soDau, int soCuoi, double thue, int donGia) {
         this.maDinhMuc = maDinhMuc;
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;

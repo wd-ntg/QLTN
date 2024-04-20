@@ -1,12 +1,12 @@
 package models.Client;
 
-public class ClientHouseholdModel {
+public class HoModel {
     private String maCTKV, tenChiTiet, maKhuVuc, tenKhuVuc, maDH, tenDH, maLoai, tenLoai;
 
-    public ClientHouseholdModel() {
+    public HoModel() {
     }
 
-    public ClientHouseholdModel(String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, String maDH, String tenDH, String maLoai, String tenLoai) {
+    public HoModel(String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, String maDH, String tenDH, String maLoai, String tenLoai) {
         this.maCTKV = maCTKV;
         this.tenChiTiet = tenChiTiet;
         this.maKhuVuc = maKhuVuc;

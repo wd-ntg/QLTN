@@ -4,21 +4,21 @@ import controllers.Client.ClientCtrl;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Client.ClientHouseholdModel;
+import models.Client.HoModel;
 
 /**
  *
  * @author Phu Bao
  */
-public class ClientChart extends javax.swing.JPanel {
+public class ThongKe extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientChart
      */
-    private List<ClientHouseholdModel> dsCacHo;
+    private List<HoModel> dsCacHo;
     private String maHo;
 
-    public ClientChart() {
+    public ThongKe() {
         initComponents();
         hienThiDSCacHo();
         showChart();
@@ -33,7 +33,7 @@ public class ClientChart extends javax.swing.JPanel {
                 cboDSCacHo.addItem(diaChi);
             });
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientChart.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

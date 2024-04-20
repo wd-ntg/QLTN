@@ -6,35 +6,35 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import models.Client.ClientHouseholdModel;
-import models.Client.ClientInfoModel;
+import models.Client.HoModel;
+import models.Client.ThongTinCaNhanModel;
 
 /**
  *
  * @author Phu Bao
  */
-public class ClientInfo extends javax.swing.JPanel {
+public class ThongTinCaNhan extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientInfo
      */
     DefaultTableModel tableModel;
-    List<ClientHouseholdModel> dsCacHo = new ArrayList<>();
+    List<HoModel> dsCacHo = new ArrayList<>();
     
-    public ClientInfo() {
+    public ThongTinCaNhan() {
         initComponents();
         tableModel = (DefaultTableModel) tblListOfHouseholds.getModel();
         try {
             hienThiThongTinCaNhanChuHo();
             hienThiCacHoDangSuDungDichVu();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientInfo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThongTinCaNhan.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
     private void hienThiThongTinCaNhanChuHo() throws ClassNotFoundException {
-        ClientInfoModel chuHo = ClientCtrl.hienThiChuHo();
+        ThongTinCaNhanModel chuHo = ClientCtrl.hienThiChuHo();
         lblMaChuHo.setText(chuHo.getMaCH());
         lblHoTen.setText(chuHo.getHoTen());
         lblDiaChi.setText(chuHo.getDiaChi());

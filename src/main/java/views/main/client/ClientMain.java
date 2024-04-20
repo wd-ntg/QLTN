@@ -69,7 +69,8 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbHome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbHome.setText("Trang chủ");
+        jlbHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-home-21.png"))); // NOI18N
+        jlbHome.setText("Trang chủ    ");
 
         javax.swing.GroupLayout jpnHomeLayout = new javax.swing.GroupLayout(jpnHome);
         jpnHome.setLayout(jpnHomeLayout);
@@ -87,13 +88,15 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbBill.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbBill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbBill.setText("Hóa đơn");
+        jlbBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-bill-21.png"))); // NOI18N
+        jlbBill.setText("Hóa đơn       ");
+        jlbBill.setToolTipText("");
 
         javax.swing.GroupLayout jpnBillLayout = new javax.swing.GroupLayout(jpnBill);
         jpnBill.setLayout(jpnBillLayout);
         jpnBillLayout.setHorizontalGroup(
             jpnBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlbBill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpnBillLayout.setVerticalGroup(
             jpnBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,15 +108,14 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbChart.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbChart.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbChart.setText("Thống kê");
+        jlbChart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-chart-21.png"))); // NOI18N
+        jlbChart.setText("Thống kê      ");
 
         javax.swing.GroupLayout jpnChartLayout = new javax.swing.GroupLayout(jpnChart);
         jpnChart.setLayout(jpnChartLayout);
         jpnChartLayout.setHorizontalGroup(
             jpnChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnChartLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlbChart, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+            .addComponent(jlbChart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
         );
         jpnChartLayout.setVerticalGroup(
             jpnChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +129,8 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbInfo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbInfo.setText("Tài khoản");
+        jlbInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-account-21.png"))); // NOI18N
+        jlbInfo.setText("Tài khoản      ");
 
         javax.swing.GroupLayout jpnInfoLayout = new javax.swing.GroupLayout(jpnInfo);
         jpnInfo.setLayout(jpnInfoLayout);
@@ -145,15 +148,14 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbChangePassword.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbChangePassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbChangePassword.setText("Đổi mật khẩu");
+        jlbChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-change-password-21.png"))); // NOI18N
+        jlbChangePassword.setText(" Đổi mật khẩu");
 
         javax.swing.GroupLayout jpnChangePasswordLayout = new javax.swing.GroupLayout(jpnChangePassword);
         jpnChangePassword.setLayout(jpnChangePasswordLayout);
         jpnChangePasswordLayout.setHorizontalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnChangePasswordLayout.createSequentialGroup()
-                .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpnChangePasswordLayout.setVerticalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +167,8 @@ public class ClientMain extends javax.swing.JFrame {
 
         jlbLogOut.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlbLogOut.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbLogOut.setText("Đăng xuất");
+        jlbLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client/icons8-log-out-21.png"))); // NOI18N
+        jlbLogOut.setText("Đăng xuất      ");
         jlbLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlbLogOutMouseClicked(evt);
@@ -244,7 +247,7 @@ public class ClientMain extends javax.swing.JFrame {
         );
         jpnViewLayout.setVerticalGroup(
             jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jpnRootLayout = new javax.swing.GroupLayout(jpnRoot);
@@ -284,7 +287,7 @@ public class ClientMain extends javax.swing.JFrame {
 
     private void jlbLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbLogOutMouseClicked
         // TODO add your handling code here:
-        new ClientLogin().setVisible(true);
+        new DangNhap().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jlbLogOutMouseClicked
 

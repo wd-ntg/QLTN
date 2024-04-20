@@ -500,4 +500,49 @@ public class WorkerController {
         }
         return -1;
     }
+    
+    public List<GhiNuocModel> getGhiNuocNV(String maNV, String where, Object ... search){
+        List<GhiNuocModel> lsGhiNuoc = new ArrayList<>();
+        String sql = """
+                     select gn.MAGHI, dh.MADH, gn.KI, gn.NGAYBATDAUGHI, gn.NGAYHANGHI, dh.MACH, gn.CSC, gn.CSM, ch.HOTEN, ctkv.TENCHITIET
+                     from GHINUOC as gn
+                     join DONGHO as dh
+                     on gn.MADH = dh.MADH
+                     join PHANCONG as pc
+                     on pc.MADH = dh.MADH
+                     join CHUHO as ch
+                     on ch.MACH = dh.MACH
+                     join CHITIETKHUVUC as ctkv
+                     on ctkv.MACTKV = dh.MADIACHI
+                     where pc.MANV = ? and YEAR(gn.KI) = YEAR(GETDATE()) and MONTH(gn.KI) = MONTH(GETDATE()) - 1 and dh.TRANGTHAI = 1
+                     """ + where;
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, maNV);
+            for(int i = 0; i< search.length; i++){
+                statement.setObject(i+2, search[i]);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                GhiNuocModel ghiNuocModel = new GhiNuocModel(
+                        resultSet.getString("MAGHI"),
+                        resultSet.getString("MADH"),
+                        resultSet.getInt("CSC"),
+                        resultSet.getInt("CSC"),
+                        null,
+                        null,
+                        String.valueOf(resultSet.getDate("KI")),
+                        resultSet.getString("NGAYBATDAUGHI"),
+                        resultSet.getString("NGAYHANGHI"));
+                ghiNuocModel.getChuHoModel().setHoTen(resultSet.getString("HOTEN"));
+                ghiNuocModel.getChuHoModel().setMaCH(resultSet.getString("MACH"));
+                ghiNuocModel.getChuHoModel().setDiaChiDatNuoc(resultSet.getString("TENCHITIET"));
+                lsGhiNuoc.add(ghiNuocModel);
+            }
+            return lsGhiNuoc;
+        }
+        catch (SQLException | ClassNotFoundException ex) { 
+            Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lsGhiNuoc;
+    }
 }
