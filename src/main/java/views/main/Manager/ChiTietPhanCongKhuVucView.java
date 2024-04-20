@@ -257,14 +257,14 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel1.setBackground(new java.awt.Color(235, 239, 254));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Phân công nhân viên ");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(5, 205, 153));
         jLabel2.setText("Công ty dịch vụ nước đô thị Quận 9");
 
         nameArea.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -297,6 +297,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Danh sách phân công nhân viên");
@@ -319,6 +320,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(bangPhanCongNhanVien);
 
+        tuDongPhanCong.setBackground(new java.awt.Color(134, 140, 255));
+        tuDongPhanCong.setForeground(new java.awt.Color(255, 255, 255));
         tuDongPhanCong.setText("Tự động phân công");
         tuDongPhanCong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,6 +341,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             }
         });
 
+        chinhSua.setBackground(new java.awt.Color(134, 140, 255));
+        chinhSua.setForeground(new java.awt.Color(255, 255, 255));
         chinhSua.setText("Chỉnh sửa");
         chinhSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +353,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Chọn thời gian");
 
+        xemThongTin.setBackground(new java.awt.Color(134, 140, 255));
+        xemThongTin.setForeground(new java.awt.Color(255, 255, 255));
         xemThongTin.setText("Xem thông tin");
         xemThongTin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,6 +362,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             }
         });
 
+        datLai.setBackground(new java.awt.Color(134, 140, 255));
+        datLai.setForeground(new java.awt.Color(255, 255, 255));
         datLai.setText("Đặt lại");
         datLai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +371,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             }
         });
 
+        apDung.setBackground(new java.awt.Color(134, 140, 255));
+        apDung.setForeground(new java.awt.Color(255, 255, 255));
         apDung.setText("Áp dụng");
         apDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -369,6 +380,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             }
         });
 
+        nguoiDungChuaDuocPhanCong.setBackground(new java.awt.Color(134, 140, 255));
+        nguoiDungChuaDuocPhanCong.setForeground(new java.awt.Color(255, 255, 255));
         nguoiDungChuaDuocPhanCong.setText("Người dùng chưa được phân công");
         nguoiDungChuaDuocPhanCong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

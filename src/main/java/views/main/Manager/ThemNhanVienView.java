@@ -103,7 +103,7 @@ public class ThemNhanVienView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel1.setBackground(new java.awt.Color(235, 239, 254));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -233,11 +233,11 @@ public class ThemNhanVienView extends javax.swing.JFrame {
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Quản lí nhân viên");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(5, 205, 153));
         jLabel2.setText("Quản lí tiền nước công ti dịch vụ nước đô thị");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

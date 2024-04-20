@@ -14,11 +14,11 @@ import models.Worker.GlobalData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-<<<<<<< HEAD
+
 import views.main.Manager.ManagerMain;
-=======
+
 import views.main.Worker.workerMain;
->>>>>>> 0a9553698d87005d6890445ba9c4849eca530de9
+
 //import views.worker.workerMain;
 
 /**

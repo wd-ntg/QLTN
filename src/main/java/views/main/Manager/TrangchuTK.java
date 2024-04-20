@@ -1,313 +1,70 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package views.main.Manager;
 
-package views.main.Worker;
-
-import controllers.Worker.WorkerController;
-import java.awt.Color;
-import java.awt.Font;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import controllers.Manager.ThongKeCtrl;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import models.Worker.GlobalData;
-import models.Worker.HoaDonModel;
-import models.Worker.NhanVienModel;
-import utils.customCode.PieChar.ModelPieChart;
-import utils.customCode.PieChar.PieChart;
-import utils.customCode.Table.TableCustom;
-import utils.customCode.TableButton.TableActionCellEditor;
-import utils.customCode.TableButton.TableActionCellRender;
-import utils.customCode.TableButton.TableActionEvent;
-import utils.customCode.TextField.SearchOptinEvent;
-import utils.customCode.TextField.SearchOption;
+import models.NguoiDungMoi;
 
+/**
+ *
+ * @author GIANG
+ */
+public class TrangchuTK extends javax.swing.JPanel {
 
+    /**
+     * Creates new form TrangchuTK
+     */
+    int year = Calendar.getInstance().get(Calendar.YEAR);
+    
+    int thang = Calendar.getInstance().get(Calendar.MONTH); 
+    
+    DefaultTableModel tableModel;
+    List<NguoiDungMoi> dsNguoiDungMois = new ArrayList<>();
 
-public class home_worker extends javax.swing.JPanel {
+    public TrangchuTK() {
+        try {
+            initComponents();
+                
+            tableModel = (DefaultTableModel) table.getModel();
+            
+            nam.setText((String.valueOf(year)));
+            lb_month.setText(String.valueOf(year));
+            ThongKeCtrl thongKeCtrl = new ThongKeCtrl();
+            thongKeCtrl.setDataToPieChartLuongNuoc(pieChartLuongNuoc, String.valueOf(year));
 
-    private NhanVienModel nhanVienModel = GlobalData.getInstance().getNhanVienModel();
-    private WorkerController workerController = new WorkerController();
-    private DefaultTableModel tblModel_userPendingPay = new DefaultTableModel(){
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            if(column == 6){
-                return true;
-            }
-            return false;
+            thongKeCtrl.setDataToChartThanhToan(chartThanhToan, String.valueOf(year));
+
+            totalNguoiDung.setText(String.valueOf(thongKeCtrl.demSoluongNguoiSuDung()));
+            totalNhanVien.setText(String.valueOf(thongKeCtrl.demSoluongNhanVien()));
+            
+            hienThiDSNguoiDungMoi();
+        } catch (Exception e) {
         }
-    };
-    private int priceCurrentMonth = 0;
-    private workerMain wMain;
-
-    public home_worker(workerMain wMain) {
-        this.wMain = wMain;
-        initComponents();
-        setDefault();
-        
-        
     }
+    
+    public void hienThiDSNguoiDungMoi() throws ClassNotFoundException {
+        String tg = String.valueOf(thang)+"/"+String.valueOf(year);
+        dsNguoiDungMois = ThongKeCtrl.getNguoiDungMoi(tg);
 
-    public void setDefault(){
-        lb_branch.setText("Chi nhánh " + workerController.getBranchWork(nhanVienModel.getMaKV()));
-        Calendar calendar = Calendar.getInstance();
-        lb_month.setText(convertNumberToMonth(calendar.get(Calendar.MONTH) + 1));
-        button_pre.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-previous-24.png"));
-        button_next.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-next-24.png"));
-        button_pre.setEnabled(true);
-        button_next.setEnabled(false);
-        LocalDate currentDate = LocalDate.now();
-        lb_year.setText("Năm " + currentDate.getYear());
-        lb_totalUser.setText(String.valueOf(workerController.getTotalUser(GlobalData.getInstance().getBranch())));
-//        lb_payYear.setText(String.valueOf(workerController.getTotalPriceYear(GlobalData.getInstance().getBranch())) + " vnd");
-        lb_diachicty.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-home-24.png"));
-        lb_emailcty.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-mail-24.png"));
-        lb_www.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-www-24.png"));
-        lb_sdt.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-phone-24.png"));
-        lb_copyright.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-copyright-24.png"));
-        
-        lb_imgUser.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-group-48.png"));
-        lb_tablePending.setText("Bảng người dùng chưa thanh toán");
-        
-//        setDefaultBarchart();
-        setDefaultPieChart(calendar.get(Calendar.MONTH) + 1);
-        
-        initTable_userPendingPay();
-        TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
-        fillTableInforUser("");
-        setingUITablePending ();
-        
-        txt_search.addEventOptionSelected(new SearchOptinEvent() {
-            @Override
-            public void optionSelected(SearchOption option, int index) {
-                txt_search.setHint("Tìm kiếm theo " + option.getName() + "...");
-            }
+        tableModel.setRowCount(0);
+
+        dsNguoiDungMois.forEach(area -> {
+            tableModel.addRow(new Object[]{area.getMaND(), area.getTenND(), area.getDcND(), area.getLoaiNuocSD()});
         });
-        txt_search.removeAllOption();
-        txt_search.addOption(new SearchOption("Tên", new ImageIcon(("src\\main\\java\\images\\Worker\\user_1.png"))));
-        txt_search.addOption(new SearchOption("Địa chỉ", new ImageIcon(("src\\main\\java\\images\\Worker\\address.png"))));
-        txt_search.addOption(new SearchOption("Kì", new ImageIcon(("src\\main\\java\\images\\Worker\\icons8-group-24.png"))));
     }
-    
-    
-//    private void setDefaultBarchart(){
-//        chart.clear();
-//        chart.addLegend("Income", new Color(245, 189, 135));
-//        Calendar calendar = Calendar.getInstance();
-//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-//        
-//        Map<Integer, Double> pricePerMonthMap = workerController.getSumPricePerMonth(GlobalData.getInstance().getBranch());
-//        if(pricePerMonthMap.get(currentMonth) != null){
-//            priceCurrentMonth = pricePerMonthMap.get(currentMonth).intValue();
-//        }else{
-//             priceCurrentMonth = 0;
-//        }
-//        
-//        Set<Integer> keys =  pricePerMonthMap.keySet();
-//        for(int month = 1; month <= 12; month ++){
-//            if (!keys.contains(month)){
-//                chart.addData(new ModelChart(String.valueOf(month), new double[]{0}));
-//            }
-//            else{
-//                chart.addData(new ModelChart(String.valueOf(month), new double[]{pricePerMonthMap.get(month)}));
-//            }
-//        }
-//        chart.start();
-//    }
-    
-    private void setDefaultPieChart(int month){
-        pieChart1.clearData();
-        pieChart1.setChartType(PieChart.PeiChartType.DEFAULT);
 
-        Map<String,Double> donePay = workerController.getPayDone(GlobalData.getInstance().getBranch(), month);
-        Map<String,Double> pendingPay = workerController.getPayPending(GlobalData.getInstance().getBranch(), month);
-        Double totalPay = pendingPay.get("PendingPay") + donePay.get("DonePay");
-        pieChart1.addData(new ModelPieChart("PendingPay", pendingPay.get("PendingPay")*100/totalPay,new Color(221, 65, 65)));
-        pieChart1.addData(new ModelPieChart("PayDone", 100-pendingPay.get("PendingPay")*100/totalPay,new Color(23, 126, 238)));
-    }
-    public String convertNumberToMonth(int number) {
-        String monthName = "";
-        monthName = switch (number) {
-            case 1 -> "Tháng Một";
-            case 2 -> "Tháng Hai";
-            case 3 -> "Tháng Ba";
-            case 4 -> "Tháng Tư";
-            case 5 -> "Tháng Năm";
-            case 6 -> "Tháng Sáu";
-            case 7 -> "Tháng Bảy";
-            case 8 -> "Tháng Tám";
-            case 9 -> "Tháng Chín";
-            case 10 -> "Tháng Mười";
-            case 11 -> "Tháng Mười Một";
-            case 12 -> "Tháng Mười Hai";
-            default -> "Số không hợp lệ";
-        }; // Nếu số không nằm trong khoảng từ 1 đến 12
-        return monthName;
-    }
-    
-    public static int convertMonthToNumber(String monthName) {
-        return switch (monthName) {
-            case "Tháng Một" -> 1;
-            case "Tháng Hai" -> 2;
-            case "Tháng Ba" -> 3;
-            case "Tháng Tư" -> 4;
-            case "Tháng Năm" -> 5;
-            case "Tháng Sáu" -> 6;
-            case "Tháng Bảy" -> 7;
-            case "Tháng Tám" -> 8;
-            case "Tháng Chín" -> 9;
-            case "Tháng Mười" -> 10;
-            case "Tháng Mười Một" -> 11;
-            case "Tháng Mười Hai" -> 12;
-            default -> -1;
-        }; // Trả về -1 nếu tên tháng không hợp lệ
-    }
-    
-    private void setingUITablePending (){
-        TableColumn column1 = table.getColumnModel().getColumn(0);
-        column1.setPreferredWidth(25);
-        TableColumn column2 = table.getColumnModel().getColumn(1);
-        column2.setPreferredWidth(50);
-        TableColumn column3 = table.getColumnModel().getColumn(2);
-        column3.setPreferredWidth(200);
-        TableColumn column4 = table.getColumnModel().getColumn(3);
-        column4.setPreferredWidth(25);
-        TableColumn column5 = table.getColumnModel().getColumn(4);
-        column5.setPreferredWidth(25);
-        TableColumn column6 = table.getColumnModel().getColumn(5);
-        column6.setPreferredWidth(50);
-        TableColumn column7 = table.getColumnModel().getColumn(6);
-        column7.setPreferredWidth(10);
-    }
-    
-    private void initTable_userPendingPay() {
-        String[] header = new String[]{"ID Bill","Họ Và Tên", "Địa Chỉ","Kì","Hạn TT", "Tổng Tiền"," "};
-        tblModel_userPendingPay.setColumnIdentifiers(header);
-        table.setModel(tblModel_userPendingPay);
-        table.getTableHeader().setFont(new Font("Times New Roman",Font.PLAIN, 18));
-    }
-    private void fillTableInforUser(String where, Object ... text){
-        tblModel_userPendingPay.setRowCount(0);
-        List<HoaDonModel> lsBills;
-        lsBills = workerController.getInforUsersPendingByBranch(GlobalData.getInstance().getBranch(),
-                    where,
-                    text);
-            GlobalData.getInstance().setLsBill(lsBills);
-            for (HoaDonModel pm : lsBills) {
-                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedDate = formatter.format(pm.getNgayDenHan());
-                tblModel_userPendingPay.addRow(new String[]{
-                    String.valueOf(pm.getMaHoaDon()),
-                    pm.getChuHo().getHoTen(),
-                    pm.getDiaChiChiTiet(), 
-                    pm.getKi().substring(0, 7),
-                    formattedDate,
-                    String.valueOf(pm.getTongtien())}
-                );
-            }
-        
-        tblModel_userPendingPay.fireTableDataChanged();
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        TableActionEvent event = new TableActionEvent() {
-            @Override
-            public void onEdit(int row) {
-                String maHD = String.valueOf(table.getValueAt(row, 0));
-                for(HoaDonModel pm: GlobalData.getInstance().getLsBill()){
-                    if(pm.getMaHoaDon().equals(maHD)){
-                        LocalDate currentDate = LocalDate.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                        String formattedDate = currentDate.format(formatter);
-                        int endDay = Integer.parseInt(pm.getNgayDenHan().toString().substring(8, 10));
-                        int endMonth = Integer.parseInt(pm.getNgayDenHan().toString().substring(5, 7));
-                        int endYear = Integer.parseInt(pm.getNgayDenHan().toString().substring(0, 4));
-                        int ngayGhi = Integer.parseInt(formattedDate.substring(3, 5));
-                        int thangGhi = Integer.parseInt(formattedDate.substring(0, 2));
-                        int namGhi = Integer.parseInt(formattedDate.substring(6));
-                        String message = "Đã quá hạn thanh toán, vui lòng liên hệ quản lý để xử lý!";
-                        if(namGhi > endYear){
-                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
-                            return;
-                        }
-                        if(thangGhi > endMonth){
-                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
-                            return;
-                        }
-                        if(ngayGhi > endDay){
-                            JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
-                            return;
-                        }
-                        int choice = JOptionPane.showConfirmDialog(home_worker.this,"Bạn có chắc người này đã thanh toán?", "Ghi tiền",JOptionPane.YES_NO_OPTION);
-                        if(choice == JOptionPane.OK_OPTION){
-                            
-                            int result = workerController.setUserHadPayDone(
-                                maHD, 
-                                formattedDate,
-                                GlobalData.getInstance().getNhanVienModel().getMaNV());
-                            if(result == 1){
-                                JOptionPane.showMessageDialog(home_worker.this, "Thành Công", "Thông báo", JOptionPane.OK_OPTION);
-                            }else{
-                                JOptionPane.showMessageDialog(home_worker.this, "Thất bại", "Thông báo", JOptionPane.OK_OPTION);
-                            }
-                        }else{
-                            return;
-                        }
-                        break;
-                    }
-                }
-                GlobalData.getInstance().setStack("TRANGCHU");
-                wMain.setVisibleAllFalse();
-                wMain.setVisibleHome(true);
-            }
-
-            @Override
-            public void onDelete(int row) {
-                if (table.isEditing()) {
-                    table.getCellEditor().stopCellEditing();
-                }
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.removeRow(row);
-            }
-
-            @Override
-            public void onView(int row) {
-                String idUserSelected = String.valueOf(table.getValueAt(row, 0));
-                for(HoaDonModel pm: GlobalData.getInstance().getLsBill()){
-                    if(pm.getMaHoaDon().equals(idUserSelected)){
-                        wMain.setBillsChuHo_DienSoNuoc(workerController.getInforCHbyMADH(pm.getChuHo().getMaDH()));
-                        break;
-                    }
-                }
-                GlobalData.getInstance().setStack("TRANGCHU");
-                wMain.setVisibleAllFalse();
-                wMain.setVisibleDienSoNuoc(true);
-            }
-        };
-        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
-        // ----- end table -----
-    }
-    
-//        private void setingUITable(){
-//        TableColumn column1 = table.getColumnModel().getColumn(0);
-//        column1.setPreferredWidth(10);
-//        TableColumn column2 = table.getColumnModel().getColumn(1);
-//        column2.setPreferredWidth(75);
-//        TableColumn column3 = table.getColumnModel().getColumn(2);
-//        column3.setPreferredWidth(200);
-//        TableColumn column4 = table.getColumnModel().getColumn(3);
-//        column4.setPreferredWidth(50);
-//        TableColumn column5 = table.getColumnModel().getColumn(4);
-//        column5.setPreferredWidth(50);
-//        TableColumn column6 = table.getColumnModel().getColumn(5);
-//        column6.setPreferredWidth(30);
-//    }
-    
+    // 
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -320,23 +77,32 @@ public class home_worker extends javax.swing.JPanel {
         jPanel8 = new javax.swing.JPanel();
         lb_imgUser = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lb_totalUser = new javax.swing.JLabel();
+        totalNguoiDung = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        lb_imgUser1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        totalNhanVien = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        chartPieLuongNuoc = new javax.swing.JPanel();
         lb_year = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        pieChartLuongNuoc = new javax.swing.JPanel();
+        button_pre1 = new javax.swing.JButton();
+        button_next1 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        nam = new javax.swing.JLabel();
         panelLegend = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         labelColor1 = new utils.customCode.BarChar.LabelColor();
         labelColor2 = new utils.customCode.BarChar.LabelColor();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         lb_month = new javax.swing.JLabel();
         button_pre = new javax.swing.JButton();
         button_next = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        pieChart1 = new utils.customCode.PieChar.PieChart();
+        chartThanhToan = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -350,8 +116,6 @@ public class home_worker extends javax.swing.JPanel {
         lb_sdt = new javax.swing.JLabel();
         lb_copyright = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(1000, 700));
-
         jPanel1.setBackground(new java.awt.Color(235, 239, 254));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
@@ -363,7 +127,7 @@ public class home_worker extends javax.swing.JPanel {
 
         lb_branch.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         lb_branch.setForeground(new java.awt.Color(5, 205, 153));
-        lb_branch.setText("Chi nhánh Tân Phú");
+        lb_branch.setText("Công ti quản lí nước quận 9");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -396,11 +160,11 @@ public class home_worker extends javax.swing.JPanel {
         lb_imgUser.setPreferredSize(new java.awt.Dimension(48, 48));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel4.setText("User");
+        jLabel4.setText("Người dùng");
 
-        lb_totalUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lb_totalUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_totalUser.setText("100");
+        totalNguoiDung.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        totalNguoiDung.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalNguoiDung.setText("100");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -410,10 +174,10 @@ public class home_worker extends javax.swing.JPanel {
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(lb_imgUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lb_totalUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(23, 23, 23))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,10 +186,48 @@ public class home_worker extends javax.swing.JPanel {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lb_totalUser))
+                        .addComponent(totalNguoiDung))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lb_imgUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+
+        lb_imgUser1.setPreferredSize(new java.awt.Dimension(48, 48));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        jLabel5.setText("Nhân viên");
+
+        totalNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        totalNhanVien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalNhanVien.setText("100");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(lb_imgUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(totalNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(totalNhanVien))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lb_imgUser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40))
         );
 
@@ -434,15 +236,19 @@ public class home_worker extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
         );
 
@@ -467,37 +273,61 @@ public class home_worker extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(235, 239, 254));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        chartPieLuongNuoc.setBackground(new java.awt.Color(255, 255, 255));
+        chartPieLuongNuoc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
 
         lb_year.setBackground(new java.awt.Color(255, 255, 255));
         lb_year.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lb_year.setForeground(new java.awt.Color(0, 255, 255));
-        lb_year.setText("Năm 2024");
+        lb_year.setText("Lượng nước tiêu thụ");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(lb_year)
-                .addGap(306, 306, 306))
+        javax.swing.GroupLayout pieChartLuongNuocLayout = new javax.swing.GroupLayout(pieChartLuongNuoc);
+        pieChartLuongNuoc.setLayout(pieChartLuongNuocLayout);
+        pieChartLuongNuocLayout.setHorizontalGroup(
+            pieChartLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_year, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        pieChartLuongNuocLayout.setVerticalGroup(
+            pieChartLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 214, Short.MAX_VALUE)
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        button_pre1.setPreferredSize(new java.awt.Dimension(24, 24));
+        button_pre1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_pre1ActionPerformed(evt);
+            }
+        });
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 255, 255));
-        jLabel10.setText("Phân tích thanh toán");
+        button_next1.setPreferredSize(new java.awt.Dimension(24, 24));
+        button_next1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_next1ActionPerformed(evt);
+            }
+        });
+
+        jPanel13.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel13.setPreferredSize(new java.awt.Dimension(80, 24));
+
+        nam.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        nam.setForeground(new java.awt.Color(255, 255, 255));
+        nam.setText("March");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(nam)
+                .addGap(20, 20, 20))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(nam))
+        );
 
         panelLegend.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -541,6 +371,65 @@ public class home_worker extends javax.swing.JPanel {
                     .addComponent(labelColor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        jLabel8.setText("Lượng nước");
+
+        javax.swing.GroupLayout chartPieLuongNuocLayout = new javax.swing.GroupLayout(chartPieLuongNuoc);
+        chartPieLuongNuoc.setLayout(chartPieLuongNuocLayout);
+        chartPieLuongNuocLayout.setHorizontalGroup(
+            chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chartPieLuongNuocLayout.createSequentialGroup()
+                .addGroup(chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lb_year))
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(pieChartLuongNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                                .addComponent(button_pre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(button_next1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(43, 43, 43))
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        chartPieLuongNuocLayout.setVerticalGroup(
+            chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lb_year, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_next1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(chartPieLuongNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(pieChartLuongNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(chartPieLuongNuocLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 255, 255));
+        jLabel10.setText("Phân tích thanh toán");
+
         jPanel10.setBackground(new java.awt.Color(0, 255, 255));
         jPanel10.setPreferredSize(new java.awt.Dimension(80, 24));
 
@@ -578,9 +467,16 @@ public class home_worker extends javax.swing.JPanel {
             }
         });
 
-        jLabel8.setText("Số đơn:");
-
-        pieChart1.setPreferredSize(new java.awt.Dimension(200, 200));
+        javax.swing.GroupLayout chartThanhToanLayout = new javax.swing.GroupLayout(chartThanhToan);
+        chartThanhToan.setLayout(chartThanhToanLayout);
+        chartThanhToanLayout.setHorizontalGroup(
+            chartThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 321, Short.MAX_VALUE)
+        );
+        chartThanhToanLayout.setVerticalGroup(
+            chartThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -588,26 +484,19 @@ public class home_worker extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(button_pre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(button_next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
-                        .addGap(69, 69, 69))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addComponent(button_pre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(button_next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(chartThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 162, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,14 +507,9 @@ public class home_worker extends javax.swing.JPanel {
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_pre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chartThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -635,7 +519,7 @@ public class home_worker extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "Họ Và Tên", "Địa Chỉ", "Nhóm", ""
+                "ID", "Họ Và Tên", "Địa Chỉ", "Loại nước", ""
             }
         ));
         table.setRowHeight(30);
@@ -643,7 +527,7 @@ public class home_worker extends javax.swing.JPanel {
 
         lb_tablePending.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lb_tablePending.setForeground(new java.awt.Color(0, 255, 255));
-        lb_tablePending.setText("Hello World");
+        lb_tablePending.setText("Đăng kí mới");
 
         txt_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -664,8 +548,9 @@ public class home_worker extends javax.swing.JPanel {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
                     .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(lb_tablePending)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -675,7 +560,7 @@ public class home_worker extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_tablePending))
                 .addGap(18, 18, 18)
@@ -744,7 +629,7 @@ public class home_worker extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chartPieLuongNuoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -757,7 +642,7 @@ public class home_worker extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chartPieLuongNuoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -784,100 +669,63 @@ public class home_worker extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboBox_TotalMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBox_TotalMoneyActionPerformed
-//        int index = comboBox_TotalMoney.getSelectedIndex();
-//        if(index == 0){
-//            lb_payYear.setText(String.valueOf(workerController.getTotalPriceYear(GlobalData.getInstance().getBranch())) + " vnd");
-//        }else{
-//            lb_payYear.setText(String.valueOf(priceCurrentMonth));
-//        }
-    }//GEN-LAST:event_comboBox_TotalMoneyActionPerformed
+    private void button_pre1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pre1ActionPerformed
+        // TODO add your handling code here:
+        year--;
+        nam.setText(String.valueOf(year));
+    }//GEN-LAST:event_button_pre1ActionPerformed
+
+    private void button_next1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_next1ActionPerformed
+        // TODO add your handling code here:
+        year++;
+        nam.setText(String.valueOf(year));
+    }//GEN-LAST:event_button_next1ActionPerformed
 
     private void button_preActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_preActionPerformed
-        Calendar calendar = Calendar.getInstance();
-        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-        int showMonth = convertMonthToNumber(lb_month.getText());
-        if(showMonth == 1){
-            button_pre.setEnabled(false);
-            return;
-        }
-        int minMonth = currentMonth - 2;
-        int maxMonth = currentMonth;
-        if(showMonth >= minMonth && showMonth <= maxMonth){
-            button_pre.setEnabled(true);
-            lb_month.setText(convertNumberToMonth(showMonth-1));
-            button_next.setEnabled(true);
-            if(showMonth -2  < minMonth || showMonth -1 == 1){
-                button_pre.setEnabled(false);
-            }
-        }else{
-            button_pre.setEnabled(false);
-        }
-        setDefaultPieChart(showMonth -1);
+        year--;
+        lb_month.setText(String.valueOf(year - 1));
     }//GEN-LAST:event_button_preActionPerformed
 
     private void button_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_nextActionPerformed
-        Calendar calendar = Calendar.getInstance();
-        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-        int showMonth = convertMonthToNumber(lb_month.getText());
-        if(showMonth == 12){
-            button_next.setEnabled(false);
-            return;
-        }
-        int minMonth = currentMonth - 2;
-        int maxMonth = currentMonth;
-        if(showMonth >= minMonth && showMonth <= maxMonth){
-            button_next.setEnabled(true);
-            lb_month.setText(convertNumberToMonth(showMonth+1));
-            button_pre.setEnabled(true);
-            if(showMonth +2  > maxMonth || showMonth+1 == 12){
-                button_next.setEnabled(false);
-            }
-        }else{
-            button_next.setEnabled(false); 
-        }
-        setDefaultPieChart(showMonth +1);
+        year++;
+        lb_month.setText(String.valueOf(year));
     }//GEN-LAST:event_button_nextActionPerformed
-
-    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
-        if(txt_search.isSelected()){
-            int option = txt_search.getSelectedIndex();
-            String text = "%" + txt_search.getText().trim() +"%";
-            switch (option) {
-                case 0 -> fillTableInforUser("and HOTEN like ?", text);
-                case 1 -> fillTableInforUser("and TENCHITIET like ?", text);
-                case 3 -> fillTableInforUser("and KI like ?", text);
-                default -> {
-                }
-            }
-        }
-    }//GEN-LAST:event_txt_searchKeyReleased
 
     private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_searchActionPerformed
 
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+
+    }//GEN-LAST:event_txt_searchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_next;
+    private javax.swing.JButton button_next1;
     private javax.swing.JButton button_pre;
+    private javax.swing.JButton button_pre1;
+    private javax.swing.JPanel chartPieLuongNuoc;
+    private javax.swing.JPanel chartThanhToan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private utils.customCode.BarChar.LabelColor labelColor1;
     private utils.customCode.BarChar.LabelColor labelColor2;
@@ -886,15 +734,18 @@ public class home_worker extends javax.swing.JPanel {
     private javax.swing.JLabel lb_diachicty;
     private javax.swing.JLabel lb_emailcty;
     private javax.swing.JLabel lb_imgUser;
+    private javax.swing.JLabel lb_imgUser1;
     private javax.swing.JLabel lb_month;
     private javax.swing.JLabel lb_sdt;
     private javax.swing.JLabel lb_tablePending;
-    private javax.swing.JLabel lb_totalUser;
     private javax.swing.JLabel lb_www;
     private javax.swing.JLabel lb_year;
+    private javax.swing.JLabel nam;
     private javax.swing.JPanel panelLegend;
-    private utils.customCode.PieChar.PieChart pieChart1;
+    private javax.swing.JPanel pieChartLuongNuoc;
     private javax.swing.JTable table;
+    private javax.swing.JLabel totalNguoiDung;
+    private javax.swing.JLabel totalNhanVien;
     private utils.customCode.TextField.TextFieldSearchOption txt_search;
     // End of variables declaration//GEN-END:variables
 }

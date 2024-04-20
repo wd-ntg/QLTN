@@ -13,6 +13,7 @@ import views.main.Manager.AddWaterCategory;
 import views.main.Manager.DangNhapView;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
+import views.main.Manager.TrangchuTK;
 import views.main.client.ClientBill;
 import views.main.client.ClientChangePassword;
 import views.main.client.ClientChart;
@@ -40,7 +41,7 @@ public class ChuyenManHinhCtrl {
         jlbItem.setBackground(new Color(230, 255, 255));
         root.removeAll();
         root.setLayout(new BorderLayout());
-        root.add(new ClientHome());
+        root.add(new TrangchuTK());
         root.validate();
         root.repaint();
     }
@@ -69,6 +70,9 @@ public class ChuyenManHinhCtrl {
         @Override
         public void mouseClicked(MouseEvent e) {
             switch (kind) {
+                case "Trang chu":
+                    node = new TrangchuTK();
+                    break;
                 case "Nhan vien":
                     node = new TrangNhanVien();
                     break;
@@ -81,12 +85,9 @@ public class ChuyenManHinhCtrl {
                     break;
                 case "LogOut":
                     node = new ClientHome();
-                    break;
-//                case "Chart":
-//                    node = new ClientChart();
-//                    break;                 
+                    break;                 
                 default:
-                    node = new ClientHome();
+                    node = new TrangchuTK();
                     break;
             }
             root.removeAll();

@@ -17,11 +17,11 @@ public class ManagerMain extends javax.swing.JFrame {
     public ManagerMain() {
         initComponents();
         setTitle("QUẢN LÝ TIỀN NƯỚC");
-        ChuyenManHinhCtrl controller = new ChuyenManHinhCtrl(jpnView);
+        ChuyenManHinhCtrl controller = new ChuyenManHinhCtrl(jpnView    );
         controller.setView(jpnHome, jlbHome);
 
         List<DanhMucModel> listItem = new ArrayList<>();
-        listItem.add(new DanhMucModel("Trang chủ", jpnHome, jlbHome));
+        listItem.add(new DanhMucModel("Trang chu", jpnHome, jlbHome));
 
         listItem.add(new DanhMucModel("Nhan vien", jpnBill, jlbBill));
 
