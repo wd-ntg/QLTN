@@ -11,16 +11,17 @@ import javax.swing.JPanel;
 import models.Client.DanhMucModel;
 import views.main.Manager.LoaiNuocView;
 import views.main.Manager.DangNhapView;
+import views.main.Manager.ProfileQuanLyViewPanel;
 import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
 import views.main.Manager.TrangchuTK;
-import views.main.client.ClientBill;
+/*import views.main.client.ClientBill;
 import views.main.client.ClientChangePassword;
 import views.main.client.ClientChart;
 import views.main.client.ClientHome;
 import views.main.client.ClientInfo;
-import views.main.client.ClientLogin;
+import views.main.client.ClientLogin;*/
 /**
  *
  * @author Phu Bao
@@ -87,8 +88,11 @@ public class ChuyenManHinhCtrl {
                 case "Phan cong":
                     node = new TrangPhanCong();
                     break;
+                case "Ho so quan li":
+                    node = new ProfileQuanLyViewPanel();
+                    break;
                 case "LogOut":
-                    node = new ClientHome();
+                    //node = new ClientHome();
                     break;                 
                 default:
                     node = new TrangchuTK();
