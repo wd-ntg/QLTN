@@ -9,7 +9,7 @@ package models;
  * @author GIANG
  */
 public class QuanLyModel {
-
+    
     public QuanLyModel(String MAQL, String HOTEN, String SDT, String NGAYSINH, String NGAYLAM, String CCCD, String GIOITINH, String EMAIL) {
         this.MAQL = MAQL;
         this.HOTEN = HOTEN;
@@ -18,6 +18,15 @@ public class QuanLyModel {
         this.NGAYLAM = NGAYLAM;
         this.CCCD = CCCD;
         this.GIOITINH = GIOITINH;
+        this.EMAIL = EMAIL;
+    }
+    
+    public QuanLyModel(String MAQL, String HOTEN, String SDT, String CCCD, String NGAYLAM, String EMAIL) {
+        this.MAQL = MAQL;
+        this.HOTEN = HOTEN;
+        this.SDT = SDT;
+        this.NGAYLAM = NGAYLAM;
+        this.CCCD = CCCD;
         this.EMAIL = EMAIL;
     }
     

@@ -10,9 +10,9 @@ public class ConnectDB {
         Connection conn = null;
         try {
              Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String connectionURL = "jdbc:sqlserver://localhost;database=QLTN;encrypt=true;trustServerCertificate=true;";
+            String connectionURL = "jdbc:sqlserver://localhost;database=QLTNFINAL;encrypt=true;trustServerCertificate=true;";
             String username = "sa";
-            String password = "123456789";
+            String password = "123456";
             conn = DriverManager.getConnection(connectionURL, username, password);
         } catch (Exception e) {
             e.printStackTrace();

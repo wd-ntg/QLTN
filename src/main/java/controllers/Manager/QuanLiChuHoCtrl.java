@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.ChuHoModel;
+import models.QuanLyModel;
 import models.TaiKhoanModel;
 
 
@@ -194,6 +195,53 @@ public class QuanLiChuHoCtrl {
                 }
             }
         }
+    }
+    
+    public static QuanLyModel layThongTinQuanLy(String email) throws ClassNotFoundException {
+        QuanLyModel quanLy = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectDB.getConnection();
+            String sql = "SELECT QL.MAQL, QL.HOTEN, QL.SDT, QL.CCCD, QL.NGAYLAM, TAIKHOAN.EMAIL " +
+                         "FROM QUANLY QL " +
+                         "JOIN TAIKHOAN ON TAIKHOAN.MATK = QL.MAQL " +
+                         "WHERE TAIKHOAN.EMAIL = ? AND TAIKHOAN.TRANGTHAI = 'TRUE'";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String MAQL = resultSet.getString("MAQL");
+                String HOTEN = resultSet.getString("HOTEN");
+                String SDT = resultSet.getString("SDT");
+                String CCCD = resultSet.getString("CCCD");
+                String NGAYLAM = resultSet.getString("NGAYLAM");
+                String EMAIL = resultSet.getString("EMAIL");
+                quanLy = new QuanLyModel(MAQL, HOTEN, SDT, CCCD, NGAYLAM, EMAIL);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanLiChuHoCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(QuanLiChuHoCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(QuanLiChuHoCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return quanLy;
     }
       
     /*public static List<PersonModel> kiemTraTinhTrangThanhToan() throws ClassNotFoundException {

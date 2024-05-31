@@ -31,6 +31,8 @@ public class ManagerMain extends javax.swing.JFrame {
 
         listItem.add(new DanhMucModel("Thêm loại nước", jpnAddWaterCategory, jlbAddWaterCategory));
         
+        listItem.add(new DanhMucModel("Ho so quan li", jpnQuanli, jlbQuanli));
+        
         listItem.add(new DanhMucModel("LogOut", jpnLogOut, jlbLogOut));
         controller.setEvent(listItem);
     }
@@ -60,6 +62,8 @@ public class ManagerMain extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jpnAddWaterCategory = new javax.swing.JPanel();
         jlbAddWaterCategory = new javax.swing.JLabel();
+        jpnQuanli = new javax.swing.JPanel();
+        jlbQuanli = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -188,6 +192,31 @@ public class ManagerMain extends javax.swing.JFrame {
             .addComponent(jlbAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
+        jpnQuanli.setBackground(new java.awt.Color(255, 255, 255));
+        jpnQuanli.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jlbQuanli.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbQuanli.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbQuanli.setText("Hồ sơ quản lí");
+        jlbQuanli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbQuanliMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpnQuanliLayout = new javax.swing.GroupLayout(jpnQuanli);
+        jpnQuanli.setLayout(jpnQuanliLayout);
+        jpnQuanliLayout.setHorizontalGroup(
+            jpnQuanliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnQuanliLayout.createSequentialGroup()
+                .addComponent(jlbQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jpnQuanliLayout.setVerticalGroup(
+            jpnQuanliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
@@ -203,7 +232,8 @@ public class ManagerMain extends javax.swing.JFrame {
                     .addComponent(jpnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpnChangePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnQuanli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jpnMenuLayout.setVerticalGroup(
@@ -221,11 +251,13 @@ public class ManagerMain extends javax.swing.JFrame {
                 .addComponent(jpnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jpnQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addContainerGap())
         );
 
         jpnView.setBackground(new java.awt.Color(255, 255, 255));
@@ -281,6 +313,10 @@ public class ManagerMain extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jlbLogOutMouseClicked
 
+    private void jlbQuanliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbQuanliMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlbQuanliMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -326,6 +362,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JLabel jlbHome;
     private javax.swing.JLabel jlbInfo;
     private javax.swing.JLabel jlbLogOut;
+    private javax.swing.JLabel jlbQuanli;
     private javax.swing.JPanel jpnAddWaterCategory;
     private javax.swing.JPanel jpnBill;
     private javax.swing.JPanel jpnChangePassword;
@@ -333,6 +370,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JPanel jpnInfo;
     private javax.swing.JPanel jpnLogOut;
     private javax.swing.JPanel jpnMenu;
+    private javax.swing.JPanel jpnQuanli;
     private javax.swing.JPanel jpnRoot;
     private javax.swing.JPanel jpnView;
     // End of variables declaration//GEN-END:variables
