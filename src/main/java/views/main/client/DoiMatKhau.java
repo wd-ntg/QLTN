@@ -47,7 +47,7 @@ public class DoiMatKhau extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel4.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel4.setBackground(new java.awt.Color(0, 204, 204));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N

@@ -472,40 +472,6 @@ public class ClientCtrl {
         }
     }
 
-    //----------
-//    public static PersonModel getInforPersonbyEmail(String email) throws ClassNotFoundException {
-//        String sql = """
-//                     select p.PersonId,p.NamePerson,p.RolePerson, p.Email,p.PhoneNumber, p.AddressPerson, a.PasswordAcc, rc.ValueRole
-//                    from Person as p
-//                    join AreaEmployer as ae
-//                    on p.PersonId = ae.EmployId
-//                    join Account as a
-//                    on a.Email = p.Email
-//                    join RoleCode as rc
-//                    on rc.KeyCode = ae.RoleArea
-//                    where p.Email = ?
-//                     """;
-//        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-//            statement.setString(1, email);
-//            ResultSet resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                PersonModel personModel = new PersonModel(
-//                        resultSet.getString("PersonId"),
-//                        resultSet.getString("PasswordAcc"),
-//                        resultSet.getString("RolePerson"),
-//                        resultSet.getString("NamePerson"),
-//                        resultSet.getString("Email"),
-//                        resultSet.getString("PhoneNumber"),
-//                        resultSet.getString("AddressPerson"));
-//                PersonData.getInstance().setBranch(resultSet.getString("ValueRole"));
-//                return personModel;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
-
     // Chart
     public static List<ThongKeModel> layDuLieuThongKe(String maDiaChi) throws ClassNotFoundException {
         List<ThongKeModel> list = new ArrayList<>();

@@ -15,16 +15,13 @@ import models.Worker.GlobalData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-<<<<<<< HEAD:src/main/java/views/main/client/ClientLogin.java
-
 import views.main.Manager.ManagerMain;
 
 import views.main.Worker.workerMain;
 
-=======
+
 import views.main.Manager.ManagerMain;
 import views.main.Worker.workerMain;
->>>>>>> b0fea19f5ef904414e054a2618ee44150e60f8cb:src/main/java/views/main/client/DangNhap.java
 //import views.worker.workerMain;
 
 /**

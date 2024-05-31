@@ -9,8 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import models.Client.HoaDonModel;
 import models.Client.HoModel;
+import utils.customCode.Table.TableCustom;
 
 /**
  *
@@ -29,6 +31,8 @@ public class TrangChu extends javax.swing.JPanel {
         initComponents();
         tableModel = (DefaultTableModel) tblDanhSachHoaDonChuaTra.getModel();
         try {
+            setingUITable();
+            TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
             hienThiHoaDon();
             hienThiDSCacHo();
             datThongBao();
@@ -36,6 +40,27 @@ public class TrangChu extends javax.swing.JPanel {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void setingUITable(){
+        TableColumn column1 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(25);
+        TableColumn column2 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(30);
+        TableColumn column3 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(75);
+        TableColumn column4 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(3);
+        column4.setPreferredWidth(30);
+        TableColumn column5 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(4);
+        column5.setPreferredWidth(30);
+        TableColumn column6 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(5);
+        column6.setPreferredWidth(60);
+        TableColumn column7 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(6);
+        column7.setPreferredWidth(60);  
+        TableColumn column8 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(7);
+        column8.setPreferredWidth(60);  
+        TableColumn column9 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(8);
+        column9.setPreferredWidth(60);  
     }
 
     private void hienThiDSCacHo() {
@@ -126,8 +151,8 @@ public class TrangChu extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 0, 51));
 
-        jPanel2.setBackground(new java.awt.Color(242, 230, 255));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Chi tiết");
@@ -221,7 +246,7 @@ public class TrangChu extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDongHo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                                    .addComponent(txtDongHo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                                     .addComponent(txtMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtKi))
                                 .addGap(50, 50, 50))
@@ -235,12 +260,10 @@ public class TrangChu extends javax.swing.JPanel {
                             .addComponent(btnThanhToan))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTieuThu, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                            .addComponent(txtTieuThu, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                             .addComponent(txtSoTien)
                             .addComponent(txtNgayDenHan)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(txtDiaChi))
                 .addGap(97, 97, 97))
         );
@@ -284,7 +307,7 @@ public class TrangChu extends javax.swing.JPanel {
                 .addGap(18, 18, 18))
         );
 
-        jPanel3.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
@@ -393,7 +416,7 @@ public class TrangChu extends javax.swing.JPanel {
                     .addComponent(jLabel7)
                     .addComponent(lblThongBao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
