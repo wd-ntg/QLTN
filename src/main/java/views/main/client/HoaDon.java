@@ -7,8 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import models.Client.HoaDonModel;
 import models.Client.HoModel;
+import utils.customCode.Table.TableCustom;
 /**
  *
  * @author Phu Bao
@@ -27,11 +29,28 @@ public class HoaDon extends javax.swing.JPanel {
         initComponents();
         tableModel = (DefaultTableModel) tblDanhSachHoaDon.getModel();
         try {
+            setingUITable();
+            TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
             hienThiHoaDon();
             hienThiDSCacHo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HoaDon.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void setingUITable(){
+        TableColumn column1 = tblDanhSachHoaDon.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(25);
+        TableColumn column2 = tblDanhSachHoaDon.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(30);
+        TableColumn column3 = tblDanhSachHoaDon.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(75);
+        TableColumn column4 = tblDanhSachHoaDon.getColumnModel().getColumn(3);
+        column4.setPreferredWidth(30);
+        TableColumn column5 = tblDanhSachHoaDon.getColumnModel().getColumn(4);
+        column5.setPreferredWidth(30);
+        TableColumn column6 = tblDanhSachHoaDon.getColumnModel().getColumn(5);
+        column6.setPreferredWidth(60);  
     }
 
     private void hienThiDSCacHo() {
@@ -137,7 +156,7 @@ public class HoaDon extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel4.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel4.setBackground(new java.awt.Color(0, 204, 204));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N

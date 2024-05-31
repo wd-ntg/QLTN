@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import models.Client.HoModel;
 import models.Client.ThongTinCaNhanModel;
+import utils.customCode.Table.TableCustom;
 
 /**
  *
@@ -25,12 +27,29 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
         initComponents();
         tableModel = (DefaultTableModel) tblListOfHouseholds.getModel();
         try {
+            setingUITable();
+            TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
             hienThiThongTinCaNhanChuHo();
             hienThiCacHoDangSuDungDichVu();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ThongTinCaNhan.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    private void setingUITable(){
+        TableColumn column1 = tblListOfHouseholds.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(25);
+        TableColumn column2 = tblListOfHouseholds.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(30);
+        TableColumn column3 = tblListOfHouseholds.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(75);
+        TableColumn column4 = tblListOfHouseholds.getColumnModel().getColumn(3);
+        column4.setPreferredWidth(30);
+        TableColumn column5 = tblListOfHouseholds.getColumnModel().getColumn(4);
+        column5.setPreferredWidth(30);
+        TableColumn column6 = tblListOfHouseholds.getColumnModel().getColumn(5);
+        column6.setPreferredWidth(60);  
     }
     
     private void hienThiThongTinCaNhanChuHo() throws ClassNotFoundException {
@@ -242,14 +261,11 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -283,7 +299,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
