@@ -14,8 +14,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import models.DataGlobal;
 
 public class ChuKyDienTuPanel extends JPanel {
+
     private Point lastPoint;
     private BufferedImage image;
     private CloudinaryUploader uploader;
@@ -60,6 +62,11 @@ public class ChuKyDienTuPanel extends JPanel {
         }
     }
 
+    public void clearSignature() {
+        image = null;
+        repaint(); // Vẽ lại panel để hiển thị không có chữ ký
+    }
+
     public void saveSignatureAsImage() {
         if (image != null) {
             JFileChooser fileChooser = new JFileChooser();
@@ -73,10 +80,12 @@ public class ChuKyDienTuPanel extends JPanel {
                     }
                     ImageIO.write(image, "PNG", fileToSave);
                     JOptionPane.showMessageDialog(null, "Chữ ký đã được lưu thành công!");
-                    
+
                     uploader = new CloudinaryUploader();
-                    
+
                     String publicUrl = uploader.uploadFile(fileToSave);
+
+                    DataGlobal.getDataGLobal.dataGlobal.setLinkChuKy(publicUrl);
 //                    if (publicUrl != null) {
 //                        JOptionPane.showMessageDialog(null, "Upload successful: " + publicUrl);
 //                    } else {
@@ -92,22 +101,35 @@ public class ChuKyDienTuPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame("Chữ Ký Điện Tử");
-                ChuKyDienTuPanel chuKyPanel = new ChuKyDienTuPanel();
-                JButton taoChuKyButton = new JButton("Lưu Chữ Ký");
-                taoChuKyButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        chuKyPanel.saveSignatureAsImage();
-                    }
-                });
-                frame.add(chuKyPanel, BorderLayout.CENTER);
-                frame.add(taoChuKyButton, BorderLayout.SOUTH);
-                frame.setSize(400, 300);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-            }
-        });
-    }
+    SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            JFrame frame = new JFrame("Chữ Ký Điện Tử");
+            ChuKyDienTuPanel chuKyPanel = new ChuKyDienTuPanel();
+            JButton taoChuKyButton = new JButton("Lưu Chữ Ký");
+            taoChuKyButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    chuKyPanel.saveSignatureAsImage();
+                }
+            });
+            JButton clearChuKy = new JButton("Làm sạch");
+            clearChuKy.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    chuKyPanel.clearSignature(); // Gọi phương thức clearSignature() của chuKyPanel
+                }
+            });
+            
+            JPanel buttonPanel = new JPanel(new FlowLayout()); // Tạo một JPanel mới sử dụng FlowLayout để chứa các nút
+            buttonPanel.add(taoChuKyButton); // Thêm nút "Lưu Chữ Ký" vào panel
+            buttonPanel.add(clearChuKy); // Thêm nút "Làm sạch" vào panel
+            
+            frame.add(chuKyPanel, BorderLayout.CENTER); // Thêm panel chữ ký vào vị trí trung tâm của frame
+            frame.add(buttonPanel, BorderLayout.SOUTH); // Thêm panel nút vào vị trí dưới của frame
+            
+            frame.setSize(400, 300);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        }
+    });
+}
+
 }
