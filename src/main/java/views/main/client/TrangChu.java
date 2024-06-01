@@ -488,17 +488,44 @@ public class TrangChu extends javax.swing.JPanel {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-        String maHoaDon = txtMaHoaDon.getText();
-        if (maHoaDon.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chưa có hóa đơn nào được chọn!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                ClientCtrl.thanhToan(maHoaDon);
-                JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                refresh();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
+//        String maHoaDon = txtMaHoaDon.getText();
+//        if (maHoaDon.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Chưa có hóa đơn nào được chọn!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            try {
+//                ClientCtrl.thanhToan(maHoaDon);
+//                JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                refresh();
+//            } catch (ClassNotFoundException ex) {
+//                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        
+        int selectedIndex = tblDanhSachHoaDonChuaTra.getSelectedRow();
+        if (selectedIndex >= 0) {
+            HoaDonModel hd = dsHoaDon.get(selectedIndex);
+            if (DSGiuongBenhKhaDung.Instance == null) {
+                DSGiuongBenhKhaDung.Instance = new DSGiuongBenhKhaDung();
             }
+            DSGiuongBenhKhaDung.Instance.txtMaXepGiuong.setText(xg.getMaXepGiuong());
+            DSGiuongBenhKhaDung.Instance.txtMaGiuongBenhNhanDangDung.setText(xg.getMaGiuong());
+            try {
+                String loaiPhong = XepGiuongCtrl.loaiPhong(xg.getMaGiuong());
+                DSGiuongBenhKhaDung.Instance.txtTenLoaiPhong.setText(loaiPhong);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(XepGiuong.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DSGiuongBenhKhaDung.Instance.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    // Khi cửa sổ DSGiuongBenhKhaDung được đóng, gọi phương thức làm mới
+                    lamMoi();
+                }
+            });
+            DSGiuongBenhKhaDung.Instance.setVisible(true);
+
+        } else {
+            DialogHelper.showError("Chưa có dòng nào trong bảng được chọn");
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
