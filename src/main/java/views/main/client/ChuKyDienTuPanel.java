@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 public class ChuKyDienTuPanel extends JPanel {
     private Point lastPoint;
     private BufferedImage image;
+    private CloudinaryUploader uploader;
 
     public ChuKyDienTuPanel() {
         setBackground(Color.WHITE);
@@ -72,6 +73,15 @@ public class ChuKyDienTuPanel extends JPanel {
                     }
                     ImageIO.write(image, "PNG", fileToSave);
                     JOptionPane.showMessageDialog(null, "Chữ ký đã được lưu thành công!");
+                    
+                    uploader = new CloudinaryUploader();
+                    
+                    String publicUrl = uploader.uploadFile(fileToSave);
+//                    if (publicUrl != null) {
+//                        JOptionPane.showMessageDialog(null, "Upload successful: " + publicUrl);
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Upload failed");
+//                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Lỗi khi lưu chữ ký: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
