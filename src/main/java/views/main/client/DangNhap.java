@@ -2,6 +2,7 @@ package views.main.client;
 
 import views.main.client.*;
 import controllers.Client.ClientCtrl;
+import controllers.PaymentCenter.PaymentCenterController;
 import controllers.Worker.WorkerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import views.main.Worker.workerMain;
 
 
 import views.main.Manager.ManagerMain;
+import views.main.PaymentCenter.CenterMain;
 import views.main.Worker.workerMain;
 //import views.worker.workerMain;
 
@@ -221,6 +223,12 @@ public class DangNhap extends javax.swing.JFrame {
             } else {
                 String flag = ClientCtrl.dangNhap(email, password);
                 switch (flag) {
+                    case "R4" -> {
+                        //Đăng nhập cho Điểm thu
+                        PaymentCenterController.ganMaTrungGian(email);
+                        new CenterMain().setVisible(true);
+                        this.dispose();
+                    }                  
                     case "R3" -> {
                         //Đăng nhập cho Chủ hộ
                         ClientCtrl.ganMaChuHo(email);
