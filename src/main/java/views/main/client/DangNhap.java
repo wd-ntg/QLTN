@@ -3,6 +3,8 @@ package views.main.client;
 import views.main.client.*;
 import controllers.Client.ClientCtrl;
 import controllers.PaymentCenter.PaymentCenterController;
+import controllers.Manager.QuanLiChuHoCtrl;
+
 import controllers.Worker.WorkerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,19 +13,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
+import models.DataGlobal;
+import models.QuanLyModel;
 import models.Worker.GlobalData;
 //import models.PersonData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
 import views.main.Manager.ManagerMain;
-
 import views.main.Worker.workerMain;
-
-
 import views.main.Manager.ManagerMain;
 import views.main.PaymentCenter.CenterMain;
 import views.main.Worker.workerMain;
+
 //import views.worker.workerMain;
 
 /**
@@ -243,6 +245,8 @@ public class DangNhap extends javax.swing.JFrame {
                         this.dispose();
                     }
                     case "R1" -> {
+                        QuanLyModel quanLyDangNhap = QuanLiChuHoCtrl.layThongTinQuanLy(email);
+                        DataGlobal.getDataGLobal.dataGlobal.setPhienQLHienTai(quanLyDangNhap);
                         new ManagerMain().setVisible(true);
                         this.dispose();
 
