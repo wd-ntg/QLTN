@@ -11,6 +11,16 @@ package models;
 public class DataGlobal {
     
     private PhanCongModel phanCongModel;
+    
+    private String linkChuKy;
+
+    public String getLinkChuKy() {
+        return linkChuKy;
+    }
+
+    public void setLinkChuKy(String linkChuKy) {
+        this.linkChuKy = linkChuKy;
+    }
 
     public PhanCongModel getPhanCongModel() {
         return phanCongModel;
@@ -67,6 +77,7 @@ public class DataGlobal {
         EmployerNon = "";
         
         currentEditChuHo = new ChuHoModel();
+        linkChuKy = "";
     }
 
 

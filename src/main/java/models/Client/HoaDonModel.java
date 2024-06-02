@@ -5,15 +5,15 @@ import java.sql.Date;
 
 
 public class HoaDonModel {
-    private String maHoaDon, maNhanVienLapHoaDon, maGhi, maDongHo, maNhanVienGhiNuoc, tenNhanVienLapHoaDon, tenNhanVienGhiNuoc, tenDongHo, maLoai, tenLoai, ki, maCTKV, tenChiTiet, maKhuVuc, tenKhuVuc;
+    private String maHoaDon, maNhanVienLapHoaDon, maGhi, maDongHo, maNhanVienGhiNuoc, tenNhanVienLapHoaDon, tenNhanVienGhiNuoc, tenDongHo, maLoai, tenLoai, ki, maCTKV, tenChiTiet, maKhuVuc, tenKhuVuc, maChuHo;
     private int tieuThu, tongTien, chiSoCu, chiSoMoi;
     private Date ngayDenHan, ngayTra, ngayTao, ngayGhi;
-    private boolean thanhToan;
+    private int thanhToan;
 
     public HoaDonModel() {
     }
 
-    public HoaDonModel(String maHoaDon, String maNhanVienLapHoaDon, String maGhi, String maDongHo, String maNhanVienGhiNuoc, String tenNhanVienLapHoaDon, String tenNhanVienGhiNuoc, String tenDongHo, String maLoai, String tenLoai, String ki, String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, int tieuThu, int tongTien, boolean thanhToan, int chiSoCu, int chiSoMoi, Date ngayDenHan, Date ngayTra, Date ngayTao, Date ngayGhi) {
+    public HoaDonModel(String maHoaDon, String maNhanVienLapHoaDon, String maGhi, String maDongHo, String maNhanVienGhiNuoc, String tenNhanVienLapHoaDon, String tenNhanVienGhiNuoc, String tenDongHo, String maLoai, String tenLoai, String ki, String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, int tieuThu, int tongTien, int thanhToan, int chiSoCu, int chiSoMoi, Date ngayDenHan, Date ngayTra, Date ngayTao, Date ngayGhi) {
         this.maHoaDon = maHoaDon;
         this.maNhanVienLapHoaDon = maNhanVienLapHoaDon;
         this.maGhi = maGhi;
@@ -40,7 +40,29 @@ public class HoaDonModel {
         this.ngayGhi = ngayGhi;
     }
 
-    
+    public HoaDonModel(String maHoaDon, String maGhi, String maDongHo, String tenDongHo, String maLoai, String tenLoai, String ki, String maCTKV, String tenChiTiet, String maKhuVuc, String tenKhuVuc, String maChuHo, int tieuThu, int tongTien, int chiSoCu, int chiSoMoi, Date ngayDenHan, Date ngayTra, Date ngayTao, Date ngayGhi, int thanhToan) {
+        this.maHoaDon = maHoaDon;
+        this.maGhi = maGhi;
+        this.maDongHo = maDongHo;
+        this.tenDongHo = tenDongHo;
+        this.maLoai = maLoai;
+        this.tenLoai = tenLoai;
+        this.ki = ki;
+        this.maCTKV = maCTKV;
+        this.tenChiTiet = tenChiTiet;
+        this.maKhuVuc = maKhuVuc;
+        this.tenKhuVuc = tenKhuVuc;
+        this.maChuHo = maChuHo;
+        this.tieuThu = tieuThu;
+        this.tongTien = tongTien;
+        this.chiSoCu = chiSoCu;
+        this.chiSoMoi = chiSoMoi;
+        this.ngayDenHan = ngayDenHan;
+        this.ngayTra = ngayTra;
+        this.ngayTao = ngayTao;
+        this.ngayGhi = ngayGhi;
+        this.thanhToan = thanhToan;
+    }
 
     public String getMaHoaDon() {
         return maHoaDon;
@@ -146,11 +168,11 @@ public class HoaDonModel {
         this.tongTien = tongTien;
     }
 
-    public boolean isThanhToan() {
+    public int getThanhToan() {
         return thanhToan;
     }
 
-    public void setThanhToan(boolean thanhToan) {
+    public void setThanhToan(int thanhToan) {
         this.thanhToan = thanhToan;
     }
 
@@ -232,6 +254,14 @@ public class HoaDonModel {
 
     public void setTenKhuVuc(String tenKhuVuc) {
         this.tenKhuVuc = tenKhuVuc;
+    }
+
+    public String getMaChuHo() {
+        return maChuHo;
+    }
+
+    public void setMaChuHo(String maChuHo) {
+        this.maChuHo = maChuHo;
     }
   
 }
