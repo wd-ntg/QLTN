@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -85,7 +83,7 @@ public class ClientCtrl {
                         resultSet.getString("TENKHUVUC"),
                         resultSet.getInt("TIEUTHU"),
                         resultSet.getInt("TONGTIEN"),
-                        resultSet.getBoolean("THANHTOAN"),
+                        resultSet.getInt("THANHTOAN"),
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getDate("NGAYDENHAN"),
@@ -100,7 +98,7 @@ public class ClientCtrl {
         return dsHoaDon;
     }
 
-    public static List<HoaDonModel> hienThiCacHoaDonChuaTraTheoDiaChi(String DetailAddressId) throws ClassNotFoundException {
+    public static List<HoaDonModel> hienThiCacHoaDonChuaTraTheoDiaChi(String maDiaChi) throws ClassNotFoundException {
         List<HoaDonModel> dsHoaDon = new ArrayList<>();
         String sql = "SELECT HD.MAHOADON, HD.TIEUTHU, HD.TONGTIEN, HD.THANHTOAN, "
                 + "HD.NGAYDENHAN, HD.NGAYTRA, HD.NGAYTAO, "
@@ -118,10 +116,11 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 0 " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 0 AND DH.MADIACHI = ? " 
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
+            statement.setString(2, maDiaChi);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 HoaDonModel bill = new HoaDonModel(
@@ -142,7 +141,7 @@ public class ClientCtrl {
                         resultSet.getString("TENKHUVUC"),
                         resultSet.getInt("TIEUTHU"),
                         resultSet.getInt("TONGTIEN"),
-                        resultSet.getBoolean("THANHTOAN"),
+                        resultSet.getInt("THANHTOAN"),
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getDate("NGAYDENHAN"),
@@ -171,13 +170,28 @@ public class ClientCtrl {
         java.sql.Date ngayHomNaySQL = new java.sql.Date(ngayHomNay.getTime());
         String sql = "UPDATE HOADON SET THANHTOAN = ?, NGAYTRA = ? WHERE MAHOADON = ?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setBoolean(1, true);
+            statement.setInt(1, 3);
             statement.setDate(2, ngayHomNaySQL);
             statement.setString(3, maHoaDon);
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static String traVeEmail() throws ClassNotFoundException{
+        String sql = "SELECT * FROM TAIKHOAN WHERE MATK = ?";
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, maChuHo);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String email =  resultSet.getString("EMAIL");
+                return email;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     //Info
@@ -335,7 +349,7 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 1 " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 " 
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
@@ -359,7 +373,7 @@ public class ClientCtrl {
                         resultSet.getString("TENKHUVUC"),
                         resultSet.getInt("TIEUTHU"),
                         resultSet.getInt("TONGTIEN"),
-                        resultSet.getBoolean("THANHTOAN"),
+                        resultSet.getInt("THANHTOAN"),
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getDate("NGAYDENHAN"),
@@ -392,7 +406,7 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 1 AND CTKV.MACTKV = ? " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 AND CTKV.MACTKV = ? " 
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
@@ -417,7 +431,7 @@ public class ClientCtrl {
                         resultSet.getString("TENKHUVUC"),
                         resultSet.getInt("TIEUTHU"),
                         resultSet.getInt("TONGTIEN"),
-                        resultSet.getBoolean("THANHTOAN"),
+                        resultSet.getInt("THANHTOAN"),
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getDate("NGAYDENHAN"),
@@ -430,6 +444,65 @@ public class ClientCtrl {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dsHoaDon;
+    }
+    
+    private static String traVeHinhThucTrungGian(String maHD) throws ClassNotFoundException {
+        String output = null;
+        String sql = "SELECT HD.MAHOADON, HT.TENHT, TG.MATG, TG.MACTKV,TG.TENTG "
+                + "FROM HOADON AS HD "
+                + "JOIN HINHTHUCTHANHTOAN AS HT ON HD.THANHTOAN = HT.MAHT "
+                + "JOIN TRUNGGIAN AS TG ON HD.MATG = TG.MATG "
+                + "WHERE HD.MAHOADON = ? AND HD.THANHTOAN = 2";
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, maHD);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                output = resultSet.getString("TENHT") + " tại " + resultSet.getString("TENTG");
+                return output;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return output;
+    }
+    
+    private static String traVeHinhThucKhac(String maHD) throws ClassNotFoundException {
+        String output = null;
+        String sql = "SELECT HD.MAHOADON, HT.TENHT "
+                + "FROM HOADON AS HD "
+                + "JOIN HINHTHUCTHANHTOAN AS HT ON HD.THANHTOAN = HT.MAHT "
+                + "WHERE HD.MAHOADON = ? AND (HD.THANHTOAN = 1 OR HD.THANHTOAN = 3)";
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, maHD);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                output = resultSet.getString("TENHT");
+                return output;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return output;
+    }
+    
+    public static String traVeHinhThucThanhToan(String maHD) throws ClassNotFoundException{
+        String sql = "SELECT THANHTOAN FROM HOADON "
+                + "WHERE MAHOADON = ? AND THANHTOAN != 0";
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, maHD);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int thanhToan = resultSet.getInt("THANHTOAN");
+                if (thanhToan == 2){
+                    return traVeHinhThucTrungGian(maHD);
+                } else if (thanhToan == 1 || thanhToan == 3){
+                    return traVeHinhThucKhac(maHD);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static List<HoaDonModel> sapXepTheoTienTangDan(List<HoaDonModel> dsHoaDon) throws ClassNotFoundException {

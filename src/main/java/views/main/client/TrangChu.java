@@ -2,16 +2,22 @@ package views.main.client;
 
 import controllers.Client.ClientCtrl;
 import java.awt.Color;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import models.Client.HoaDonModel;
 import models.Client.HoModel;
+import utils.DialogHelper;
+import utils.GenerateCode;
+import utils.GenerateVerifyCode;
+import utils.SendMailConfirmPaymentOnline;
 import utils.customCode.Table.TableCustom;
 
 /**
@@ -26,6 +32,7 @@ public class TrangChu extends javax.swing.JPanel {
     DefaultTableModel tableModel;
     List<HoaDonModel> dsHoaDon = new ArrayList<>();
     private List<HoModel> dsCacHo;
+    public static String verifyCode;
 
     public TrangChu() {
         initComponents();
@@ -41,8 +48,8 @@ public class TrangChu extends javax.swing.JPanel {
             Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void setingUITable(){
+
+    private void setingUITable() {
         TableColumn column1 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(0);
         column1.setPreferredWidth(25);
         TableColumn column2 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(1);
@@ -56,11 +63,11 @@ public class TrangChu extends javax.swing.JPanel {
         TableColumn column6 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(5);
         column6.setPreferredWidth(60);
         TableColumn column7 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(6);
-        column7.setPreferredWidth(60);  
+        column7.setPreferredWidth(60);
         TableColumn column8 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(7);
-        column8.setPreferredWidth(60);  
+        column8.setPreferredWidth(60);
         TableColumn column9 = tblDanhSachHoaDonChuaTra.getColumnModel().getColumn(8);
-        column9.setPreferredWidth(60);  
+        column9.setPreferredWidth(60);
     }
 
     private void hienThiDSCacHo() {
@@ -446,7 +453,7 @@ public class TrangChu extends javax.swing.JPanel {
             int chiSoMoi = hoaDon.getChiSoMoi();
             int soNuoc = chiSoMoi - chiSoCu;
             txtTieuThu.setText(String.valueOf(soNuoc));
-            txtSoTien.setText(String.valueOf(hoaDon.getTongTien()));
+            txtSoTien.setText(String.valueOf(GenerateCode.generateMoneyCurrency(hoaDon.getTongTien())));
             txtDiaChi.setText(hoaDon.getTenChiTiet());
             txtKi.setText(hoaDon.getKi());
             String dongHo = hoaDon.getMaDongHo() + "-" + hoaDon.getTenDongHo();
@@ -464,13 +471,15 @@ public class TrangChu extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tblDanhSachHoaDonChuaTraMouseClicked
 
-    private void refresh() {
+    public void refresh() {
         txtMaHoaDon.setText("");
         txtDongHo.setText("");
         txtTieuThu.setText("");
         txtSoTien.setText("");
         txtDiaChi.setText("");
         cboDSCacHo.setSelectedIndex(0);
+        txtKi.setText("");
+        txtNgayDenHan.setText("");
         datThongBao();
         lblTrangThaiThanhToan.setVisible(false);
         try {
@@ -488,45 +497,41 @@ public class TrangChu extends javax.swing.JPanel {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-//        String maHoaDon = txtMaHoaDon.getText();
-//        if (maHoaDon.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Chưa có hóa đơn nào được chọn!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-//        } else {
-//            try {
-//                ClientCtrl.thanhToan(maHoaDon);
-//                JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//                refresh();
-//            } catch (ClassNotFoundException ex) {
-//                Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        
-        int selectedIndex = tblDanhSachHoaDonChuaTra.getSelectedRow();
-        if (selectedIndex >= 0) {
-            HoaDonModel hd = dsHoaDon.get(selectedIndex);
-            if (DSGiuongBenhKhaDung.Instance == null) {
-                DSGiuongBenhKhaDung.Instance = new DSGiuongBenhKhaDung();
-            }
-            DSGiuongBenhKhaDung.Instance.txtMaXepGiuong.setText(xg.getMaXepGiuong());
-            DSGiuongBenhKhaDung.Instance.txtMaGiuongBenhNhanDangDung.setText(xg.getMaGiuong());
-            try {
-                String loaiPhong = XepGiuongCtrl.loaiPhong(xg.getMaGiuong());
-                DSGiuongBenhKhaDung.Instance.txtTenLoaiPhong.setText(loaiPhong);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(XepGiuong.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            DSGiuongBenhKhaDung.Instance.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    // Khi cửa sổ DSGiuongBenhKhaDung được đóng, gọi phương thức làm mới
-                    lamMoi();
+        try {
+            int selectedIndex = tblDanhSachHoaDonChuaTra.getSelectedRow();
+            if (selectedIndex >= 0) {
+                HoaDonModel hd = dsHoaDon.get(selectedIndex);
+                if (XacNhanThanhToan.Instance == null) {
+                    XacNhanThanhToan.Instance = new XacNhanThanhToan();
                 }
-            });
-            DSGiuongBenhKhaDung.Instance.setVisible(true);
+                String email = ClientCtrl.traVeEmail();
+                System.out.println(email);
+                if (email == null) {
+                    DialogHelper.showError("Không tìm thấy email");
+                } else {
+                    verifyCode = GenerateVerifyCode.generateRandomCode();
+                    System.out.println(verifyCode);
+                    SendMailConfirmPaymentOnline.sendEmail(verifyCode, email);
+                    DialogHelper.showMessage("Kiểm tra email của bạn để lấy mã xác nhận");
+                    XacNhanThanhToan.Instance.txtMaHoaDon.setText(hd.getMaHoaDon());
+                    XacNhanThanhToan.Instance.txtSoTien.setText(String.valueOf(GenerateCode.generateMoneyCurrency(hd.getTongTien())));
 
-        } else {
-            DialogHelper.showError("Chưa có dòng nào trong bảng được chọn");
+                    XacNhanThanhToan.Instance.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                            // Khi cửa sổ DSGiuongBenhKhaDung được đóng, gọi phương thức làm mới
+                            refresh();
+                        }
+                    });
+                    XacNhanThanhToan.Instance.setVisible(true);
+                }
+            } else {
+                DialogHelper.showError("Chưa có dòng nào trong bảng được chọn");
+            }
+        } catch (ClassNotFoundException | MessagingException | UnsupportedEncodingException ex) {
+            Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void cboDSCacHoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDSCacHoActionPerformed
