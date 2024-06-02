@@ -531,7 +531,6 @@ public class TrangChu extends javax.swing.JPanel {
         } catch (ClassNotFoundException | MessagingException | UnsupportedEncodingException ex) {
             Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void cboDSCacHoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDSCacHoActionPerformed

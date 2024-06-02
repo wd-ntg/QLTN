@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import views.main.Manager.ManagerMain;
 
 
 public class GlobalData {
     private static GlobalData instance;
+    private ManagerMain managerMain = new ManagerMain();
     private NhanVienModel nhanVienModel = new NhanVienModel();
     private List<ChuHoModel> lsChuHoInfor = new ArrayList<>();
     private List<HoaDonModel> lsBill = new ArrayList<>();
@@ -91,5 +93,14 @@ public class GlobalData {
     public void setLsChuHoInfor(List<ChuHoModel> lsChuHoInfor) {
         this.lsChuHoInfor = lsChuHoInfor;
     }
+
+    public ManagerMain getManagerMain() {
+        return managerMain;
+    }
+
+    public void setManagerMain(ManagerMain managerMain) {
+        this.managerMain = managerMain;
+    }
    
+    
 }

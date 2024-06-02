@@ -13,6 +13,7 @@ import views.main.Manager.LoaiNuocView;
 import views.main.Manager.DangNhapView;
 import views.main.Manager.NhacNhoTienNuoc;
 import views.main.Manager.ProfileQuanLyViewPanel;
+import views.main.Manager.QLHopDong;
 import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
@@ -92,9 +93,14 @@ public class ChuyenManHinhCtrl {
                 case "Ho so quan li":
                     node = new ProfileQuanLyViewPanel();
                     break;
+<<<<<<< HEAD
                 case "Nhac nuoc":
                     node = new NhacNhoTienNuoc();
                     break;
+=======
+                case "QL Hop Dong":
+                    node = new QLHopDong();
+>>>>>>> trung
                 case "LogOut":
                     //node = new ClientHome();
                     break;                 
