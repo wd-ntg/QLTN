@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import models.Client.DanhMucModel;
 import views.main.Manager.LoaiNuocView;
 import views.main.Manager.DangNhapView;
+import views.main.Manager.NhacNhoTienNuoc;
 import views.main.Manager.ProfileQuanLyViewPanel;
 import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
@@ -90,6 +91,9 @@ public class ChuyenManHinhCtrl {
                     break;
                 case "Ho so quan li":
                     node = new ProfileQuanLyViewPanel();
+                    break;
+                case "Nhac nuoc":
+                    node = new NhacNhoTienNuoc();
                     break;
                 case "LogOut":
                     //node = new ClientHome();
