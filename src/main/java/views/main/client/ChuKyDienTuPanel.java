@@ -86,6 +86,10 @@ public class ChuKyDienTuPanel extends JPanel {
                     String publicUrl = uploader.uploadFile(fileToSave);
 
                     DataGlobal.getDataGLobal.dataGlobal.setLinkChuKy(publicUrl);
+                    
+                    String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
+                    
+                    System.out.println("views.main.client.ChuKyDienTuPanel.saveSignatureAsImage()" + linkChuKy);
 //                    if (publicUrl != null) {
 //                        JOptionPane.showMessageDialog(null, "Upload successful: " + publicUrl);
 //                    } else {

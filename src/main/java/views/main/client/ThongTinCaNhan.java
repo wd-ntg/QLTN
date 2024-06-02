@@ -39,9 +39,9 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     
     private void setingUITable(){
         TableColumn column1 = tblListOfHouseholds.getColumnModel().getColumn(0);
-        column1.setPreferredWidth(25);
+        column1.setPreferredWidth(20);
         TableColumn column2 = tblListOfHouseholds.getColumnModel().getColumn(1);
-        column2.setPreferredWidth(30);
+        column2.setPreferredWidth(50);
         TableColumn column3 = tblListOfHouseholds.getColumnModel().getColumn(2);
         column3.setPreferredWidth(75);
         TableColumn column4 = tblListOfHouseholds.getColumnModel().getColumn(3);
@@ -237,7 +237,15 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
             new String [] {
                 "Mã địa chỉ", "Địa chỉ chi tiết", "Tên khu vực", "Mã đồng hồ", "Tên đồng hồ", "Loại nước"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblListOfHouseholds);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -252,8 +260,8 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -279,7 +287,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
