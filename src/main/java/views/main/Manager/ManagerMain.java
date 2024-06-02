@@ -34,7 +34,7 @@ public class ManagerMain extends javax.swing.JFrame {
         listItem.add(new DanhMucModel("Ho so quan li", jpnQuanli, jlbQuanli));
         listItem.add(new DanhMucModel("Nhac nuoc", jpnNhacNuoc, jlbNhacNuoc));
         
-//        listItem.add(new DanhMucModel("QL Hop Dong",jpnQLHD,jlbQLHD));
+        listItem.add(new DanhMucModel("QL Hop Dong",jpnQLHD,jlbQLHD));
 
         listItem.add(new DanhMucModel("LogOut", jpnLogOut, jlbLogOut));
         controller.setEvent(listItem);

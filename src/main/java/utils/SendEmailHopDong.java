@@ -47,7 +47,7 @@ public class SendEmailHopDong {
                 <h2 style="red: bule;">Phần mềm quản lý nước Quận 9</h2>
                 <h3 style="color: blue;">Xin chào: %s</h3>
                 <p>Hợp đồng của bạn bị từ chối vì lý do sau:</p>
-                <p style="color: red;>%s</p>
+                <p style="color: red;">%s</p>
                 <p>Bạn hãy chỉnh sửa theo đúng yêu cầu hợp đồng của chúng tôi.</p>
                 <p>Nếu có gì thắc mắc hãy đến trung tâm cấp nước của chúng tôi.</p>
                 <p>Hoặc liên hệ số điện thoại: 0123456789 để được giúp đỡ</p>

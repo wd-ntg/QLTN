@@ -93,14 +93,11 @@ public class ChuyenManHinhCtrl {
                 case "Ho so quan li":
                     node = new ProfileQuanLyViewPanel();
                     break;
-<<<<<<< HEAD
                 case "Nhac nuoc":
                     node = new NhacNhoTienNuoc();
                     break;
-=======
                 case "QL Hop Dong":
                     node = new QLHopDong();
->>>>>>> trung
                 case "LogOut":
                     //node = new ClientHome();
                     break;                 
