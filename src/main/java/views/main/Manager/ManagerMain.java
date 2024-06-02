@@ -32,7 +32,7 @@ public class ManagerMain extends javax.swing.JFrame {
         listItem.add(new DanhMucModel("Thêm loại nước", jpnAddWaterCategory, jlbAddWaterCategory));
         
         listItem.add(new DanhMucModel("Ho so quan li", jpnQuanli, jlbQuanli));
-        
+        listItem.add(new DanhMucModel("Nhac nuoc", jpnNhacNuoc, jlbNhacNuoc));
         listItem.add(new DanhMucModel("LogOut", jpnLogOut, jlbLogOut));
         controller.setEvent(listItem);
     }
@@ -64,6 +64,8 @@ public class ManagerMain extends javax.swing.JFrame {
         jlbAddWaterCategory = new javax.swing.JLabel();
         jpnQuanli = new javax.swing.JPanel();
         jlbQuanli = new javax.swing.JLabel();
+        jpnNhacNuoc = new javax.swing.JPanel();
+        jlbNhacNuoc = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -217,23 +219,48 @@ public class ManagerMain extends javax.swing.JFrame {
             .addComponent(jlbQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
         );
 
+        jpnNhacNuoc.setBackground(new java.awt.Color(255, 255, 255));
+        jpnNhacNuoc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jlbNhacNuoc.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbNhacNuoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbNhacNuoc.setText("Nhắc nước");
+        jlbNhacNuoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbNhacNuocMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpnNhacNuocLayout = new javax.swing.GroupLayout(jpnNhacNuoc);
+        jpnNhacNuoc.setLayout(jpnNhacNuocLayout);
+        jpnNhacNuocLayout.setHorizontalGroup(
+            jpnNhacNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbNhacNuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+        );
+        jpnNhacNuocLayout.setVerticalGroup(
+            jpnNhacNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbNhacNuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnMenuLayout.createSequentialGroup()
-                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnMenuLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1))
-                    .addComponent(jpnHome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnBill, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnChangePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpnQuanli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnMenuLayout.createSequentialGroup()
+                            .addGap(35, 35, 35)
+                            .addComponent(jLabel1))
+                        .addComponent(jpnHome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnBill, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnChangePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpnQuanli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jpnMenuLayout.setVerticalGroup(
@@ -253,7 +280,9 @@ public class ManagerMain extends javax.swing.JFrame {
                 .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jpnQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,6 +346,10 @@ public class ManagerMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbQuanliMouseClicked
 
+    private void jlbNhacNuocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbNhacNuocMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlbNhacNuocMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +395,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JLabel jlbHome;
     private javax.swing.JLabel jlbInfo;
     private javax.swing.JLabel jlbLogOut;
+    private javax.swing.JLabel jlbNhacNuoc;
     private javax.swing.JLabel jlbQuanli;
     private javax.swing.JPanel jpnAddWaterCategory;
     private javax.swing.JPanel jpnBill;
@@ -370,6 +404,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JPanel jpnInfo;
     private javax.swing.JPanel jpnLogOut;
     private javax.swing.JPanel jpnMenu;
+    private javax.swing.JPanel jpnNhacNuoc;
     private javax.swing.JPanel jpnQuanli;
     private javax.swing.JPanel jpnRoot;
     private javax.swing.JPanel jpnView;
