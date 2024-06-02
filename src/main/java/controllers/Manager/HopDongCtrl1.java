@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.HopDongModel1;
+import models.WaterCategoryModel;
 import models.Worker.HoaDonModel;
 
 
@@ -68,5 +69,25 @@ public class HopDongCtrl1 {
             Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+    public WaterCategoryModel getLoaiNuocByID(String maLoai){
+        WaterCategoryModel loaiNuoc = new WaterCategoryModel();
+        String sql = """
+                     select * from LOAI
+                     where MALOAI = ?
+                     """;
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, maLoai);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                loaiNuoc.setMaLoai(rs.getString("MALOAI"));
+                loaiNuoc.setTenLoai(rs.getString("TENLOAI"));
+                loaiNuoc.setPhiTre(rs.getDouble("PHITRE"));
+            }
+            return loaiNuoc;
+        }catch (SQLException | ClassNotFoundException ex) { 
+            Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

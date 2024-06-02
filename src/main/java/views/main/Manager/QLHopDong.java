@@ -4,6 +4,8 @@ package views.main.Manager;
 import controllers.Manager.HopDongCtrl1;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -122,7 +124,15 @@ public class QLHopDong extends javax.swing.JPanel {
                 String idMAHD = String.valueOf(table.getValueAt(row, 0)).trim();
                 for(HopDongModel1 hd: lsHopDongModel1s){
                     if(hd.getMaHD().equals(idMAHD)){
-                        
+                        XemHopDong xemHopDong = new XemHopDong(hd);
+                        xemHopDong.setVisible(true);
+                        GlobalData.getInstance().getManagerMain().setEnabled(false);
+                        xemHopDong.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosing(WindowEvent e) {
+                                GlobalData.getInstance().getManagerMain().setEnabled(true);
+                            }
+                        });
                         break;
                     }
                 }
@@ -144,11 +154,12 @@ public class QLHopDong extends javax.swing.JPanel {
                     if(hd.getMaHD().equals(idMAHD)){
                         int Option = JOptionPane.showConfirmDialog(QLHopDong.this, "Bạn có chắc muốn từ chối hợp đồng này?","Thông báo", JOptionPane.YES_NO_OPTION);
                         if(Option == JOptionPane.OK_OPTION){
-                            // Xóa HopDong theo mã HD
-//                            int status = hopDongCtrl1.deleteHopDong(idMAHD);
-//                            if(status == 1){
-//                                JOptionPane.showMessageDialog(QLHopDong.this, "Thành Công", "Thông báo",JOptionPane.OK_OPTION);
-//                            }
+                            
+                             //Xóa HopDong theo mã HD
+                            int status = hopDongCtrl1.deleteHopDong(idMAHD);
+                            if(status == 1){
+                                JOptionPane.showMessageDialog(QLHopDong.this, "Thành Công", "Thông báo",JOptionPane.OK_OPTION);
+                            }
                             fillTableHopDong("");
                             String text="Lỗi CCCD";
                             try {
@@ -236,7 +247,9 @@ public class QLHopDong extends javax.swing.JPanel {
                 JLabel imageLabel = new JLabel(imageIcon);
                 dialog.add(imageLabel, BorderLayout.CENTER);
             } else {
-                downLoadImg(hd.getDulieuCCCD(), imagePath);
+                if(downLoadImg(hd.getDulieuCCCD(), imagePath)==0){
+                    return;
+                }
             }
 
             // Đặt vị trí của JDialog ở giữa màn hình
@@ -245,12 +258,14 @@ public class QLHopDong extends javax.swing.JPanel {
             // Hiển thị JDialog
             dialog.setVisible(true);
     }
-    private void downLoadImg(String imageUrl,String outputPath){
+    private int downLoadImg(String imageUrl,String outputPath){
         Path output = Paths.get(outputPath);
         try (InputStream inputstream = new URL(imageUrl).openStream()){
             Files.copy(inputstream, output,StandardCopyOption.REPLACE_EXISTING);
+            return 1;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi tải file");
+            return 0;
         }
     }
     

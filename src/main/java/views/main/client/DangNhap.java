@@ -263,7 +263,9 @@ public class DangNhap extends javax.swing.JFrame {
                     case "R1" -> {
                         QuanLyModel quanLyDangNhap = QuanLiChuHoCtrl.layThongTinQuanLy(email);
                         DataGlobal.getDataGLobal.dataGlobal.setPhienQLHienTai(quanLyDangNhap);
-                        new ManagerMain().setVisible(true);
+                        ManagerMain manManagerMain = new ManagerMain();
+                        manManagerMain.setVisible(true);
+                        GlobalData.getInstance().setManagerMain(manManagerMain);
                         this.dispose();
 
                     }
