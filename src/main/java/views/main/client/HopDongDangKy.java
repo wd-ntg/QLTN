@@ -37,8 +37,8 @@ public class HopDongDangKy extends javax.swing.JFrame {
 
     private String linkCCCD;
     private String linkGiayTo;
-
-    private String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
+    
+    public String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
 
     public HopDongDangKy() {
         initComponents();
@@ -171,9 +171,9 @@ public class HopDongDangKy extends javax.swing.JFrame {
             }
         });
 
-        statusLabel.setText("jLabel19");
+        statusLabel.setText("File đang chọn");
 
-        statusLabel2.setText("jLabel20");
+        statusLabel2.setText("File đang chọn ");
 
         phuongCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         phuongCombobox.addActionListener(new java.awt.event.ActionListener() {
@@ -182,7 +182,7 @@ public class HopDongDangKy extends javax.swing.JFrame {
             }
         });
 
-        displayImg.setText("jLabel19");
+        displayImg.setText("Chữ Ký");
 
         GuiYeuCau.setBackground(new java.awt.Color(0, 153, 204));
         GuiYeuCau.setForeground(new java.awt.Color(255, 255, 255));
@@ -266,7 +266,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
                                                             .addComponent(NgayCap)))))
                                             .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -431,6 +430,9 @@ public class HopDongDangKy extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 chuKyPanel.saveSignatureAsImage();
                 frame.dispose(); // Đóng JFrame sau khi lưu
+                String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
+                System.out.println(".actionPerformed()" + linkChuKy);
+                displayImage();
 
             }
         });
@@ -441,18 +443,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
                 chuKyPanel.clearSignature();
             }
         });
-
-        System.out.println("views.main.client.HopDongDangKy.TaoChuKyActionPerformed()" + linkChuKy);
-
-        try {
-            URL url = new URL("https://res.cloudinary.com/djfpcyyfe/image/upload/v1717260495/yqwqb9lvwkhpykfsaif0.png");
-            Image image = ImageIO.read(url);
-
-            // Hiển thị hình ảnh trong một JLabel
-            JLabel label = new JLabel(new ImageIcon(image));
-            frame.add(label, BorderLayout.CENTER);
-        } catch (Exception e) {
-        }
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
@@ -465,6 +455,8 @@ public class HopDongDangKy extends javax.swing.JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đặt JFrame để đóng khi tắt cửa sổ
         frame.setLocationRelativeTo(this); // Hiển thị cửa sổ ở giữa cửa sổ cha
         frame.setVisible(true);
+
+
     }//GEN-LAST:event_TaoChuKyActionPerformed
 
     private void ChonCCCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChonCCCDActionPerformed
@@ -513,25 +505,32 @@ public class HopDongDangKy extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_phuongComboboxActionPerformed
 
-    private void displayImage() {                                         
-    // Thay đổi hình ảnh của JLabel đã tồn tại
-    try {
-        // Đường dẫn của hình ảnh
-        String imagePath = "https://res.cloudinary.com/djfpcyyfe/image/upload/v1717260495/yqwqb9lvwkhpykfsaif0.png";
-        
-        // Tạo một ImageIcon từ URL
-        ImageIcon icon = new ImageIcon(new URL(imagePath));
-        
+    private void displayImage() {
         // Thay đổi hình ảnh của JLabel đã tồn tại
-        displayImg.setIcon(icon);
-        
-        // Cập nhật lại giao diện để hiển thị hình ảnh mới
-        displayImg.revalidate();
-        displayImg.repaint();
-    } catch (IOException ex) {
-        ex.printStackTrace();
+        try {
+            // Đảm bảo linkChuKy có giao thức hợp lệ
+            String imagePath = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
+            if (!imagePath.startsWith("http://") && !imagePath.startsWith("https://")) {
+                imagePath = "http://" + imagePath; // Thêm giao thức mặc định nếu không có
+            }
+
+            // Tạo một ImageIcon từ URL
+            ImageIcon icon = new ImageIcon(new URL(imagePath));
+
+            // Thay đổi hình ảnh của JLabel đã tồn tại
+            displayImg.setIcon(icon);
+
+            // Cập nhật lại giao diện để hiển thị hình ảnh mới
+            displayImg.revalidate();
+            displayImg.repaint();
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "URL không hợp lệ: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải hình ảnh: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
 
     /**
      * @param args the command line arguments
