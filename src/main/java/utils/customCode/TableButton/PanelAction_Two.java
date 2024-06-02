@@ -6,16 +6,16 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 
 
-public class PanelAction extends javax.swing.JPanel {
+public class PanelAction_Two extends javax.swing.JPanel {
 
  
-    public PanelAction() {
-        initComponents();
-        cmdEdit.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-pencil-24.png"));
-        cmdView.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-view-24.png"));
+    public PanelAction_Two() {
+        initComponents();       
+        cmdEdit.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-tick-24.png"));
+        cmdView.setIcon(new ImageIcon("src\\\\main\\\\java\\\\images\\\\Worker\\\\icons8-exit-button-24.png"));
     }
 
-    public void initEvent(TableActionEvent event, int row){
+    public void initEvent(TableActionEvent_Two event, int row){
         cmdView.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {

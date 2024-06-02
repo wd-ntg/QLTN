@@ -17,11 +17,14 @@ public class HopDongModel1 {
     private String duLieuChungMinhNhaDat;
     private String duLieuChuKy;
     private Date ngayDangKy;
+    private String sodienthoai;
+    private String cccd;
+    private String loaiNuoc;
 
     public HopDongModel1() {
     }
 
-    public HopDongModel1(String maHD, String tenHD, String tenNguoiDangKy, String email, String diadiemDangKy, String ndhd, boolean trangThai, String nguoiKyDuyet, String dulieuCCCD, String duLieuChungMinhNhaDat, String duLieuChuKy, Date ngayDangKy) {
+    public HopDongModel1(String maHD, String tenHD, String tenNguoiDangKy, String email, String diadiemDangKy, String ndhd, boolean trangThai, String nguoiKyDuyet, String dulieuCCCD, String duLieuChungMinhNhaDat, String duLieuChuKy, Date ngayDangKy, String sodienthoai, String cccd, String loaiNuoc) {
         this.maHD = maHD;
         this.tenHD = tenHD;
         this.tenNguoiDangKy = tenNguoiDangKy;
@@ -34,7 +37,12 @@ public class HopDongModel1 {
         this.duLieuChungMinhNhaDat = duLieuChungMinhNhaDat;
         this.duLieuChuKy = duLieuChuKy;
         this.ngayDangKy = ngayDangKy;
+        this.sodienthoai = sodienthoai;
+        this.cccd = cccd;
+        this.loaiNuoc = loaiNuoc;
     }
+    
+    
 
     public String getMaHD() {
         return maHD;
@@ -131,6 +139,30 @@ public class HopDongModel1 {
     public void setDiadiemDangKy(String diadiemDangKy) {
         this.diadiemDangKy = diadiemDangKy;
     }
+
+    public String getSodienthoai() {
+        return sodienthoai;
+    }
+
+    public void setSodienthoai(String sodienthoai) {
+        this.sodienthoai = sodienthoai;
+    }
+
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
+    }
+
+    public String getLoaiNuoc() {
+        return loaiNuoc;
+    }
+
+    public void setLoaiNuoc(String loaiNuoc) {
+        this.loaiNuoc = loaiNuoc;
+    }
     
-        
+    
 }

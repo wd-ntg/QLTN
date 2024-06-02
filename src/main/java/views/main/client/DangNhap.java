@@ -314,7 +314,7 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here:
         DieuLeHuongDan hopDongDangKy = new DieuLeHuongDan();
         hopDongDangKy.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        hopDongDangKy.setSize(646, 628); // Đặt kích thước cho JFrame mới
+        hopDongDangKy.setSize(1500, 1500); // Đặt kích thước cho JFrame mới
         hopDongDangKy.setVisible(true);
 
         // Đóng cửa sổ hiện tại

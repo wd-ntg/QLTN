@@ -2,8 +2,8 @@
 package utils.customCode.TableButton;
 
 
-public interface TableActionEvent_One {
-    public void onEdit(int row, int column);
-    public void onDelete(int row,int column);
-    public void onView(int row, int column);
+public interface TableActionEvent_Two {
+    public void onEdit(int row);
+    public void onDelete(int row);
+    public void onView(int row);
 }

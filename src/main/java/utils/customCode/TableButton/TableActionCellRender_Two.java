@@ -7,19 +7,19 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
-public class TableActionCellRender_One extends DefaultTableCellRenderer{
+public class TableActionCellRender_Two extends DefaultTableCellRenderer{
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        PanelAction_One action_one = new PanelAction_One();
+        PanelAction_Two action_two = new PanelAction_Two();
         if(isSelected == false && row % 2 == 0){
-            action_one.setBackground(Color.WHITE);
+            action_two.setBackground(Color.WHITE);
         }
         else{
-            action_one.setBackground(com.getBackground());
+            action_two.setBackground(com.getBackground());
         }
-        return action_one;
+        return action_two;
     }
     
 }

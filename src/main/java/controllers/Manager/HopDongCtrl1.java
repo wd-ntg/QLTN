@@ -40,7 +40,11 @@ public class HopDongCtrl1 {
                         rs.getString("DULIEUCCCD"),
                         rs.getString("DULIEUCHUNGMINHNHADAT"),
                         rs.getString("DULIEUCHUKY"),
-                        (Date) rs.getDate("NGAYDANGKY"));
+                        (Date) rs.getDate("NGAYDANGKY"),
+                        rs.getString("SODIENTHOAI"),
+                        rs.getString("CCCD"),
+                        rs.getString("LOAINUOC")
+                );
                 lsHopDongModel1s.add(hopDongModel1);
             }
             return lsHopDongModel1s;
@@ -49,5 +53,20 @@ public class HopDongCtrl1 {
             Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    public int deleteHopDong(String maHD){
+        String sql = """
+                     delete from HOPDONG
+                     where MAHD = ?
+                     """;
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, maHD);          
+            int rs = statement.executeUpdate();
+            return rs;
+        }
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 }

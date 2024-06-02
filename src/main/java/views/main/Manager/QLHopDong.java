@@ -2,26 +2,46 @@
 package views.main.Manager;
 
 import controllers.Manager.HopDongCtrl1;
+import java.awt.BorderLayout;
 import java.awt.Font;
+import java.io.File;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import models.HopDongModel1;
 import models.Worker.ChuHoModel;
 import models.Worker.GlobalData;
+import utils.SendEmailHopDong;
 import utils.customCode.Table.TableCustom;
 import utils.customCode.TableButton.TableActionCellEditor;
 import utils.customCode.TableButton.TableActionCellEditor_One;
+import utils.customCode.TableButton.TableActionCellEditor_Two;
 import utils.customCode.TableButton.TableActionCellRender;
 import utils.customCode.TableButton.TableActionCellRender_One;
+import utils.customCode.TableButton.TableActionCellRender_Two;
 import utils.customCode.TableButton.TableActionEvent;
 import utils.customCode.TableButton.TableActionEvent_One;
+import utils.customCode.TableButton.TableActionEvent_Two;
 
 
 public class QLHopDong extends javax.swing.JPanel {
+    ManagerMain managerMain;
     private List<HopDongModel1> lsHopDongModel1s = new ArrayList<>();
     private HopDongCtrl1 hopDongCtrl1 = new HopDongCtrl1();
     private DefaultTableModel tblModel = new DefaultTableModel(){
@@ -36,6 +56,7 @@ public class QLHopDong extends javax.swing.JPanel {
     };
 
     public QLHopDong() {
+        this.managerMain = GlobalData.getInstance().getManagerMain();
         initComponents();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         initTable();
@@ -95,13 +116,13 @@ public class QLHopDong extends javax.swing.JPanel {
         table.getColumnModel().getColumn(7).setCellRenderer( centerRenderer3);
         table.getColumnModel().getColumn(8).setCellRenderer( centerRenderer4 );
         table.getColumnModel().getColumn(9).setCellRenderer( centerRenderer );
-        TableActionEvent event = new TableActionEvent() {
+        TableActionEvent_Two event = new TableActionEvent_Two() {
             @Override
             public void onEdit(int row) {
-                String idMAHD = String.valueOf(table.getValueAt(row, 0));
+                String idMAHD = String.valueOf(table.getValueAt(row, 0)).trim();
                 for(HopDongModel1 hd: lsHopDongModel1s){
                     if(hd.getMaHD().equals(idMAHD)){
-                        System.out.println("edit");
+                        
                         break;
                     }
                 }
@@ -121,7 +142,22 @@ public class QLHopDong extends javax.swing.JPanel {
                 String idMAHD = String.valueOf(table.getValueAt(row, 0));
                 for(HopDongModel1 hd: lsHopDongModel1s){
                     if(hd.getMaHD().equals(idMAHD)){
-                        System.out.println("view");
+                        int Option = JOptionPane.showConfirmDialog(QLHopDong.this, "Bạn có chắc muốn từ chối hợp đồng này?","Thông báo", JOptionPane.YES_NO_OPTION);
+                        if(Option == JOptionPane.OK_OPTION){
+                            // Xóa HopDong theo mã HD
+//                            int status = hopDongCtrl1.deleteHopDong(idMAHD);
+//                            if(status == 1){
+//                                JOptionPane.showMessageDialog(QLHopDong.this, "Thành Công", "Thông báo",JOptionPane.OK_OPTION);
+//                            }
+                            fillTableHopDong("");
+                            String text="Lỗi CCCD";
+                            try {
+                                // Gửi email cho người đăng ký - Dùng email họ đã đăng ký - Tự động
+                                SendEmailHopDong.SendEmailHopDong(hd, text,"nguyenthanht632@gmail.com",false);
+                            } catch (MessagingException | UnsupportedEncodingException ex) {
+                                Logger.getLogger(QLHopDong.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                         break;
                     }
                 }
@@ -132,10 +168,10 @@ public class QLHopDong extends javax.swing.JPanel {
             @Override
             public void onEdit(int row, int column) {
                 String idMAHD = String.valueOf(table.getValueAt(row, 0));
-                String col = String.valueOf(table.getSelectedColumn());
+                int col = table.getSelectedColumn();
                 for(HopDongModel1 hd: lsHopDongModel1s){
                     if(hd.getMaHD().equals(idMAHD)){
-                        System.out.println("row: " + idMAHD + " col: " + col );
+                        showDialog(row, col,hd);
                         break;
                     }
                 }
@@ -149,10 +185,10 @@ public class QLHopDong extends javax.swing.JPanel {
             @Override
             public void onView(int row, int column) {
                 String idMAHD = String.valueOf(table.getValueAt(row, 0));
-                String col = String.valueOf(table.getSelectedColumn());
+                int col = (table.getSelectedColumn());
                 for(HopDongModel1 hd: lsHopDongModel1s){
                     if(hd.getMaHD().equals(idMAHD)){
-                        System.out.println("row: " + idMAHD + " col: " + col );
+                        showDialog(row, col, hd);
                         break;
                     }
                 }
@@ -167,8 +203,55 @@ public class QLHopDong extends javax.swing.JPanel {
         table.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender_One());
         table.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor_One(event_One));
         
-        table.getColumnModel().getColumn(9).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(9).setCellEditor(new TableActionCellEditor(event));
+        table.getColumnModel().getColumn(9).setCellRenderer(new TableActionCellRender_Two());
+        table.getColumnModel().getColumn(9).setCellEditor(new TableActionCellEditor_Two(event));
+    }
+    
+    private void showDialog(int row, int col, HopDongModel1 hd){
+        
+//        Hiển thị CCCD
+        switch (col) {
+            case 6 -> createDialog(hd, "cccd");
+            case 7 -> createDialog(hd, "sodo");
+            case 8 -> createDialog(hd, "chukynd");
+            default -> {
+                return;
+            }
+        }
+    }
+    private void createDialog(HopDongModel1 hd,String loai){
+        String imagePath = "src/main/java/images/hopDong" +"/"+hd.getMaHD()+"_"+loai+".jpg";
+         // Tạo JDialog mới
+            JDialog dialog = new JDialog(managerMain, "Image Dialog", true);
+            dialog.setSize(500, 600);
+            dialog.setLayout(new BorderLayout());
+
+            File imageFile = new File(imagePath);
+
+            if (imageFile.exists()) {
+                // Tạo ImageIcon từ ảnh
+                ImageIcon imageIcon = new ImageIcon(imagePath);
+
+                // Tạo JLabel chứa ImageIcon
+                JLabel imageLabel = new JLabel(imageIcon);
+                dialog.add(imageLabel, BorderLayout.CENTER);
+            } else {
+                downLoadImg(hd.getDulieuCCCD(), imagePath);
+            }
+
+            // Đặt vị trí của JDialog ở giữa màn hình
+            dialog.setLocationRelativeTo(null);
+
+            // Hiển thị JDialog
+            dialog.setVisible(true);
+    }
+    private void downLoadImg(String imageUrl,String outputPath){
+        Path output = Paths.get(outputPath);
+        try (InputStream inputstream = new URL(imageUrl).openStream()){
+            Files.copy(inputstream, output,StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi tải file");
+        }
     }
     
     @SuppressWarnings("unchecked")
