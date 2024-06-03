@@ -166,26 +166,32 @@ public class QLHopDong extends javax.swing.JPanel {
                     if(hd.getMaHD().equals(idMAHD)){
                         int Option = JOptionPane.showConfirmDialog(QLHopDong.this, "Bạn có chắc muốn từ chối hợp đồng này?","Thông báo", JOptionPane.YES_NO_OPTION);
                         if(Option == JOptionPane.OK_OPTION){
+                            String text = JOptionPane.showInputDialog("Lý Do Từ Chối");
+                            if(text != null){
+                                    //Xóa HopDong theo mã HD
+                                int status = hopDongCtrl1.deleteHopDong(idMAHD);
+                                if(status == 1){
+                                    JOptionPane.showMessageDialog(QLHopDong.this, "Thành Công", "Thông báo",JOptionPane.OK_OPTION);
+                                }
+                                fillTableHopDong("");
+                                try {
+                                    // Gửi email cho người đăng ký - Dùng email họ đã đăng ký - Tự động
+                                    SendEmailHopDong.SendEmailHopDong(hd, text,"nguyenthanht632@gmail.com",false, null, null);
+                                } catch (MessagingException | UnsupportedEncodingException ex) {
+                                    Logger.getLogger(QLHopDong.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(QLHopDong.this, "Bạn cần để lại lý do!", "Thông báo", JOptionPane.OK_OPTION);
+                                return;
+                            }
                             
-                             //Xóa HopDong theo mã HD
-                            int status = hopDongCtrl1.deleteHopDong(idMAHD);
-                            if(status == 1){
-                                JOptionPane.showMessageDialog(QLHopDong.this, "Thành Công", "Thông báo",JOptionPane.OK_OPTION);
-                            }
-                            fillTableHopDong("");
-                            String text="Lỗi CCCD";
-                            try {
-                                // Gửi email cho người đăng ký - Dùng email họ đã đăng ký - Tự động
-                                SendEmailHopDong.SendEmailHopDong(hd, text,"nguyenthanht632@gmail.com",false, null, null);
-                            } catch (MessagingException | UnsupportedEncodingException ex) {
-                                Logger.getLogger(QLHopDong.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                         }
                         break;
                     }
                 }
             }
         };
+        
         
         TableActionEvent_One event_One = new TableActionEvent_One() {
             @Override
@@ -289,7 +295,6 @@ public class QLHopDong extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        textFieldSearchOption1 = new utils.customCode.TextField.TextFieldSearchOption();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -323,24 +328,17 @@ public class QLHopDong extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 536, Short.MAX_VALUE)
-                .addComponent(textFieldSearchOption1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(jScrollPane1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1065, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(textFieldSearchOption1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -367,6 +365,5 @@ public class QLHopDong extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
-    private utils.customCode.TextField.TextFieldSearchOption textFieldSearchOption1;
     // End of variables declaration//GEN-END:variables
 }
