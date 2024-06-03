@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import models.DataGlobal;
 
@@ -24,7 +27,7 @@ public class ChuKyDienTuPanel extends JPanel {
 
     public ChuKyDienTuPanel() {
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(400, 300));
+        setPreferredSize(new Dimension(250, 150));
 
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -103,6 +106,32 @@ public class ChuKyDienTuPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Chữ ký không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public int saveSignatureQL(String url,int status, String maHD){
+        if (image != null) {
+        File fileToSave = new File(url);
+        if(status > 0){
+            int flag = status - 1;
+            String old_url = "src/main/java/images/hopDong" +"/"+maHD+"_"+"chukyql" + flag+".png";
+            File fileOLdToSave = new File(old_url);
+            if (!fileOLdToSave.delete()) {
+                Logger.getLogger(ChuKyDienTuPanel.class.getName()).log(Level.SEVERE, "Không thể xóa tệp tin cũ: " + old_url);
+                return 0; // Nếu không thể xóa tệp tin cũ, trả về 0
+            }
+        }
+
+        try {
+            ImageIO.write(image, "PNG", fileToSave);
+            status += 1;
+            return status; // Trả về 1 nếu lưu thành công
+        } catch (IOException ex) {
+            Logger.getLogger(ChuKyDienTuPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chữ ký không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        return 0; // Trả về 0 nếu có lỗi
+    }
 
     public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
@@ -129,7 +158,7 @@ public class ChuKyDienTuPanel extends JPanel {
             frame.add(chuKyPanel, BorderLayout.CENTER); // Thêm panel chữ ký vào vị trí trung tâm của frame
             frame.add(buttonPanel, BorderLayout.SOUTH); // Thêm panel nút vào vị trí dưới của frame
             
-            frame.setSize(400, 300);
+            frame.setSize(250, 150);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
         }

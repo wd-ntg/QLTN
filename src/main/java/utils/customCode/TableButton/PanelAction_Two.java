@@ -11,7 +11,7 @@ public class PanelAction_Two extends javax.swing.JPanel {
  
     public PanelAction_Two() {
         initComponents();       
-        cmdEdit.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-tick-24.png"));
+        cmdEdit.setIcon(new ImageIcon("src\\main\\java\\images\\Worker\\icons8-view1-24.png"));
         cmdView.setIcon(new ImageIcon("src\\\\main\\\\java\\\\images\\\\Worker\\\\icons8-exit-button-24.png"));
     }
 

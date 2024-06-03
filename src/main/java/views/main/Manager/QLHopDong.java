@@ -40,6 +40,7 @@ import utils.customCode.TableButton.TableActionCellRender_Two;
 import utils.customCode.TableButton.TableActionEvent;
 import utils.customCode.TableButton.TableActionEvent_One;
 import utils.customCode.TableButton.TableActionEvent_Two;
+import views.main.client.ChuKyDienTuPanel;
 
 
 public class QLHopDong extends javax.swing.JPanel {
@@ -131,6 +132,17 @@ public class QLHopDong extends javax.swing.JPanel {
                             @Override
                             public void windowClosing(WindowEvent e) {
                                 GlobalData.getInstance().getManagerMain().setEnabled(true);
+                                int status = (GlobalData.getInstance().getStatus()) -1;
+                                if(status >=0){
+                                    String old_url = "src/main/java/images/hopDong" +"/"+hd.getMaHD()+"_"+"chukyql" + status+".png";
+                                    File fileOLdToSave = new File(old_url);
+                                    if (!fileOLdToSave.delete()) {
+                                        Logger.getLogger(ChuKyDienTuPanel.class.getName()).log(Level.SEVERE, "Không thể xóa tệp tin cũ: " + old_url);
+                                        return;
+                                    }
+                                    GlobalData.getInstance().setStatus(0);
+                                }
+                                fillTableHopDong("");
                             }
                         });
                         break;
@@ -164,7 +176,7 @@ public class QLHopDong extends javax.swing.JPanel {
                             String text="Lỗi CCCD";
                             try {
                                 // Gửi email cho người đăng ký - Dùng email họ đã đăng ký - Tự động
-                                SendEmailHopDong.SendEmailHopDong(hd, text,"nguyenthanht632@gmail.com",false);
+                                SendEmailHopDong.SendEmailHopDong(hd, text,"nguyenthanht632@gmail.com",false, null, null);
                             } catch (MessagingException | UnsupportedEncodingException ex) {
                                 Logger.getLogger(QLHopDong.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -231,7 +243,7 @@ public class QLHopDong extends javax.swing.JPanel {
         }
     }
     private void createDialog(HopDongModel1 hd,String loai){
-        String imagePath = "src/main/java/images/hopDong" +"/"+hd.getMaHD()+"_"+loai+".jpg";
+        String imagePath = "src/main/java/images/hopDong" +"/"+hd.getMaHD()+"_"+loai+".png";
          // Tạo JDialog mới
             JDialog dialog = new JDialog(managerMain, "Image Dialog", true);
             dialog.setSize(500, 600);
@@ -239,18 +251,18 @@ public class QLHopDong extends javax.swing.JPanel {
 
             File imageFile = new File(imagePath);
 
-            if (imageFile.exists()) {
-                // Tạo ImageIcon từ ảnh
-                ImageIcon imageIcon = new ImageIcon(imagePath);
-
-                // Tạo JLabel chứa ImageIcon
-                JLabel imageLabel = new JLabel(imageIcon);
-                dialog.add(imageLabel, BorderLayout.CENTER);
-            } else {
+            if (!imageFile.exists()) {
                 if(downLoadImg(hd.getDulieuCCCD(), imagePath)==0){
                     return;
                 }
+                
             }
+            // Tạo ImageIcon từ ảnh
+            ImageIcon imageIcon = new ImageIcon(imagePath);
+
+            // Tạo JLabel chứa ImageIcon
+            JLabel imageLabel = new JLabel(imageIcon);
+            dialog.add(imageLabel, BorderLayout.CENTER);
 
             // Đặt vị trí của JDialog ở giữa màn hình
             dialog.setLocationRelativeTo(null);
