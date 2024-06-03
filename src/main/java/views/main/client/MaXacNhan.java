@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views.main.client;
 
-import views.main.client.*;
-import javax.swing.JOptionPane;
+import utils.DialogHelper;
 
 /**
  *
@@ -137,11 +132,13 @@ public class MaXacNhan extends javax.swing.JFrame {
         // TODO add your handling code here:
         String maXacNhan = DangNhap.verifyCode;
         String maNhap = txtMaXacNhan.getText();
-        if (maXacNhan.equals(maNhap)) {
+        if(maNhap.isEmpty()){
+            DialogHelper.showError("Vui lòng nhập mã xác nhận");
+        } else if (maXacNhan.equals(maNhap)) {
             this.setVisible(false);
             new TaoMatKhauMoi().setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Mã không hợp lệ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Mã không hợp lệ!");
         }
     }//GEN-LAST:event_btnContinueActionPerformed
 

@@ -3,7 +3,7 @@ package views.main.client;
 import controllers.Client.ClientCtrl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import utils.DialogHelper;
 
 /**
  *
@@ -246,18 +246,18 @@ public class DoiMatKhau extends javax.swing.JPanel {
         String matKhauNhapLai = String.valueOf(matKhauNhapLaiChars);
         
         if (matKhauHienTai.isEmpty() || matKhauMoi.isEmpty() || matKhauNhapLai.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Các thông tin không được để trống", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Các thông tin không được để trống");
         } else {
             try {
                 if (!ClientCtrl.kiemTraMatKhauHienTai(matKhauHienTai)){
-                    JOptionPane.showMessageDialog(this, "Mật khẩu hiện tại sai", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    DialogHelper.showError("Mật khẩu hiện tại sai");
                 }
                 else {
                     if (!matKhauMoi.equals(matKhauNhapLai)){
-                        JOptionPane.showMessageDialog(this, "Mật khẩu nhập lại không trùng với mật khẩu mới", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Mật khẩu nhập lại không trùng với mật khẩu mới");
                     } else {
                         ClientCtrl.doiMatKhau(matKhauMoi);
-                        JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công");
+                        DialogHelper.showMessage("Đổi mật khẩu thành công");
                         refresh();
                     }
                 }

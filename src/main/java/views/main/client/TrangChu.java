@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import models.Client.HoaDonModel;
@@ -484,6 +483,7 @@ public class TrangChu extends javax.swing.JPanel {
         lblTrangThaiThanhToan.setVisible(false);
         try {
             hienThiHoaDon();
+            hienThiDSCacHo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -552,7 +552,7 @@ public class TrangChu extends javax.swing.JPanel {
                     Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Lỗi tải dữ liệu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Lỗi tải dữ liệu!");
             }
         }
     }//GEN-LAST:event_cboDSCacHoActionPerformed

@@ -14,17 +14,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import models.DataGlobal;
 import models.QuanLyModel;
 import models.Worker.GlobalData;
+import utils.DialogHelper;
 //import models.PersonData;
 //import models.PersonModel;
 import utils.GenerateVerifyCode;
 import utils.SendEmail;
-import views.main.Manager.ManagerMain;
-import views.main.Worker.workerMain;
 import views.main.Manager.ManagerMain;
 import views.main.PaymentCenter.CenterMain;
 import views.main.Worker.workerMain;
@@ -232,12 +230,12 @@ public class DangNhap extends javax.swing.JFrame {
         char[] passwordChars = txtMatKhau.getPassword();
         String password = String.valueOf(passwordChars);
         if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không được để trống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Email hoặc mật khẩu không được để trống!");
         } else try {
             if (!ClientCtrl.kiemTraEmailCoTonTai(email)) {
-                JOptionPane.showMessageDialog(this, "Email không có trong hệ thống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Email không có trong hệ thống!");
             } else if (!ClientCtrl.kiemTraMatKhauCoChinhXac(email, password)) {
-                JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không đúng!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Email hoặc mật khẩu không đúng!");
             } else {
                 String flag = ClientCtrl.dangNhap(email, password);
                 switch (flag) {
@@ -270,7 +268,7 @@ public class DangNhap extends javax.swing.JFrame {
 
                     }
                     default ->
-                        JOptionPane.showMessageDialog(this, "Lỗi đăng nhập!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Lỗi đăng nhập!");
                 }
 
             }
@@ -286,10 +284,10 @@ public class DangNhap extends javax.swing.JFrame {
         String email = txtEmail.getText();
         System.out.println(email);
         if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Email không được để trống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Email không được để trống!");
         } else try {
             if (!ClientCtrl.kiemTraEmailCoTonTai(email)) {
-                JOptionPane.showMessageDialog(this, "Email không có trong hệ thông!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Email không có trong hệ thông!");
             } else {
                 try {
                     currentEmail = email;
