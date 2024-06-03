@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import models.DinhMucNuocModel;
 import models.WaterCategoryModel;
+import utils.DialogHelper;
+import utils.GenerateCode;
+import utils.customCode.Table.TableCustom;
 
 public class LoaiNuocView extends javax.swing.JPanel {
 
@@ -25,6 +28,9 @@ public class LoaiNuocView extends javax.swing.JPanel {
         initComponents();
         tableModel1 = (DefaultTableModel) tblLoaiNuoc.getModel();
         tableModel2 = (DefaultTableModel) tblDinhMuc.getModel();
+        setingUITable1();
+        setingUITable2();
+        TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         try {
             hienThiCacLoaiNuoc();
         } catch (ClassNotFoundException ex) {
@@ -45,8 +51,34 @@ public class LoaiNuocView extends javax.swing.JPanel {
         tableModel2.setRowCount(0);
         dsDinhMuc.forEach(dinhMuc -> {
             tableModel2.addRow(new Object[]{dinhMuc.getMaDinhMuc(), dinhMuc.getMaLoai(), dinhMuc.getTenLoai(),
-                dinhMuc.getSoDau(), dinhMuc.getSoCuoi(), dinhMuc.getThue(), dinhMuc.getDonGia()});
+                dinhMuc.getSoDau(), dinhMuc.getSoCuoi(), dinhMuc.getThue(), GenerateCode.generateMoneyCurrency(dinhMuc.getDonGia())});
         });
+    }
+    
+    private void setingUITable1() {
+        TableColumn column1 = tblDinhMuc.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(25);
+        TableColumn column2 = tblDinhMuc.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(30);
+        TableColumn column3 = tblDinhMuc.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(75);
+        TableColumn column4 = tblDinhMuc.getColumnModel().getColumn(3);
+        column4.setPreferredWidth(30);
+        TableColumn column5 = tblDinhMuc.getColumnModel().getColumn(4);
+        column5.setPreferredWidth(30);
+        TableColumn column6 = tblDinhMuc.getColumnModel().getColumn(5);
+        column6.setPreferredWidth(60);
+        TableColumn column7 = tblDinhMuc.getColumnModel().getColumn(6);
+        column7.setPreferredWidth(60);
+    }
+    
+    private void setingUITable2() {
+        TableColumn column1 = tblLoaiNuoc.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(25);
+        TableColumn column2 = tblLoaiNuoc.getColumnModel().getColumn(1);
+        column2.setPreferredWidth(30);
+        TableColumn column3 = tblLoaiNuoc.getColumnModel().getColumn(2);
+        column3.setPreferredWidth(75);
     }
 
     /**
@@ -605,23 +637,23 @@ public class LoaiNuocView extends javax.swing.JPanel {
         String tenLoaiNuoc = txtTenLoaiNuoc.getText();
         String phiTreStr = txtPhiTre.getText();
         if (tenLoaiNuoc.isEmpty() || phiTreStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng điền đầy đủ thông tin");
         } else if (!phiTreStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở phí trễ thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở phí trễ thích hợp");
         } else {
             if (txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
                     double phiTre = Double.parseDouble(phiTreStr);
                     WaterCategoryModel loai = new WaterCategoryModel(tenLoaiNuoc, phiTre);
                     LoaiNuocCtrl.themLoaiNuoc(loai);
+                    DialogHelper.showMessage("Thêm thành công");
                     lamMoi();
                     hienThiCacLoaiNuoc();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                }            
             } else {
-                JOptionPane.showMessageDialog(this, "Loại nước đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Loại nước đã tồn tại");
             }
         }
     }//GEN-LAST:event_btnThemLoaiNuocActionPerformed
@@ -632,23 +664,23 @@ public class LoaiNuocView extends javax.swing.JPanel {
         String tenLoaiNuoc = txtTenLoaiNuoc.getText();
         String phiTreStr = txtPhiTre.getText();
         if (tenLoaiNuoc.isEmpty() || phiTreStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng điền đầy đủ thông tin");
         } else if (!phiTreStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở phí trễ thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở phí trễ thích hợp");
         } else {
             if (!txtMaLoaiNuoc.getText().isEmpty()) {
                 try {
                     double phiTre = Double.parseDouble(phiTreStr);
                     WaterCategoryModel loai = new WaterCategoryModel(maLoaiNuoc, tenLoaiNuoc, phiTre);
                     LoaiNuocCtrl.capNhatLoaiNuoc(loai);
+                    DialogHelper.showMessage("Cập nhật thành công thành công");
                     lamMoi();
                     hienThiCacLoaiNuoc();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                }       
             } else {
-                JOptionPane.showMessageDialog(this, "Chưa chọn loại nước nào", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Chưa chọn loại nước nào");
             }
         }
     }//GEN-LAST:event_btnCapNhatLoaiNuocActionPerformed
@@ -657,10 +689,11 @@ public class LoaiNuocView extends javax.swing.JPanel {
         // TODO add your handling code here:
         String maLoaiNuoc = txtMaLoaiNuoc.getText();
         if (maLoaiNuoc.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn loại nước nào", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Chưa chọn loại nước nào");
         } else {
             try {
                 LoaiNuocCtrl.xoaLoaiNuoc(maLoaiNuoc);
+                DialogHelper.showMessage("Xóa thành công");
                 lamMoi();
                 hienThiCacLoaiNuoc();
             } catch (ClassNotFoundException ex) {
@@ -707,15 +740,15 @@ public class LoaiNuocView extends javax.swing.JPanel {
         String donGiaStr = txtDonGia.getText();
         String thueStr = txtThue.getText();
         if (maLoai.isEmpty() || tenLoaiNuoc.isEmpty() || chiSoDauStr.isEmpty() || chiSoSauStr.isEmpty() || donGiaStr.isEmpty() || thueStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng điền đầy đủ thông tin");
         } else if (!chiSoDauStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp");
         } else if (!chiSoSauStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số sau thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở chỉ số sau thích hợp");
         } else if (!donGiaStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở đơn giá thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở đơn giá thích hợp");
         } else if (!thueStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở thuế thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở thuế thích hợp");
         } else {
             if (txtMaDinhMuc.getText().isEmpty()) {
                 try {
@@ -724,21 +757,22 @@ public class LoaiNuocView extends javax.swing.JPanel {
                     int donGia = Integer.parseInt(donGiaStr);
                     double thue = Double.parseDouble(thueStr);
                     if (chiSoDau < 0 || chiSoDau < 0 || donGia < 0 || thue < 0) {
-                        JOptionPane.showMessageDialog(this, "Vui lòng nhập các số liệu là số lớn hơn 0", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Vui lòng nhập các số liệu là số lớn hơn 0");
                     } else if (chiSoDau > chiSoSau) {
-                        JOptionPane.showMessageDialog(this, "Chỉ số sau phải lớn hơn chỉ số đầu", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Chỉ số sau phải lớn hơn chỉ số đầu");
                     } else {
                         DinhMucNuocModel dinhMuc = new DinhMucNuocModel(maLoai, tenLoaiNuoc, chiSoDau, chiSoSau, thue, donGia);
                         LoaiNuocCtrl.themDinhMuc(dinhMuc);
+                        DialogHelper.showMessage("Thêm thành công");
                         lamMoi();
                         hienThiDinhMuc(maLoai);
                     }
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                
             } else {
-                JOptionPane.showMessageDialog(this, "Định mức nước đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Định mức nước đã tồn tại");
             }
         }
     }//GEN-LAST:event_btnThemDinhMucActionPerformed
@@ -752,15 +786,15 @@ public class LoaiNuocView extends javax.swing.JPanel {
         String donGiaStr = txtDonGia.getText();
         String thueStr = txtThue.getText();
         if (maDinhMuc.isEmpty() || chiSoSauStr.isEmpty() || donGiaStr.isEmpty() || thueStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng điền đầy đủ thông tin");
         } else if (!chiSoDauStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở chỉ số đầu thích hợp");
         } else if (!chiSoSauStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở chỉ số sau thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở chỉ số sau thích hợp");
         } else if (!donGiaStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở đơn giá thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở đơn giá thích hợp");
         } else if (!thueStr.matches("\\d*\\.?\\d+")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu ở thuế thích hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Vui lòng nhập dữ liệu ở thuế thích hợp");
         } else {
             if (!txtMaDinhMuc.getText().isEmpty()) {
                 try {
@@ -769,9 +803,9 @@ public class LoaiNuocView extends javax.swing.JPanel {
                     int donGia = Integer.parseInt(donGiaStr);
                     double thue = Double.parseDouble(thueStr);
                     if (chiSoDau < 0 || chiSoDau < 0 || donGia < 0 || thue < 0) {
-                        JOptionPane.showMessageDialog(this, "Vui lòng nhập các số liệu là số lớn hơn 0", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Vui lòng nhập các số liệu là số lớn hơn 0");
                     } else if (chiSoDau > chiSoSau) {
-                        JOptionPane.showMessageDialog(this, "Chỉ số sau phải lớn hơn chỉ số đầu", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        DialogHelper.showError("Chỉ số sau phải lớn hơn chỉ số đầu");
                     } else {
                         DinhMucNuocModel dinhMuc = new DinhMucNuocModel(maDinhMuc, chiSoSau, thue, donGia);
                         LoaiNuocCtrl.capNhatDinhMuc(dinhMuc);
@@ -781,9 +815,9 @@ public class LoaiNuocView extends javax.swing.JPanel {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(LoaiNuocView.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
+                DialogHelper.showError("Thêm thành công");
             } else {
-                JOptionPane.showMessageDialog(this, "Định mức nước đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Định mức nước đã tồn tại");
             }
         }
     }//GEN-LAST:event_btnCapNhatDinhMucActionPerformed
@@ -793,11 +827,12 @@ public class LoaiNuocView extends javax.swing.JPanel {
         String maDinhMuc = txtMaDinhMuc.getText();
         String maLoai = txtMaLoai.getText();
         if (maDinhMuc.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn định mức nào", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError("Chưa chọn định mức nào");
         } else {
             try {
                 LoaiNuocCtrl.xoaDinhMuc(maDinhMuc);
                 lamMoi();
+                DialogHelper.showMessage("Xóa thành công");
                 hienThiCacLoaiNuoc();
                 hienThiDinhMuc(maLoai);
             } catch (ClassNotFoundException ex) {

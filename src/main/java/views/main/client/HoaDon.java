@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import models.Client.HoaDonModel;
 import models.Client.HoModel;
+import utils.DialogHelper;
 import utils.GenerateCode;
 import utils.customCode.Table.TableCustom;
 /**
@@ -664,7 +664,7 @@ public class HoaDon extends javax.swing.JPanel {
                     Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Lỗi tải dữ liệu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Lỗi tải dữ liệu!");
             }
         }
     }//GEN-LAST:event_cboDSCacHoActionPerformed

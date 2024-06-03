@@ -1,10 +1,9 @@
 package views.main.client;
 
-import views.main.client.*;
 import controllers.Client.ClientCtrl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import utils.DialogHelper;
 
 /**
  *
@@ -165,19 +164,19 @@ public class TaoMatKhauMoi extends javax.swing.JFrame {
         String matKhauNhapLai = String.valueOf(matKhauNhapLaiChars);
 
         if (matKhauMoi.isEmpty() || matKhauNhapLai.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mật khẩu và mật khẩu nhập lại không được để trống", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            DialogHelper.showError( "Mật khẩu và mật khẩu nhập lại không được để trống");
         } else {
             if (matKhauNhapLai.equals(matKhauMoi)) {
                 try {
                     ClientCtrl.doiMatKhau(matKhauMoi);
-                    JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công, đăng nhập lại vào hệ thống!");
+                    DialogHelper.showMessage("Đổi mật khẩu thành công, đăng nhập lại vào hệ thống!");
                     this.setVisible(false);
                     new DangNhap().setVisible(true);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(TaoMatKhauMoi.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Nhập lại không giống!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                DialogHelper.showError("Nhập lại không giống!");
             }
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
