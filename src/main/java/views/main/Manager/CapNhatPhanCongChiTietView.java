@@ -6,6 +6,7 @@ package views.main.Manager;
 
 import controllers.Manager.ChiTietPhanCongKhuVucCtrl;
 import controllers.Manager.CapNhatPhanCongChiTietCtrl;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,10 +48,17 @@ public class CapNhatPhanCongChiTietView extends javax.swing.JFrame {
 
     public void setLabelDisplay() {
         String nonphancong = DataGlobal.getDataGLobal.dataGlobal.getEmployerNon();
+         LocalDate currentDate = LocalDate.now();
+        int year = currentDate.getYear();
+        int month = currentDate.getMonthValue();
+        int day = currentDate.getDayOfMonth();
 
+        String ngayThangNamHientai = day + "/" + month + "/" + year;
+
+        String kyPhanCongHienTai = month + "/" + year;
         if (nonphancong.equals("AC")) {
             try {
-                PhanCongModel phanCongModel = CapNhatPhanCongChiTietCtrl.timThongTinHienThiCapNhatPhanCongNhanVienChuaPhanCong(DataGlobal.getDataGLobal.dataGlobal.getPhanCongModel().getMAPC(), DataGlobal.getDataGLobal.dataGlobal.getTimeAssign());
+                PhanCongModel phanCongModel = CapNhatPhanCongChiTietCtrl.timThongTinHienThiCapNhatPhanCongNhanVienChuaPhanCong(kyPhanCongHienTai);
 
 
                 currentNameUser.setText(phanCongModel.getHOTENCH());

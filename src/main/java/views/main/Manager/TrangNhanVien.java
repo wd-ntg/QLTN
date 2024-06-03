@@ -30,6 +30,8 @@ public class TrangNhanVien extends javax.swing.JPanel {
      */
     DefaultTableModel tableModel;
     List<NhanVienModel> listWorker = new ArrayList<>();
+    
+    private int selectedIndex;
 
     public TrangNhanVien() {
         try {
@@ -38,6 +40,9 @@ public class TrangNhanVien extends javax.swing.JPanel {
             tableModel = (DefaultTableModel) listWorkerTable.getModel();
 
             hienThiDSNhanVien();
+            
+            UpdateInfoWorker.setEnabled(false);
+            UpdateInfoWorker.setEnabled(false);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLiNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,8 +74,6 @@ public class TrangNhanVien extends javax.swing.JPanel {
         AddWorker = new javax.swing.JButton();
         UpdateInfoWorker = new javax.swing.JButton();
         DeleteWorker = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         listWorkerTable = new javax.swing.JTable();
         ReloadPage = new javax.swing.JButton();
@@ -113,9 +116,6 @@ public class TrangNhanVien extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Tìm kiếm");
-
         listWorkerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -150,27 +150,20 @@ public class TrangNhanVien extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(AddWorker)
+                        .addGap(18, 18, 18)
+                        .addComponent(UpdateInfoWorker)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(AddWorker)
-                                .addGap(18, 18, 18)
-                                .addComponent(UpdateInfoWorker)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(DeleteWorker)
-                                .addGap(12, 12, 12)
-                                .addComponent(ReloadPage)
-                                .addGap(9, 9, 9)))
-                        .addGap(18, 18, 18))))
+                        .addComponent(DeleteWorker)
+                        .addGap(12, 12, 12)
+                        .addComponent(ReloadPage)
+                        .addGap(9, 9, 9)))
+                .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,11 +175,7 @@ public class TrangNhanVien extends javax.swing.JPanel {
                     .addComponent(UpdateInfoWorker)
                     .addComponent(DeleteWorker)
                     .addComponent(ReloadPage))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -302,7 +291,16 @@ public class TrangNhanVien extends javax.swing.JPanel {
     private void listWorkerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listWorkerTableMouseClicked
         // TODO add your handling code here:
 
-        int selectedIndex = listWorkerTable.getSelectedRow();
+        selectedIndex = listWorkerTable.getSelectedRow();
+        
+        if (selectedIndex == -1) {
+            UpdateInfoWorker.setEnabled(false);
+            UpdateInfoWorker.setEnabled(false);
+           
+        } else {
+            UpdateInfoWorker.setEnabled(true);
+            UpdateInfoWorker.setEnabled(true);
+        }
 
         // Kiểm tra xem người dùng đã chọn một dòng hợp lệ hay không
         if (selectedIndex >= 0) {
@@ -340,11 +338,9 @@ public class TrangNhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable listWorkerTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.DataGlobal;
@@ -24,19 +23,28 @@ public class TrangPhanCong extends javax.swing.JPanel {
     /**
      * Creates new form TrangPhanCong
      */
-    
     DefaultTableModel tableModel;
     List<KhuVucModel> listKhuVuc = new ArrayList<>();
 
     private String idArea;
-    
+
+    private int selectedIndex;
     public TrangPhanCong() {
         try {
             initComponents();
-            
+
             tableModel = (DefaultTableModel) listAreaTable.getModel();
 
             hienThiDSKhuvuc();
+
+            selectedIndex = listAreaTable.getSelectedRow();
+            
+            System.out.println("selectedIndex " + selectedIndex);
+
+            updateArea.setEnabled(false);
+            deleteArea.setEnabled(false);
+            detailAreaAssignment.setEnabled(false);
+
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLiNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,8 +80,6 @@ public class TrangPhanCong extends javax.swing.JPanel {
         updateArea = new javax.swing.JButton();
         deleteArea = new javax.swing.JButton();
         reloadArea = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         listAreaTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
@@ -81,14 +87,14 @@ public class TrangPhanCong extends javax.swing.JPanel {
         fieldNameArea = new javax.swing.JTextField();
         detailAreaAssignment = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel1.setBackground(new java.awt.Color(235, 239, 254));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(43, 54, 116));
         jLabel1.setText("Khu vực ");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(5, 205, 153));
         jLabel2.setText("Công ti dịch vụ nước đô thị Quận 9");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -99,8 +105,8 @@ public class TrangPhanCong extends javax.swing.JPanel {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(641, 641, 641))
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,6 +119,7 @@ public class TrangPhanCong extends javax.swing.JPanel {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(724, 520));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Danh sách phường / xã / thị trấn Quận 9");
@@ -152,9 +159,6 @@ public class TrangPhanCong extends javax.swing.JPanel {
                 reloadAreaActionPerformed(evt);
             }
         });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Tìm kiếm");
 
         listAreaTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,39 +201,29 @@ public class TrangPhanCong extends javax.swing.JPanel {
                 .addGap(64, 64, 64)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldNameArea, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(484, 484, 484))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(99, 99, 99)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(fieldNameArea, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(154, 154, 154))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addComponent(addArea)
-                                .addGap(18, 18, 18)
-                                .addComponent(updateArea)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteArea)
-                                .addGap(18, 18, 18)
-                                .addComponent(detailAreaAssignment)
-                                .addGap(18, 18, 18)
-                                .addComponent(reloadArea)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addArea)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateArea)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteArea)
+                        .addGap(18, 18, 18)
+                        .addComponent(detailAreaAssignment)
+                        .addGap(18, 18, 18)
+                        .addComponent(reloadArea)
+                        .addGap(84, 84, 84))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,18 +236,14 @@ public class TrangPhanCong extends javax.swing.JPanel {
                     .addComponent(deleteArea)
                     .addComponent(detailAreaAssignment)
                     .addComponent(reloadArea))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldNameArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(fieldNameArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(jLabel5))
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -261,11 +251,11 @@ public class TrangPhanCong extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -339,7 +329,17 @@ public class TrangPhanCong extends javax.swing.JPanel {
 
     private void listAreaTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listAreaTableMouseClicked
         // TODO add your handling code here:
-        int selectedIndex = listAreaTable.getSelectedRow();
+        selectedIndex = listAreaTable.getSelectedRow();
+
+        if (selectedIndex == -1) {
+            updateArea.setEnabled(false);
+            deleteArea.setEnabled(false);
+            detailAreaAssignment.setEnabled(false);
+        } else {
+            updateArea.setEnabled(true);
+            deleteArea.setEnabled(true);
+            detailAreaAssignment.setEnabled(true);
+        }
 
         // Kiểm tra xem người dùng đã chọn một dòng hợp lệ hay không
         if (selectedIndex >= 0) {
@@ -368,7 +368,6 @@ public class TrangPhanCong extends javax.swing.JPanel {
 
         ChiTietPhanCongKhuVucView detailAssignment = new ChiTietPhanCongKhuVucView();
         detailAssignment.setVisible(true);
-        detailAssignment.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_detailAreaAssignmentActionPerformed
 
 
@@ -380,13 +379,11 @@ public class TrangPhanCong extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable listAreaTable;
     private javax.swing.JButton reloadArea;
     private javax.swing.JButton updateArea;
