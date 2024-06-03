@@ -10,6 +10,7 @@ import views.main.Manager.ManagerMain;
 
 public class GlobalData {
     private static GlobalData instance;
+    private int status = 0;
     private ManagerMain managerMain = new ManagerMain();
     private NhanVienModel nhanVienModel = new NhanVienModel();
     private List<ChuHoModel> lsChuHoInfor = new ArrayList<>();
@@ -100,6 +101,14 @@ public class GlobalData {
 
     public void setManagerMain(ManagerMain managerMain) {
         this.managerMain = managerMain;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
    
     

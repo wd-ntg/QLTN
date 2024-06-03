@@ -11,7 +11,7 @@ public class HopDongModel1 {
     private String email;
     private String diadiemDangKy;
     private String ndhd;
-    private boolean trangThai;
+    private String trangThai;
     private String nguoiKyDuyet;
     private String dulieuCCCD;
     private String duLieuChungMinhNhaDat;
@@ -20,11 +20,12 @@ public class HopDongModel1 {
     private String sodienthoai;
     private String cccd;
     private String loaiNuoc;
+    private Date ngayTaoHD;
 
     public HopDongModel1() {
     }
 
-    public HopDongModel1(String maHD, String tenHD, String tenNguoiDangKy, String email, String diadiemDangKy, String ndhd, boolean trangThai, String nguoiKyDuyet, String dulieuCCCD, String duLieuChungMinhNhaDat, String duLieuChuKy, Date ngayDangKy, String sodienthoai, String cccd, String loaiNuoc) {
+    public HopDongModel1(String maHD, String tenHD, String tenNguoiDangKy, String email, String diadiemDangKy, String ndhd, String trangThai, String nguoiKyDuyet, String dulieuCCCD, String duLieuChungMinhNhaDat, String duLieuChuKy, Date ngayDangKy, String sodienthoai, String cccd, String loaiNuoc, Date ngayTaoHD) {
         this.maHD = maHD;
         this.tenHD = tenHD;
         this.tenNguoiDangKy = tenNguoiDangKy;
@@ -40,10 +41,10 @@ public class HopDongModel1 {
         this.sodienthoai = sodienthoai;
         this.cccd = cccd;
         this.loaiNuoc = loaiNuoc;
+        this.ngayTaoHD = ngayTaoHD;
     }
-    
-    
 
+    
     public String getMaHD() {
         return maHD;
     }
@@ -84,13 +85,6 @@ public class HopDongModel1 {
         this.ndhd = ndhd;
     }
 
-    public boolean isTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
-    }
 
     public String getNguoiKyDuyet() {
         return nguoiKyDuyet;
@@ -163,6 +157,23 @@ public class HopDongModel1 {
     public void setLoaiNuoc(String loaiNuoc) {
         this.loaiNuoc = loaiNuoc;
     }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public Date getNgayTaoHD() {
+        return ngayTaoHD;
+    }
+
+    public void setNgayTaoHD(Date ngayTaoHD) {
+        this.ngayTaoHD = ngayTaoHD;
+    }
+    
     
     
 }

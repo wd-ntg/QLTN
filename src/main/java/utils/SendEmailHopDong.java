@@ -13,9 +13,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import models.HopDongModel1;
+import models.TaiKhoanModel;
 
 public class SendEmailHopDong {
-    public static void SendEmailHopDong(HopDongModel1 hopDong,String text, String email, boolean status) throws MessagingException, UnsupportedEncodingException {
+    public static void SendEmailHopDong(HopDongModel1 hopDong,String text, String email, boolean status,TaiKhoanModel taiKhoanModel, String maDH) throws MessagingException, UnsupportedEncodingException {
         final String fromEmail = "n21dccn007@student.ptithcm.edu.vn";
         // Mat khai email cua ban
         final String password = "gada nxya ynnx igam";
@@ -31,12 +32,21 @@ public class SendEmailHopDong {
               <head>
               </head>
               <body>
-                <h2 style="red: blue;">Phần mềm quản lý nước Quận 9</h2>
+                <h2 style="color: blue;">Phần mềm quản lý nước Quận 9</h2>
                 <h3 style="color: blue;">Xin chào: %s</h3>
                 <p>%s</p>
+                <p>Sau đây là thông tin về hợp đồng</p>
+                <a href="%s">Hợp đồng</a>
+                <p>Tài khoản đăng nhập:</p>
+                <p>Tên đăng nhập: %s</p>
+                <p>Mật khẩu: %s</p>
+                <p>Tài khoản đăng nhập:</p>
+                <p>Mã Đồng Hồ: %s</p>
+                <p>Nếu có gì thắc mắc hãy đến trung tâm cấp nước của chúng tôi.</p>
+                <p>Hoặc liên hệ số điện thoại: 0123456789 để được giúp đỡ</p>
               </body>
               </html>
-              """.formatted(hopDong.getTenNguoiDangKy(),text);
+              """.formatted(hopDong.getTenNguoiDangKy(),text,hopDong.getNdhd(), taiKhoanModel.getEMAIL(), taiKhoanModel.getMATKHAU(),maDH);
         }else{
             body = """
               <!DOCTYPE html>
@@ -44,7 +54,7 @@ public class SendEmailHopDong {
               <head>
               </head>
               <body>
-                <h2 style="red: bule;">Phần mềm quản lý nước Quận 9</h2>
+                <h2 style="color: bule;">Phần mềm quản lý nước Quận 9</h2>
                 <h3 style="color: blue;">Xin chào: %s</h3>
                 <p>Hợp đồng của bạn bị từ chối vì lý do sau:</p>
                 <p style="color: red;">%s</p>

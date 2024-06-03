@@ -451,7 +451,7 @@ public class HopDongDangKy extends javax.swing.JFrame {
         frame.setLayout(new BorderLayout());
         frame.add(chuKyPanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
-        frame.setSize(400, 300);
+        frame.setSize(250, 150);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đặt JFrame để đóng khi tắt cửa sổ
         frame.setLocationRelativeTo(this); // Hiển thị cửa sổ ở giữa cửa sổ cha
         frame.setVisible(true);
