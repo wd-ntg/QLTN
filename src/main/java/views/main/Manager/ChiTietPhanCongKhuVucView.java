@@ -119,13 +119,11 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             TimeSelect = dsThoiGianPhanCong.getSelectedItem().toString();
 
             String[] parts = TimeSelect.split("/");
-            
-            
 
             dsThoiGianPhanCong.setSelectedItem(resultTime);
 
             storeOriginalTableModel();
-            
+
             chinhSua.setEnabled(false);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,8 +198,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
         String loaiTimKiem = getTypeFind();
         String loaiSapXep = getTypeRange();
-        
-        System.out.println("timeline " + TimeLine) ;
+
+        System.out.println("timeline " + TimeLine);
 
         String thongTinTimKiem = nhapThongTinTimKiem.getText();
 
@@ -686,6 +684,9 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         try {
             hienThiDSPhanCong(khuVucModel.getMAKHUVUC(), resultTime);
             dsThoiGianPhanCong.setSelectedItem(resultTime);
+
+            JOptionPane.showMessageDialog(null, "Đã đặt lại dữ liệu ở tháng hiện tại!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -737,6 +738,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                 try {
 
                     ChiTietPhanCongKhuVucCtrl.capNhatTatCaDuLieuThuocKhuVucChuaPhanCong(khuVucModel.getMAKHUVUC(), phanCongNhanVienModel, dsThayDoiPhanCongNhanVienModel, TimeSelect);
+                    JOptionPane.showMessageDialog(null, "Đã cập nhật dữ liệu ở khu vực chưa phân công thành công !!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception e) {
                     // Xử lý ngoại lệ nếu có
@@ -768,6 +770,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                 try {
 
                     ChiTietPhanCongKhuVucCtrl.capNhatTatCaDuLieuThuocKhuVuc(khuVucModel.getMAKHUVUC(), phanCongNhanVienModel, dsThayDoiPhanCongNhanVienModel, TimeSelect);
+                    JOptionPane.showMessageDialog(null, "Đã cập nhật dữ liệu thành công !!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception e) {
                     // Xử lý ngoại lệ nếu có

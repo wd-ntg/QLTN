@@ -5,6 +5,7 @@
 package views.main.client;
 
 import controllers.Client.DangKyHopDong;
+import database.ConnectDB;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 
 /**
@@ -37,12 +42,14 @@ public class HopDongDangKy extends javax.swing.JFrame {
 
     private String linkCCCD;
     private String linkGiayTo;
-    
+
     public String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
 
     public HopDongDangKy() {
         initComponents();
         displayImage();
+        loadDataToMucDichSuDungComboBox();
+        loadDataToDiaChiComboBox();
     }
 
     /**
@@ -64,7 +71,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
         SoNha = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         Ngo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         MucDichSuDungCombox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
@@ -73,7 +79,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         ChonCCCD = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        NgayCap = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -81,8 +86,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         CCCD = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        NoiCap = new javax.swing.JTextField();
         ChonSoDo = new javax.swing.JButton();
         TaoChuKy = new javax.swing.JButton();
         statusLabel = new javax.swing.JLabel();
@@ -105,11 +108,20 @@ public class HopDongDangKy extends javax.swing.JFrame {
 
         jLabel9.setText("Địa chỉ lắp đặt (*)");
 
-        jLabel5.setText("Ngày cấp");
+        Ngo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NgoActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Mục đích sử dụng");
 
-        MucDichSuDungCombox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        MucDichSuDungCombox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        MucDichSuDungCombox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MucDichSuDungComboxActionPerformed(evt);
+            }
+        });
 
         jLabel18.setText("Chữ ký điện tử");
 
@@ -131,8 +143,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
 
         jLabel14.setText("Giấy tờ đăng kí kèm theo:");
 
-        NgayCap.setText("Chọn ngày");
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Cấp nước hộ gia đình");
 
@@ -150,8 +160,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
         jLabel4.setText("CCCD/CMTND (*)");
 
         jLabel15.setText("Giấy chứng nhận sử dụng đất");
-
-        jLabel6.setText("Nơi cấp");
 
         ChonSoDo.setBackground(new java.awt.Color(0, 153, 255));
         ChonSoDo.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,15 +212,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(630, 630, 630)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(SoDienThoai, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(MucDichSuDungCombox, javax.swing.GroupLayout.Alignment.LEADING, 0, 223, Short.MAX_VALUE))
-                                    .addComponent(phuongCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addGap(9, 9, 9)
@@ -235,10 +234,15 @@ public class HopDongDangKy extends javax.swing.JFrame {
                                             .addComponent(displayImg, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(0, 0, Short.MAX_VALUE))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(25, 25, 25))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel9)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
                                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(TenKhachHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,44 +250,44 @@ public class HopDongDangKy extends javax.swing.JFrame {
                                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(DiaChiEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(SoNha, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(Ngo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGap(71, 71, 71)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(NoiCap, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGap(33, 33, 33)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jLabel5)
-                                                            .addComponent(NgayCap)))))
-                                            .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(ChonCCCD)))
-                                            .addGap(123, 123, 123)
-                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(71, 71, 71)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addGap(0, 0, Short.MAX_VALUE))
+                                                        .addComponent(MucDichSuDungCombox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(Ngo))))
+                                            .addGap(47, 47, 47))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(0, 0, Short.MAX_VALUE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(19, 19, 19)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(SoNha, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, Short.MAX_VALUE))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(ChonCCCD)))
+                                                    .addGap(123, 123, 123)
+                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                     .addComponent(jLabel15)
                                     .addGap(18, 18, 18)
                                     .addComponent(ChonSoDo)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(630, 630, 630)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(phuongCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(206, 206, 206))
         );
@@ -311,27 +315,17 @@ public class HopDongDangKy extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DiaChiEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(1, 1, 1)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel5))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(NoiCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(NgayCap))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(MucDichSuDungCombox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -389,10 +383,15 @@ public class HopDongDangKy extends javax.swing.JFrame {
         String soDienThoai = SoDienThoai.getText();
         String cccd = CCCD.getText();
         String email = DiaChiEmail.getText();
-//        String loaiNuoc = String.valueOf(MucDichSuDungCombox.getSelectedItem());
-        String loaiNuoc = "NL1";
+        //        String loaiNuoc = String.valueOf(MucDichSuDungCombox.getSelectedItem());
+        
+        
+        String loaiNuoc = "";
+        
+        if (MucDichSuDungCombox.getSelectedItem().equals("Nước dân dụng")) {
+            loaiNuoc = "NL1";
+        }
 
-        System.out.println("views.main.client.HopDongDangKy.GuiYeuCauActionPerformed()" + soDienThoai);
 
         String diaChiLapDat = SoNha.getText() + "/" + Ngo.getText() + "/" + phuongCombobox.getSelectedItem();
 
@@ -411,12 +410,11 @@ public class HopDongDangKy extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
-
     }//GEN-LAST:event_GuiYeuCauActionPerformed
 
-    private void TenKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TenKhachHangActionPerformed
+    private void phuongComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phuongComboboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TenKhachHangActionPerformed
+    }//GEN-LAST:event_phuongComboboxActionPerformed
 
     private void TaoChuKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaoChuKyActionPerformed
         // TODO add your handling code here:
@@ -456,8 +454,31 @@ public class HopDongDangKy extends javax.swing.JFrame {
         frame.setLocationRelativeTo(this); // Hiển thị cửa sổ ở giữa cửa sổ cha
         frame.setVisible(true);
 
-
     }//GEN-LAST:event_TaoChuKyActionPerformed
+
+    private void ChonSoDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChonSoDoActionPerformed
+        // TODO add your handling code here:
+        uploader = new CloudinaryUploader();
+
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            statusLabel2.setText("Uploading...");
+            // Upload file lên Cloudinary
+            String publicUrl = uploader.uploadFile(selectedFile);
+            linkGiayTo = publicUrl;
+            if (publicUrl != null) {
+                statusLabel2.setText("Upload successful: " + publicUrl.substring(0, 12) + "...");
+            } else {
+                statusLabel2.setText("Upload failed");
+            }
+        }
+    }//GEN-LAST:event_ChonSoDoActionPerformed
+
+    private void TenKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TenKhachHangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TenKhachHangActionPerformed
 
     private void ChonCCCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChonCCCDActionPerformed
         // TODO add your handling code here:
@@ -481,29 +502,91 @@ public class HopDongDangKy extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ChonCCCDActionPerformed
 
-    private void ChonSoDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChonSoDoActionPerformed
+    private void NgoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NgoActionPerformed
         // TODO add your handling code here:
-        uploader = new CloudinaryUploader();
+    }//GEN-LAST:event_NgoActionPerformed
 
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            statusLabel2.setText("Uploading...");
-            // Upload file lên Cloudinary
-            String publicUrl = uploader.uploadFile(selectedFile);
-            linkGiayTo = publicUrl;
-            if (publicUrl != null) {
-                statusLabel2.setText("Upload successful: " + publicUrl.substring(0, 12) + "...");
-            } else {
-                statusLabel2.setText("Upload failed");
+    private void MucDichSuDungComboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MucDichSuDungComboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MucDichSuDungComboxActionPerformed
+
+    private void loadDataToMucDichSuDungComboBox() {
+        // Sử dụng try-with-resources để tự động đóng các tài nguyên
+        try {
+            // Kết nối tới cơ sở dữ liệu
+            Connection conn = ConnectDB.getConnection();
+
+            // Chuỗi truy vấn để lấy tên các loại từ bảng LOAI
+            String query = "SELECT TENLOAI FROM LOAI";
+
+            try {
+                PreparedStatement statement = conn.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery();
+                // Xóa các mục cũ trong JComboBox trước khi thêm các mục mới
+                MucDichSuDungCombox.removeAllItems();
+
+                // Lặp qua kết quả và thêm vào JComboBox
+                while (resultSet.next()) {
+                    String tenLoai = resultSet.getString("TENLOAI");
+                    MucDichSuDungCombox.addItem(tenLoai);
+                }
+            } catch (SQLException e) {
+                // In lỗi ra console
+                e.printStackTrace();
+            } finally {
+                // Đảm bảo rằng kết nối được đóng sau khi sử dụng
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            // Xử lý ClassNotFoundException và SQLException
+            e.printStackTrace();
         }
-    }//GEN-LAST:event_ChonSoDoActionPerformed
+    }
+    
+     private void loadDataToDiaChiComboBox() {
+        // Sử dụng try-with-resources để tự động đóng các tài nguyên
+        try {
+            // Kết nối tới cơ sở dữ liệu
+            Connection conn = ConnectDB.getConnection();
 
-    private void phuongComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phuongComboboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_phuongComboboxActionPerformed
+            // Chuỗi truy vấn để lấy tên các loại từ bảng LOAI
+            String query = "SELECT TENKHUVUC FROM KHUVUC";
+
+            try {
+                PreparedStatement statement = conn.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery();
+                // Xóa các mục cũ trong JComboBox trước khi thêm các mục mới
+                phuongCombobox.removeAllItems();
+
+                // Lặp qua kết quả và thêm vào JComboBox
+                while (resultSet.next()) {
+                    String tenLoai = resultSet.getString("TENKHUVUC");
+                    phuongCombobox.addItem(tenLoai);
+                }
+            } catch (SQLException e) {
+                // In lỗi ra console
+                e.printStackTrace();
+            } finally {
+                // Đảm bảo rằng kết nối được đóng sau khi sử dụng
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            // Xử lý ClassNotFoundException và SQLException
+            e.printStackTrace();
+        }
+    }
 
     private void displayImage() {
         // Thay đổi hình ảnh của JLabel đã tồn tại
@@ -531,6 +614,8 @@ public class HopDongDangKy extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lỗi khi tải hình ảnh: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    
 
     /**
      * @param args the command line arguments
@@ -575,9 +660,7 @@ public class HopDongDangKy extends javax.swing.JFrame {
     private javax.swing.JTextField DiaChiEmail;
     private javax.swing.JButton GuiYeuCau;
     private javax.swing.JComboBox<String> MucDichSuDungCombox;
-    private javax.swing.JButton NgayCap;
     private javax.swing.JTextField Ngo;
-    private javax.swing.JTextField NoiCap;
     private javax.swing.JTextField SoDienThoai;
     private javax.swing.JTextField SoNha;
     private javax.swing.JButton TaoChuKy;
@@ -596,8 +679,6 @@ public class HopDongDangKy extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

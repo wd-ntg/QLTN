@@ -45,13 +45,12 @@ public class PhanCongView extends javax.swing.JFrame {
             hienThiDSKhuvuc();
 
             selectedIndex = listAreaTable.getSelectedRow();
-            
+
             System.out.println("selectedIndex " + selectedIndex);
 
             updateArea.setEnabled(false);
             deleteArea.setEnabled(false);
             detailAreaAssignment.setEnabled(false);
-
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLiNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
@@ -284,6 +283,8 @@ public class PhanCongView extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             hienThiDSKhuvuc();
+            JOptionPane.showMessageDialog(null, "Đã tải lại thông tin !!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuanLiNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
         }
