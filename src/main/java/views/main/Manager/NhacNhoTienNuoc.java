@@ -49,16 +49,16 @@ public class NhacNhoTienNuoc extends javax.swing.JPanel {
     }
 
     private void kiemTraNgay() {
-        LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
-        int dayOfMonth = today.getDayOfMonth(); // Lấy ngày trong tháng
-        if (dayOfMonth >= 23 && dayOfMonth <= 25) {
-            btnGuiHangLoat.setEnabled(true);
-            btnGuiMail.setEnabled(true);
-        } else {
-            btnGuiHangLoat.setEnabled(false);
-            btnGuiMail.setEnabled(false);
-            lblThongBao.setText("Hôm nay không phải là ngày gửi email");
-        }
+//        LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
+//        int dayOfMonth = today.getDayOfMonth(); // Lấy ngày trong tháng
+//        if (dayOfMonth >= 23 && dayOfMonth <= 25) {
+//            btnGuiHangLoat.setEnabled(true);
+//            btnGuiMail.setEnabled(true);
+//        } else {
+//            btnGuiHangLoat.setEnabled(false);
+//            btnGuiMail.setEnabled(false);
+//            lblThongBao.setText("Hôm nay không phải là ngày gửi email");
+//        }
     }
 
     private void guiEmailHangLoat() {
@@ -413,8 +413,8 @@ public class NhacNhoTienNuoc extends javax.swing.JPanel {
                         .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblThongBao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -430,7 +430,7 @@ public class NhacNhoTienNuoc extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

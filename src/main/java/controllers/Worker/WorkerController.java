@@ -19,6 +19,7 @@ import models.Worker.DinhMucModel;
 import models.Worker.GhiNuocModel;
 import models.Worker.HoaDonModel;
 import models.Worker.NhanVienModel;
+import utils.PasswordHashing;
 
 
 
@@ -130,7 +131,8 @@ public class WorkerController {
                      where MATK = ?
                      """;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, newPassword);
+            String hashPassword = PasswordHashing.hashPassword(newPassword);
+            statement.setString(1, hashPassword);
             statement.setString(2, maNV);
             int rs = statement.executeUpdate();
         }
