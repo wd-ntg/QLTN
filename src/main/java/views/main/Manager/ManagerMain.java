@@ -1,10 +1,20 @@
 package views.main.Manager;
 
 import controllers.Manager.ChuyenManHinhCtrl;
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
 import models.Client.DanhMucModel;
 import models.Worker.GlobalData;
+import java.awt.Frame;
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import views.main.client.DangNhap;
 
 /**
  *
@@ -18,24 +28,24 @@ public class ManagerMain extends javax.swing.JFrame {
     public ManagerMain() {
         initComponents();
         setTitle("QUẢN LÝ TIỀN NƯỚC");
-        ChuyenManHinhCtrl controller = new ChuyenManHinhCtrl(jpnView    );
+        ChuyenManHinhCtrl controller = new ChuyenManHinhCtrl(jpnView);
         controller.setView(jpnHome, jlbHome);
 
         List<DanhMucModel> listItem = new ArrayList<>();
         listItem.add(new DanhMucModel("Trang chu", jpnHome, jlbHome));
 
         listItem.add(new DanhMucModel("Nhan vien", jpnBill, jlbBill));
-        
+
         listItem.add(new DanhMucModel("Quan li chu ho", jpnInfo, jlbInfo));
 
         listItem.add(new DanhMucModel("Phan cong", jpnChangePassword, jlbChangePassword));
 
         listItem.add(new DanhMucModel("Thêm loại nước", jpnAddWaterCategory, jlbAddWaterCategory));
-        
+
         listItem.add(new DanhMucModel("Ho so quan li", jpnQuanli, jlbQuanli));
         listItem.add(new DanhMucModel("Nhac nuoc", jpnNhacNuoc, jlbNhacNuoc));
-        
-        listItem.add(new DanhMucModel("QL Hop Dong",jpnQLHD,jlbQLHD));
+
+        listItem.add(new DanhMucModel("QL Hop Dong", jpnQLHD, jlbQLHD));
 
         listItem.add(new DanhMucModel("LogOut", jpnLogOut, jlbLogOut));
         controller.setEvent(listItem);
@@ -391,9 +401,10 @@ public class ManagerMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jlbLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbLogOutMouseClicked
-        // TODO add your handling code here:
-//        new ClientLogin().setVisible(true);
+      new DangNhap().setVisible(true);
         this.dispose();
+
+
     }//GEN-LAST:event_jlbLogOutMouseClicked
 
     private void jlbQuanliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbQuanliMouseClicked

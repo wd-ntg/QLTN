@@ -24,6 +24,8 @@ import views.main.client.ClientChart;
 import views.main.client.ClientHome;
 import views.main.client.ClientInfo;
 import views.main.client.ClientLogin;*/
+import views.main.client.DangNhap;
+
 /**
  *
  * @author Phu Bao
@@ -98,9 +100,9 @@ public class ChuyenManHinhCtrl {
                     break;
                 case "QL Hop Dong":
                     node = new QLHopDong();
-                case "LogOut":
-                    node = new DangNhapView();
-                    break;                 
+//                case "LogOut":
+////                    node = new DangNhap();
+//                    break;                 
                 default:
                     node = new TrangchuTK();
 
