@@ -462,6 +462,7 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
         double giatien = 0.0;
         List<DinhMucModel> dinhMucModels = workerController.getDinhMuc(maDH);
         for(DinhMucModel dinhMucModel: dinhMucModels){
+            System.out.println(dinhMucModel.getSoDau() + " --" + dinhMucModel.getSoCuoi());
             if(tieuthu >= (dinhMucModel.getSoCuoi()-dinhMucModel.getSoDau())){
                 tieuthu -= (dinhMucModel.getSoCuoi()-dinhMucModel.getSoDau());
                 giatien += ((dinhMucModel.getDongia() *(1+ dinhMucModel.getThue() / 100))) * (dinhMucModel.getSoCuoi()-dinhMucModel.getSoDau());
@@ -492,7 +493,8 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
                 workerController.recordGhiNuocHoDan(ghiNuocModel);
                 String MAHD = "HD" + UUID.randomUUID().toString().substring(0,12);
                 int tieuthu = Integer.parseInt(text_currentIndex.getText()) - Integer.parseInt(text_preIndex.getText());
-
+                System.out.println(getGiaTienNuoc(tieuthu, chuHoModel.getMaDH()));
+                System.out.println(chuHoModel.getMaDH());
                 HoaDonModel hoadon = new HoaDonModel(MAHD,
                         tieuthu,
                         getGiaTienNuoc(tieuthu, chuHoModel.getMaDH()),
