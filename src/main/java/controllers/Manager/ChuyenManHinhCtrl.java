@@ -99,7 +99,7 @@ public class ChuyenManHinhCtrl {
                 case "QL Hop Dong":
                     node = new QLHopDong();
                 case "LogOut":
-                    //node = new ClientHome();
+                    node = new DangNhapView();
                     break;                 
                 default:
                     node = new TrangchuTK();
