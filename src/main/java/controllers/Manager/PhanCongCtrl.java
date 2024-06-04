@@ -161,8 +161,9 @@ public class PhanCongCtrl {
         PreparedStatement statement = null;
         try {
             connection = ConnectDB.getConnection();
-            String sql = "UPDATE RoleCode SET ValueRole = ? WHERE KeyCode=?";
-            statement = connection.prepareCall(sql);
+            String sql = "UPDATE KHUVUC SET TENKHUVUC = ? WHERE MAKHUVUC=?";
+            
+            statement = connection.prepareCall(sql);    
 
             statement.setString(1, nameArea);
             statement.setString(2, idArea);

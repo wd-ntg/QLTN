@@ -125,6 +125,14 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             storeOriginalTableModel();
 
             chinhSua.setEnabled(false);
+
+            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    setVisible(false);
+                }
+            });
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
         }
