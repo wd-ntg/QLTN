@@ -28,9 +28,11 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
+import javax.swing.table.TableModel;
 import models.KhuVucModel;
 import models.NhanVienModel;
 import models.PhanCongModel;
+import java.time.LocalDate;
 
 /**
  *
@@ -61,7 +63,6 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
     String TimeSelect;
 
     String EmployerNon;
-   
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     Date currentDate = new Date();
@@ -85,21 +86,19 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         try {
             initComponents();
 
-            // Set abtribution 
-            // Tạo JComboBox cho tháng và năm
+            chinhSua.setEnabled(false);
+
             String[] monthsYears = generateMonthsYears();
 
             for (int i = 0; i < monthsYears.length; i++) {
                 dsThoiGianPhanCong.addItem(monthsYears[i]);
             }
 
-//            listTimeAssignment = new JComboBox<>(monthsYears);
             nameArea.setText(khuVucModel.getTENKHUVUC());
 
             JComboBox<String> comboBox = new JComboBox<>();
 
-// Gán TableCellEditor cho cột bạn muốn thêm combobox vào (ví dụ: cột thứ 2)
-            TableColumn column = bangPhanCongNhanVien.getColumnModel().getColumn(5);
+            TableColumn column = bangPhanCongNhanVien.getColumnModel().getColumn(6);
 
             bangPhanCongNhanVien.getAccessibleContext();
 
@@ -113,15 +112,19 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
             });
 
-            // Add Data 
             tableModel = (DefaultTableModel) bangPhanCongNhanVien.getModel();
 
             hienThiDSPhanCong(khuVucModel.getMAKHUVUC(), resultTime);
 
             TimeSelect = dsThoiGianPhanCong.getSelectedItem().toString();
 
+            String[] parts = TimeSelect.split("/");
+
             dsThoiGianPhanCong.setSelectedItem(resultTime);
 
+            storeOriginalTableModel();
+
+            chinhSua.setEnabled(false);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,6 +135,28 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         String selectedValue = dsThoiGianPhanCong.getSelectedItem().toString();
 
         TimeSelect = selectedValue;
+
+        String[] parts = TimeSelect.split("/");
+
+        // Lấy tháng và năm từ mảng parts
+        int month = Integer.parseInt(parts[0]);
+        int year = Integer.parseInt(parts[1]);
+
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+
+        if (month != monthCurrent || yearCurrent != year) {
+            chinhSua.setEnabled(false);
+            apDung.setEnabled(false);
+            tuDongPhanCong.setEnabled(false);
+        } else {
+            chinhSua.setEnabled(true);
+            apDung.setEnabled(true);
+            tuDongPhanCong.setEnabled(true);
+        }
+
     }
 
     public void hienThiDSPhanCong(String AreaId, String TimeLine) throws ClassNotFoundException {
@@ -140,15 +165,15 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         tableModel.setRowCount(0);
 
         phanCongNhanVienModel.forEach(pc -> {
-            tableModel.addRow(new Object[]{pc.getMAPC(), pc.getMACH(), pc.getHOTENCH(), pc.getTENLOAINUOC(), pc.getTENDIACHI(), pc.getMANV(), pc.getHOTENNV(), pc.getMAQL(), pc.getHOTENQL()});
+            tableModel.addRow(new Object[]{pc.getMAPC(), pc.getMADH(), pc.getMACH(), pc.getHOTENCH(), pc.getTENLOAINUOC(), pc.getTENDIACHI(), pc.getMANV(), pc.getHOTENNV(), pc.getMAQL(), pc.getHOTENQL()});
         });
 
         phanCongNhanVienModel.forEach(assign -> {
             detailAddressId.add(assign.getMAPC());
         });
-        
+
         EmployerNon = "";
-        
+
         DataGlobal.getDataGLobal.dataGlobal.setEmployerNon(EmployerNon);
 
     }
@@ -160,13 +185,62 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         tableModel.setRowCount(0);
 
         phanCongNhanVienModel.forEach(pc -> {
-            tableModel.addRow(new Object[]{pc.getMAPC(), pc.getMACH(), pc.getHOTENCH(), pc.getTENLOAINUOC(), pc.getTENDIACHI(), pc.getMANV(), pc.getHOTENNV(), pc.getMAQL(), pc.getHOTENQL()});
+            tableModel.addRow(new Object[]{pc.getMAPC(), pc.getMADH(), pc.getMACH(), pc.getHOTENCH(), pc.getTENLOAINUOC(), pc.getTENDIACHI(), pc.getMANV(), pc.getHOTENNV(), pc.getMAQL(), pc.getHOTENQL()});
         });
 
         phanCongNhanVienModel.forEach(assign -> {
             detailAddressIdNone.add(assign.getMAPC());
         });
 
+    }
+
+    public void hienThiDSBangOTimKiem(String AreaId, String TimeLine) throws ClassNotFoundException {
+
+        String loaiTimKiem = getTypeFind();
+        String loaiSapXep = getTypeRange();
+
+        System.out.println("timeline " + TimeLine);
+
+        String thongTinTimKiem = nhapThongTinTimKiem.getText();
+
+        phanCongNhanVienModel = ChiTietPhanCongKhuVucCtrl.timTatCaDuLieuThuocKhuVucBangOTimKiem(AreaId, TimeLine, loaiTimKiem, loaiSapXep, thongTinTimKiem);
+
+        tableModel.setRowCount(0);
+
+        phanCongNhanVienModel.forEach(pc -> {
+            tableModel.addRow(new Object[]{pc.getMAPC(), pc.getMADH(), pc.getMACH(), pc.getHOTENCH(), pc.getTENLOAINUOC(), pc.getTENDIACHI(), pc.getMANV(), pc.getHOTENNV(), pc.getMAQL(), pc.getHOTENQL()});
+        });
+
+        phanCongNhanVienModel.forEach(assign -> {
+            detailAddressIdNone.add(assign.getMAPC());
+        });
+
+    }
+
+    public String getTypeFind() {
+        String typeFind;
+        if (loaiTimKiemCombox.getSelectedItem().equals("Tìm kiếm theo tên người dùng")) {
+            typeFind = "CH.HOTEN";
+        } else if (loaiTimKiemCombox.getSelectedItem().equals("Tìm kiếm theo địa chỉ đồng hồ")) {
+            typeFind = "CTKV.TENCHITIET";
+        } else {
+            typeFind = "PC.MAPC";
+        }
+        return typeFind;
+    }
+
+    public String getTypeRange() {
+
+        String typeRange;
+        if (loaiSapXepCombox.getSelectedItem().equals("Sắp xếp tăng dần theo mã đồng hồ")) {
+            typeRange = "ORDER BY DH.MADH ASC";
+        } else if (loaiSapXepCombox.getSelectedItem().equals("Sắp xếp tăng dần theo mã người dùng")) {
+            typeRange = "ORDER BY CH.MACH ASC";
+        } else {
+            typeRange = "ORDER BY PC.MAPC ASC";
+        }
+
+        return typeRange;
     }
 
     private String[] generateMonthsYears() {
@@ -217,6 +291,34 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         }
     }
 
+    private List<String> originalColumnNames;
+    private Object[][] originalData;
+
+    private void storeOriginalTableModel() {
+        DefaultTableModel model = (DefaultTableModel) bangPhanCongNhanVien.getModel();
+
+        // Lưu trữ tên các cột
+        originalColumnNames = new ArrayList<>();
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            originalColumnNames.add(model.getColumnName(i));
+        }
+
+        // Lưu trữ dữ liệu
+        originalData = new Object[model.getRowCount()][model.getColumnCount()];
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                originalData[i][j] = model.getValueAt(i, j);
+            }
+        }
+    }
+
+    private void restoreOriginalTableModel() {
+        if (originalColumnNames != null && originalData != null) {
+            DefaultTableModel model = new DefaultTableModel(originalData, originalColumnNames.toArray());
+            bangPhanCongNhanVien.setModel(model);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,6 +345,11 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         datLai = new javax.swing.JButton();
         apDung = new javax.swing.JButton();
         nguoiDungChuaDuocPhanCong = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        nhapThongTinTimKiem = new javax.swing.JTextField();
+        timKiemBtn = new javax.swing.JButton();
+        loaiTimKiemCombox = new javax.swing.JComboBox<>();
+        loaiSapXepCombox = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -282,7 +389,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameArea, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,25 +411,36 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
         bangPhanCongNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã PC", "Mã người sử dụng", "Tên người sử dụng", "Loại nước sử dụng", "Địa chỉ đồng hồ", "Mã nhân viên", "Tên nhân viên", "Mã QL PC", "Tên QLPC"
+                "Mã PC", "Mã DH", "Mã người sử dụng", "Tên người sử dụng", "Loại nước sử dụng", "Địa chỉ đồng hồ", "Mã nhân viên", "Tên nhân viên", "Mã QL PC", "Tên QLPC"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         bangPhanCongNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bangPhanCongNhanVienMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(bangPhanCongNhanVien);
+        if (bangPhanCongNhanVien.getColumnModel().getColumnCount() > 0) {
+            bangPhanCongNhanVien.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         tuDongPhanCong.setBackground(new java.awt.Color(134, 140, 255));
         tuDongPhanCong.setForeground(new java.awt.Color(255, 255, 255));
-        tuDongPhanCong.setText("Tự động phân công");
+        tuDongPhanCong.setText("Phân Công");
         tuDongPhanCong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tuDongPhanCongActionPerformed(evt);
@@ -343,7 +461,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
         chinhSua.setBackground(new java.awt.Color(134, 140, 255));
         chinhSua.setForeground(new java.awt.Color(255, 255, 255));
-        chinhSua.setText("Chỉnh sửa");
+        chinhSua.setText("Chỉnh sửa/Thêm phân công chi tiết");
         chinhSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chinhSuaActionPerformed(evt);
@@ -389,37 +507,67 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Tìm kiếm");
+
+        timKiemBtn.setBackground(new java.awt.Color(134, 140, 255));
+        timKiemBtn.setForeground(new java.awt.Color(255, 255, 255));
+        timKiemBtn.setText("Tìm kiếm");
+        timKiemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timKiemBtnActionPerformed(evt);
+            }
+        });
+
+        loaiTimKiemCombox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm kiếm theo tên người dùng", "Tìm kiếm theo địa chỉ đồng hồ"}));
+
+        loaiSapXepCombox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp tăng dần theo mã đồng hồ", "Sắp xếp tăng dần theo mã người dùng"}));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nguoiDungChuaDuocPhanCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(datLai)
-                                .addGap(26, 26, 26)
-                                .addComponent(apDung)
-                                .addGap(27, 27, 27)
-                                .addComponent(chinhSua))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(dsThoiGianPhanCong, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(xemThongTin)
-                            .addComponent(tuDongPhanCong)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(nguoiDungChuaDuocPhanCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(dsThoiGianPhanCong, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(datLai)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(apDung)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(loaiSapXepCombox, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(chinhSua)))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(nhapThongTinTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(loaiTimKiemCombox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(timKiemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(xemThongTin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tuDongPhanCong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,15 +580,24 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                         .addComponent(chinhSua)
                         .addComponent(datLai)
                         .addComponent(apDung)))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(xemThongTin)
-                    .addComponent(dsThoiGianPhanCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(dsThoiGianPhanCong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(xemThongTin))
                     .addComponent(nguoiDungChuaDuocPhanCong))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(nhapThongTinTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loaiTimKiemCombox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loaiSapXepCombox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(timKiemBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -466,43 +623,25 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
     private void tuDongPhanCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tuDongPhanCongActionPerformed
         // TODO add your handling code here:
-        // Định dạng ngày giờ
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        // Lấy ngày hiện tại
-        Date currentDate = new Date();
+        LocalDate currentDate = LocalDate.now();
+        int year = currentDate.getYear();
+        int month = currentDate.getMonthValue();
+        int day = currentDate.getDayOfMonth();
 
-        // Tạo một đối tượng Calendar và thiết lập ngày hiện tại vào đó
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
+        String ngayThangNamHientai = day + "/" + month + "/" + year;
 
-        // Tăng thêm 1 tháng
-        calendar.add(Calendar.MONTH, 1);
-
-        // Đặt ngày là 1
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-        // Lấy ngày sau khi tăng 1 tháng và định dạng lại thành chuỗi
-        Date nextMonthDate = calendar.getTime();
-
-        String nextMonthDateTimeString = dateFormat.format(nextMonthDate);
-
-        selectTime();
-
-        String TimeAutoAssign = String.valueOf(month + 1) + "/" + year;
-
-        System.out.println(resultTime);
+        String kyPhanCongHienTai = month + "/" + year;
 
         try {
 
-            if (ChiTietPhanCongKhuVucCtrl.kiemTraLichPhanCong(TimeAutoAssign, khuVucModel.getMAKHUVUC())) {
-                JOptionPane.showMessageDialog(null, "Tháng tiếp theo đã được phân công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            if (ChiTietPhanCongKhuVucCtrl.kiemTraLichPhanCong(kyPhanCongHienTai, khuVucModel.getMAKHUVUC())) {
+                JOptionPane.showMessageDialog(null, "Tháng này đã được phân công và tạo bảng ghi nước!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
             } else {
-                ChiTietPhanCongKhuVucCtrl.autoPhanCongNhanVien(khuVucModel.getMAKHUVUC(), nextMonthDateTimeString, resultTime);
-                JOptionPane.showMessageDialog(null, "Phân công tháng tiếp theo thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                ChiTietPhanCongKhuVucCtrl.autoPhanCongNhanVien(khuVucModel.getMAKHUVUC(), ngayThangNamHientai, kyPhanCongHienTai);
+                JOptionPane.showMessageDialog(null, "Phân công và tạo bảng ghi nước thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
-
         } catch (Exception ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -520,11 +659,11 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         int month = Integer.parseInt(parts[0]);
         int year = Integer.parseInt(parts[1]);
 
-        if (month >= Integer.parseInt(String.valueOf(this.month)) && year >= Integer.parseInt(String.valueOf(this.year))) {
+        if (month == Integer.parseInt(String.valueOf(this.month)) && year == Integer.parseInt(String.valueOf(this.year))) {
             DataGlobal.getDataGLobal.dataGlobal.setTimeAssign(TimeSelect);
             CapNhatPhanCongChiTietView updateAssignmentEmployDetail = new CapNhatPhanCongChiTietView();
             updateAssignmentEmployDetail.setVisible(true);
-             updateAssignmentEmployDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            updateAssignmentEmployDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         } else {
             JOptionPane.showMessageDialog(null, "Ngoài thời gian phân công, không được chỉnh sửa phân công !!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 
@@ -534,14 +673,20 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
     private void dsThoiGianPhanCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsThoiGianPhanCongActionPerformed
         // TODO add your handling code here:
+        selectTime();
 
     }//GEN-LAST:event_dsThoiGianPhanCongActionPerformed
 
     private void datLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datLaiActionPerformed
         // TODO add your handling code here:
+//        restoreOriginalTableModel();
+
         try {
             hienThiDSPhanCong(khuVucModel.getMAKHUVUC(), resultTime);
             dsThoiGianPhanCong.setSelectedItem(resultTime);
+
+            JOptionPane.showMessageDialog(null, "Đã đặt lại dữ liệu ở tháng hiện tại!!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -550,7 +695,6 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
     private void apDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apDungActionPerformed
         // TODO add your handling code here:
-
         selectTime();
 
         String[] parts = TimeSelect.split("/");
@@ -559,22 +703,33 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         int month = Integer.parseInt(parts[0]);
         int year = Integer.parseInt(parts[1]);
 
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+
+//        if (month != monthCurrent || year != yearCurrent) {
+//            JOptionPane.showMessageDialog(null, "Ngoài thời gian phân công, không được chỉnh sửa phân công !!!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+        System.out.println("views.main.Manager.ChiTietPhanCongKhuVucView.apDungActionPerformed()" + EmployerNon);
+
         if (EmployerNon.equals("AC")) {
             if (month >= Integer.parseInt(String.valueOf(this.month)) && year >= Integer.parseInt(String.valueOf(this.year))) {
                 for (int row = 0; row < bangPhanCongNhanVien.getRowCount(); row++) {
                     String maPC = (String) bangPhanCongNhanVien.getValueAt(row, 0);
-                    
-                    String maCH = (String) bangPhanCongNhanVien.getValueAt(row, 1); // Giả sử cột đầu tiên là PersonId
-                    String tenCH = (String) bangPhanCongNhanVien.getValueAt(row, 2); // Giả sử cột thứ hai là NamePerson
-                    String loaiNuoc = (String) bangPhanCongNhanVien.getValueAt(row, 3);
-                    String diaChiDongHo = (String) bangPhanCongNhanVien.getValueAt(row, 4);
-                    String maNV = (String) bangPhanCongNhanVien.getValueAt(row, 5);
-                    String tenNV = (String) bangPhanCongNhanVien.getValueAt(row, 6);
-                    String maQL = (String) bangPhanCongNhanVien.getValueAt(row, 7);
-                    String tenQL = (String) bangPhanCongNhanVien.getValueAt(row, 8);
+                    String maDH = (String) bangPhanCongNhanVien.getValueAt(row, 1);// Giả sử cột đầu tiên là PersonId
 
+                    String maCH = (String) bangPhanCongNhanVien.getValueAt(row, 2);
+                    String tenCH = (String) bangPhanCongNhanVien.getValueAt(row, 3); // Giả sử cột thứ hai là NamePerson
+                    String loaiNuoc = (String) bangPhanCongNhanVien.getValueAt(row, 4);
+                    String diaChiDongHo = (String) bangPhanCongNhanVien.getValueAt(row, 5);
+                    String maNV = (String) bangPhanCongNhanVien.getValueAt(row, 6);
+                    String tenNV = (String) bangPhanCongNhanVien.getValueAt(row, 7);
+                    String maQL = (String) bangPhanCongNhanVien.getValueAt(row, 8);
+                    String tenQL = (String) bangPhanCongNhanVien.getValueAt(row, 9);
 
-                    PhanCongModel thayDoiPhanCongChiTiet = new PhanCongModel(maPC, maQL, tenQL, maNV, tenNV, maCH, tenCH, diaChiDongHo, loaiNuoc); // Thêm các thông tin còn lại của AssignmentEmpoylerModel
+                    PhanCongModel thayDoiPhanCongChiTiet = new PhanCongModel(maPC, maDH, maQL, tenQL, maNV, tenNV, maCH, tenCH, diaChiDongHo, loaiNuoc); // Thêm các thông tin còn lại của AssignmentEmpoylerModel
 
                     // Thêm đối tượng AssignmentEmpoylerModel vào danh sách
                     dsThayDoiPhanCongNhanVienModel.add(thayDoiPhanCongChiTiet);
@@ -583,6 +738,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                 try {
 
                     ChiTietPhanCongKhuVucCtrl.capNhatTatCaDuLieuThuocKhuVucChuaPhanCong(khuVucModel.getMAKHUVUC(), phanCongNhanVienModel, dsThayDoiPhanCongNhanVienModel, TimeSelect);
+                    JOptionPane.showMessageDialog(null, "Đã cập nhật dữ liệu ở khu vực chưa phân công thành công !!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception e) {
                     // Xử lý ngoại lệ nếu có
@@ -594,17 +750,18 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
             if (month >= Integer.parseInt(String.valueOf(this.month)) && year >= Integer.parseInt(String.valueOf(this.year))) {
                 for (int row = 0; row < bangPhanCongNhanVien.getRowCount(); row++) {
                     String maPC = (String) bangPhanCongNhanVien.getValueAt(row, 0);
-                    
-                    String maCH = (String) bangPhanCongNhanVien.getValueAt(row, 1); // Giả sử cột đầu tiên là PersonId
-                    String tenCH = (String) bangPhanCongNhanVien.getValueAt(row, 2); // Giả sử cột thứ hai là NamePerson
-                    String loaiNuoc = (String) bangPhanCongNhanVien.getValueAt(row, 3);
-                    String diaChiDongHo = (String) bangPhanCongNhanVien.getValueAt(row, 4);
-                    String maNV = (String) bangPhanCongNhanVien.getValueAt(row, 5);
-                    String tenNV = (String) bangPhanCongNhanVien.getValueAt(row, 6);
-                    String maQL = (String) bangPhanCongNhanVien.getValueAt(row, 7);
-                    String tenQL = (String) bangPhanCongNhanVien.getValueAt(row, 8);
+                    String maDH = (String) bangPhanCongNhanVien.getValueAt(row, 1);// Giả sử cột đầu tiên là PersonId
 
-                    PhanCongModel thayDoiPhanCongNhanVienModel = new PhanCongModel(maPC, maQL, tenQL, maNV, tenNV, maCH, tenCH, diaChiDongHo, loaiNuoc);  // Thêm các thông tin còn lại của AssignmentEmpoylerModel
+                    String maCH = (String) bangPhanCongNhanVien.getValueAt(row, 2);
+                    String tenCH = (String) bangPhanCongNhanVien.getValueAt(row, 3); // Giả sử cột thứ hai là NamePerson
+                    String loaiNuoc = (String) bangPhanCongNhanVien.getValueAt(row, 4);
+                    String diaChiDongHo = (String) bangPhanCongNhanVien.getValueAt(row, 5);
+                    String maNV = (String) bangPhanCongNhanVien.getValueAt(row, 6);
+                    String tenNV = (String) bangPhanCongNhanVien.getValueAt(row, 7);
+                    String maQL = (String) bangPhanCongNhanVien.getValueAt(row, 8);
+                    String tenQL = (String) bangPhanCongNhanVien.getValueAt(row, 9);
+
+                    PhanCongModel thayDoiPhanCongNhanVienModel = new PhanCongModel(maPC, maDH, maQL, tenQL, maNV, tenNV, maCH, tenCH, diaChiDongHo, loaiNuoc);  // Thêm các thông tin còn lại của AssignmentEmpoylerModel
 
                     // Thêm đối tượng AssignmentEmpoylerModel vào danh sách
                     dsThayDoiPhanCongNhanVienModel.add(thayDoiPhanCongNhanVienModel);
@@ -613,6 +770,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
                 try {
 
                     ChiTietPhanCongKhuVucCtrl.capNhatTatCaDuLieuThuocKhuVuc(khuVucModel.getMAKHUVUC(), phanCongNhanVienModel, dsThayDoiPhanCongNhanVienModel, TimeSelect);
+                    JOptionPane.showMessageDialog(null, "Đã cập nhật dữ liệu thành công !!!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception e) {
                     // Xử lý ngoại lệ nếu có
@@ -628,6 +786,8 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         int selectedIndex = bangPhanCongNhanVien.getSelectedRow();
+
+        chinhSua.setEnabled(true);
 
         // Kiểm tra xem người dùng đã chọn một dòng hợp lệ hay không
         if (selectedIndex >= 0) {
@@ -667,9 +827,22 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         EmployerNon = "AC";
-        
+
         DataGlobal.getDataGLobal.dataGlobal.setEmployerNon(EmployerNon);
 
+        // Lưu trữ dữ liệu gốc trước khi thay đổi
+//        if (bangPhanCongNhanVien != null && bangPhanCongNhanVien.getColumnModel().getColumnCount() > 0) {
+//            bangPhanCongNhanVien.getColumnModel().getColumn(0).setHeaderValue("Mã đồng hồ");
+//
+//            if (bangPhanCongNhanVien.getColumnModel().getColumnCount() > 7) {
+//                bangPhanCongNhanVien.getColumnModel().removeColumn(bangPhanCongNhanVien.getColumnModel().getColumn(6));
+//                bangPhanCongNhanVien.getColumnModel().removeColumn(bangPhanCongNhanVien.getColumnModel().getColumn(6));
+//                bangPhanCongNhanVien.getColumnModel().removeColumn(bangPhanCongNhanVien.getColumnModel().getColumn(6));
+//            }
+//
+//            bangPhanCongNhanVien.getTableHeader().repaint();
+//            
+//        }
         try {
             hienThiDSChuaPhanCong(khuVucModel.getMAKHUVUC(), resultTime);
         } catch (ClassNotFoundException ex) {
@@ -678,9 +851,19 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_nguoiDungChuaDuocPhanCongActionPerformed
 
+    private void timKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timKiemBtnActionPerformed
+        // TODO add your handling code here:
+        try {
+            hienThiDSBangOTimKiem(khuVucModel.getMAKHUVUC(), TimeSelect);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChiTietPhanCongKhuVucView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_timKiemBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    // Lưu trữ bảng 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -731,13 +914,18 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> loaiSapXepCombox;
+    private javax.swing.JComboBox<String> loaiTimKiemCombox;
     private javax.swing.JLabel nameArea;
     private javax.swing.JButton nguoiDungChuaDuocPhanCong;
+    private javax.swing.JTextField nhapThongTinTimKiem;
+    private javax.swing.JButton timKiemBtn;
     private javax.swing.JButton tuDongPhanCong;
     private javax.swing.JButton xemThongTin;
     // End of variables declaration//GEN-END:variables

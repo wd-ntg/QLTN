@@ -57,11 +57,13 @@ public class Trangchu extends javax.swing.JFrame {
             nam.setText((String.valueOf(year)));
             lb_month.setText(String.valueOf(year));
             ThongKeCtrl thongKeCtrl = new ThongKeCtrl();
+            
             thongKeCtrl.setDataToPieChartLuongNuoc(pieChartLuongNuoc, String.valueOf(year));
 
             thongKeCtrl.setDataToChartThanhToan(chartThanhToan, String.valueOf(year));
 
             totalNguoiDung.setText(String.valueOf(thongKeCtrl.demSoluongNguoiSuDung()));
+            
             totalNhanVien.setText(String.valueOf(thongKeCtrl.demSoluongNhanVien()));
             
             hienThiDSNguoiDungMoi();

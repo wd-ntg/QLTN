@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 import models.NhanVienModel;
 import models.PhanCongModel;
 import java.util.UUID;
+import models.DataGlobal;
 
 /**
  *
@@ -39,6 +41,7 @@ public class ChiTietPhanCongKhuVucCtrl {
             connection = ConnectDB.getConnection();
             String sql = "SELECT \n"
                     + "    PC.MAPC AS MAPHANCONG, \n"
+                    + "    DH.MADH AS MADONGHO, \n"
                     + "    CH.MACH AS MACHUHO, \n"
                     + "    CH.HOTEN AS TenCHUHO,\n"
                     + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
@@ -70,6 +73,7 @@ public class ChiTietPhanCongKhuVucCtrl {
 
             while (resultSet.next()) {
                 String maPhanCong = resultSet.getString("MAPHANCONG");
+                String maDongHo = resultSet.getString("MADONGHO");
                 String maNguoiQL = resultSet.getString("MANGUOIPHUTRACH");
                 String tenNguoiQL = resultSet.getString("TENNGUOIPHUTRACH");
                 String maNhanVien = resultSet.getString("MANHANVIEN");
@@ -79,7 +83,93 @@ public class ChiTietPhanCongKhuVucCtrl {
                 String diaChiDongHo = resultSet.getString("DIACHIDONGHO");
                 String tenLoaiNuoc = resultSet.getString("TenLOAINUOCSuDung");
 
-                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
+                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maDongHo, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
+                dsChiTietPhanCongKhuVuc.add(phanCongModel);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return dsChiTietPhanCongKhuVuc;
+    }
+    
+    public static List<PhanCongModel> timTatCaDuLieuThuocKhuVucBangOTimKiem(String maKhuVuc, String TimeLine, String loaiTimKiem, String loaiSapXep, String thongTinTimKiem) throws ClassNotFoundException {
+        List<PhanCongModel> dsChiTietPhanCongKhuVuc = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = ConnectDB.getConnection();
+            String sql = "SELECT \n"
+                    + "    PC.MAPC AS MAPHANCONG, \n"
+                    + "    DH.MADH AS MADONGHO, \n"
+                    + "    CH.MACH AS MACHUHO, \n"
+                    + "    CH.HOTEN AS TenCHUHO,\n"
+                    + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
+                    + "    CTKV.TENCHITIET AS DIACHIDONGHO,\n"
+                    + "    NV.MANV AS MANHANVIEN,\n"
+                    + "    NV.HOTEN AS TENNHANVIEN,\n"
+                    + "    QL.MAQL AS MANGUOIPHUTRACH,\n"
+                    + "    QL.HOTEN AS TENNGUOIPHUTRACH\n"
+                    + "FROM \n"
+                    + "    PHANCONG PC\n"
+                    + "JOIN \n"
+                    + "    NHANVIEN NV ON NV.MANV = PC.MANV\n"
+                    + "JOIN \n"
+                    + "    QUANLY QL ON QL.MAQL = PC.MAQL\n"
+                    + "JOIN \n"
+                    + "    DONGHO DH ON DH.MADH = PC.MADH\n"
+                    + "JOIN \n"
+                    + "    CHUHO CH ON CH.MACH = DH.MACH\n"
+                    + "JOIN \n"
+                    + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
+                    + "JOIN \n"
+                    + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
+                    + "WHERE \n"
+                    + "    CTKV.MAKHUVUC = ? AND PC.NGAYPHAN LIKE ? AND " + loaiTimKiem + " LIKE ? " + loaiSapXep;;
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, maKhuVuc);
+            statement.setString(2, "%" + TimeLine + "%");
+            statement.setString(3, "%" + thongTinTimKiem + "%");
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String maPhanCong = resultSet.getString("MAPHANCONG");
+                String maDongHo = resultSet.getString("MADONGHO");
+                String maNguoiQL = resultSet.getString("MANGUOIPHUTRACH");
+                String tenNguoiQL = resultSet.getString("TENNGUOIPHUTRACH");
+                String maNhanVien = resultSet.getString("MANHANVIEN");
+                String tenNhanvien = resultSet.getString("TENNHANVIEN");
+                String maChuHo = resultSet.getString("MACHUHO");
+                String tenChuHo = resultSet.getString("TENCHUHO");
+                String diaChiDongHo = resultSet.getString("DIACHIDONGHO");
+                String tenLoaiNuoc = resultSet.getString("TenLOAINUOCSuDung");
+
+                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maDongHo, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
                 dsChiTietPhanCongKhuVuc.add(phanCongModel);
 
             }
@@ -112,49 +202,126 @@ public class ChiTietPhanCongKhuVucCtrl {
         return dsChiTietPhanCongKhuVuc;
     }
 
+//    public static List<PhanCongModel> timTatCaDuLieuThuocKhuVucChuaPhanCong(String maKhuVuc, String TimeLine) throws ClassNotFoundException {
+//        List<PhanCongModel> dsChiTietKhuVucPhanCong = new ArrayList<>();
+//        Connection connection = null;
+//        PreparedStatement statement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            connection = ConnectDB.getConnection();
+//            String sql = "SELECT \n"
+//                    + "    PC.MAPC AS MAPHANCONG, \n"
+//                    + "    CH.MACH AS MACHUHO, \n"
+//                    + "    CH.HOTEN AS TenCHUHO,\n"
+//                    + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
+//                    + "    CTKV.TENCHITIET AS DIACHIDONGHO\n"
+//                    + "FROM \n"
+//                    + "    PHANCONG PC\n"
+//                    + "JOIN \n"
+//                    + "    DONGHO DH ON DH.MADH = PC.MADH\n"
+//                    + "JOIN \n"
+//                    + "    CHUHO CH ON CH.MACH = DH.MACH\n"
+//                    + "JOIN \n"
+//                    + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
+//                    + "JOIN \n"
+//                    + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
+//                    + "WHERE \n"
+//                    + "    CTKV.MAKHUVUC = ? AND PC.NGAYPHAN IS NULL";
+//
+//            statement = connection.prepareStatement(sql);
+//            statement.setString(1, maKhuVuc);
+//            resultSet = statement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                String maPhanCong = resultSet.getString("MAPHANCONG");
+//                String maNguoiQL = "";
+//                String tenNguoiQL = "";
+//                String maNhanVien = "";
+//                String tenNhanvien = "";
+//                String maChuHo = resultSet.getString("MACHUHO");
+//                String tenChuHo = resultSet.getString("TENCHUHO");
+//                String diaChiDongHo = resultSet.getString("DIACHIDONGHO");
+//                String tenLoaiNuoc = resultSet.getString("TenLOAINUOCSuDung");
+//
+//                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
+//                dsChiTietKhuVucPhanCong.add(phanCongModel);
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            if (resultSet != null) {
+//                try {
+//                    resultSet.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            if (statement != null) {
+//                try {
+//                    statement.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
+//
+//        return dsChiTietKhuVucPhanCong;
+//    }
     public static List<PhanCongModel> timTatCaDuLieuThuocKhuVucChuaPhanCong(String maKhuVuc, String TimeLine) throws ClassNotFoundException {
         List<PhanCongModel> dsChiTietKhuVucPhanCong = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-
         try {
             connection = ConnectDB.getConnection();
             String sql = "SELECT \n"
-                    + "    PC.MAPC AS MAPHANCONG, \n"
+                    + "    DH.MADH AS MADONGHO, \n"
                     + "    CH.MACH AS MACHUHO, \n"
                     + "    CH.HOTEN AS TenCHUHO,\n"
                     + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
                     + "    CTKV.TENCHITIET AS DIACHIDONGHO\n"
                     + "FROM \n"
-                    + "    PHANCONG PC\n"
-                    + "JOIN \n"
-                    + "    DONGHO DH ON DH.MADH = PC.MADH\n"
+                    + "    DONGHO DH\n"
                     + "JOIN \n"
                     + "    CHUHO CH ON CH.MACH = DH.MACH\n"
                     + "JOIN \n"
                     + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
                     + "JOIN \n"
                     + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
+                    + "LEFT JOIN \n"
+                    + "    PHANCONG PC ON DH.MADH = PC.MADH \n"
+                    + "    AND PC.KYPHANCONG = ?\n"
                     + "WHERE \n"
-                    + "    CTKV.MAKHUVUC = ? AND PC.NGAYPHAN IS NULL";
+                    + "    CTKV.MAKHUVUC = ?\n"
+                    + "    AND PC.MADH IS NULL;";
 
             statement = connection.prepareStatement(sql);
-            statement.setString(1, maKhuVuc);
+            statement.setString(1, TimeLine);
+            statement.setString(2, maKhuVuc);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String maPhanCong = resultSet.getString("MAPHANCONG");
+                String maPhanCong = "";
                 String maNguoiQL = "";
                 String tenNguoiQL = "";
                 String maNhanVien = "";
                 String tenNhanvien = "";
+                String maDongHo = resultSet.getString("MADONGHO");
                 String maChuHo = resultSet.getString("MACHUHO");
                 String tenChuHo = resultSet.getString("TENCHUHO");
                 String diaChiDongHo = resultSet.getString("DIACHIDONGHO");
                 String tenLoaiNuoc = resultSet.getString("TenLOAINUOCSuDung");
 
-                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
+                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maDongHo, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
                 dsChiTietKhuVucPhanCong.add(phanCongModel);
 
             }
@@ -241,11 +408,18 @@ public class ChiTietPhanCongKhuVucCtrl {
         Connection connection = null;
         PreparedStatement updateStatement = null;
         PreparedStatement updateGhiNuoc = null;
+        PreparedStatement checkExistStatement = null;
+        
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+
+        String ngayThangNamHienTai = dayCurrent+"/"+monthCurrent+"/"+yearCurrent;
+        String kyPhanCongHienTai = monthCurrent + "/" + yearCurrent;
 
 //        Phải có nameDetailAddres khác nhau nữa 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date currentDate = new Date();
-        String dateTimeString = dateFormat.format(currentDate);
+
 
         try {
             connection = ConnectDB.getConnection(); // Thiết lập kết nối đến cơ sở dữ liệu
@@ -253,12 +427,8 @@ public class ChiTietPhanCongKhuVucCtrl {
             for (PhanCongModel phanCongModel : thayDoiPhanCongModels) {
 
                 String maPC = phanCongModel.getMAPC();
-                
-                
-                
-                String maNhanVien = phanCongModel.getMANV();
 
-                String ngayMoi = String.valueOf(dateTimeString);
+                String maNhanVien = phanCongModel.getMANV();
 
                 // Thực hiện truy vấn để lấy ngày phân công hiện tại
                 String layNgayQuery = "SELECT NGAYPHAN, MADH FROM PHANCONG WHERE MAPC = ?";
@@ -273,23 +443,37 @@ public class ChiTietPhanCongKhuVucCtrl {
                 }
                 preparedStatement.close();
 
-                String thayDoiNgay = "Thay doi tu " + ngayCu + " " + ngayMoi;
+                String thayDoiNgay = ngayThangNamHienTai;
 
                 // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
-                String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ?  WHERE MAPC = ? AND NGAYPHAN LIKE ?";
+                String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ?  WHERE MAPC = ?";
                 updateStatement = connection.prepareStatement(updateQuery);
                 updateStatement.setString(1, maNhanVien);
                 updateStatement.setString(2, thayDoiNgay);
                 updateStatement.setString(3, maPC);
-                updateStatement.setString(4, "%" + TimeAssign + "%");
 
                 updateStatement.executeUpdate();
-                
-                 String updateBanGhiNuoc = "Update GHINUOC SET MANV = ? WHERE MADH = ? AND KI LIKE ?";
+
+                // Kiểm tra sự tồn tại trong bảng GHINUOC
+                String checkExistQuery = "SELECT MANV, CSM FROM GHINUOC WHERE MADH = ? AND KI LIKE ?";
+                checkExistStatement = connection.prepareStatement(checkExistQuery);
+                checkExistStatement.setString(1, maDongHo);
+                checkExistStatement.setString(2, "%" + TimeAssign + "%");
+                ResultSet checkExistResult = checkExistStatement.executeQuery();
+
+                if (checkExistResult.next()) {
+                    String existingMaNV = checkExistResult.getString("CSM");
+                    if (existingMaNV != null) {
+                        // Nếu tồn tại MANV khác null thì không thực hiện cập nhật
+                        continue;
+                    }
+                }
+
+                String updateBanGhiNuoc = "Update GHINUOC SET MANV = ? WHERE MADH = ? AND KI LIKE ?";
                 updateGhiNuoc = connection.prepareStatement(updateBanGhiNuoc);
                 updateGhiNuoc.setString(1, maNhanVien);
                 updateGhiNuoc.setString(2, maDongHo);
-                updateGhiNuoc.setString(3, "%" + TimeAssign +"%");
+                updateGhiNuoc.setString(3, "%" + kyPhanCongHienTai + "%");
 
                 updateGhiNuoc.executeUpdate();
             }
@@ -309,68 +493,67 @@ public class ChiTietPhanCongKhuVucCtrl {
 
     public static void capNhatTatCaDuLieuThuocKhuVucChuaPhanCong(String AreaId, List<PhanCongModel> assignmentEmpoylerModels, List<PhanCongModel> changeAssignmentEmpoylerModels, String TimeAssign) throws ClassNotFoundException, SQLException {
         Connection connection = null;
-        PreparedStatement updateStatement = null;
-        
+        PreparedStatement insertStatement = null;
+        PreparedStatement ghiNuocStatement = null;
+        ResultSet resultSet = null;
 
-//        Phải có nameDetailAddres khác nhau nữa 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date currentDate = new Date();
-        String dateTimeString = dateFormat.format(currentDate);
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+
+        String ngayThangNamHienTai = dayCurrent+"/"+monthCurrent+"/"+yearCurrent;
+        String kyPhanCongHienTai = monthCurrent + "/" + yearCurrent;
+
+        String maQL = DataGlobal.getDataGLobal.dataGlobal.getPhienQLHienTai().getMAQL();
 
         try {
             connection = ConnectDB.getConnection(); // Thiết lập kết nối đến cơ sở dữ liệu
 
             for (PhanCongModel changeAssignment : changeAssignmentEmpoylerModels) {
-
-                String maPhanCong = changeAssignment.getMAPC();
                 String maNhanVien = changeAssignment.getMANV();
-                String maQL = "QL1";
+                String maDongHo = changeAssignment.getMADH();
+                
+                System.out.println("Ma dong ho " + maDongHo);
 
-                // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
-                String updateQuery = "UPDATE PHANCONG SET MAQL = ?,  MANV = ?, NGAYPHAN = ?  WHERE MAPC = ?";
-                updateStatement = connection.prepareStatement(updateQuery);
-                updateStatement.setString(1, maQL);
-                updateStatement.setString(2, maNhanVien);
-                updateStatement.setString(3, String.valueOf(dateTimeString));
-                updateStatement.setString(4, maPhanCong);
-
-                updateStatement.executeUpdate();
-                
-                // GHI NUOC
-                
-                String layMaDongHo = "SELECT  MADH FROM PHANCONG WHERE MAPC = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(layMaDongHo);
-                preparedStatement.setString(1, maPhanCong);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                String maDongHo = "";
-                if (resultSet.next()) {
-                    maDongHo = resultSet.getString("MADH");
-                }
-                preparedStatement.close();
-                
                 UUID uuid = UUID.randomUUID();
-
+                String maPC = "PC" + uuid.toString();
                 String maGhi = "MG" + uuid.toString();
-                
+
+                String SQL2 = "INSERT INTO PHANCONG (MAPC, MAQL, MANV, MADH, NGAYPHAN, KYPHANCONG) VALUES (?,?,?,?,?,?)";
+
+                insertStatement = connection.prepareStatement(SQL2);
+                insertStatement.setString(1, maPC);
+                insertStatement.setString(2, maQL);
+                insertStatement.setString(3, maNhanVien);
+                insertStatement.setString(4, maDongHo);
+                insertStatement.setString(5, ngayThangNamHienTai);
+                insertStatement.setString(6, kyPhanCongHienTai);
+
+                insertStatement.executeUpdate();
+                insertStatement.close();
+
                 String SQL3 = "INSERT INTO GHINUOC (MAGHI, MADH, MANV, KI, NGAYBATDAUGHI, NGAYHANGHI) VALUES (?, ?, ?, ?, ?, ?)";
 
-                PreparedStatement updateStatement2 = connection.prepareStatement(SQL3);
-                updateStatement2.setString(1, maGhi);
-                updateStatement2.setString(2, maDongHo);
-                updateStatement2.setString(3, maNhanVien);
-                updateStatement2.setString(4, TimeAssign);
-                updateStatement2.setString(5, "1/" + TimeAssign);
-                updateStatement2.setString(6, "5/" + TimeAssign);
+                ghiNuocStatement = connection.prepareStatement(SQL3);
+                ghiNuocStatement.setString(1, maGhi);
+                ghiNuocStatement.setString(2, maDongHo);
+                ghiNuocStatement.setString(3, maNhanVien);
+                ghiNuocStatement.setString(4, kyPhanCongHienTai);
+                ghiNuocStatement.setString(5, ngayThangNamHienTai);
+                ghiNuocStatement.setString(6, "10/" + kyPhanCongHienTai);
 
-                updateStatement.executeUpdate(); // Thực thi câu lệnh UPDATE
+                ghiNuocStatement.executeUpdate();
+                ghiNuocStatement.close();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Xử lý ngoại lệ khi thực hiện truy vấn SQL
         } finally {
-            // Đóng tài nguyên sau khi hoàn thành công việc
-            if (updateStatement != null) {
-                updateStatement.close();
+            if (ghiNuocStatement != null) {
+                ghiNuocStatement.close();
+            }
+            if (insertStatement != null) {
+                insertStatement.close();
             }
             if (connection != null) {
                 connection.close();
@@ -389,6 +572,7 @@ public class ChiTietPhanCongKhuVucCtrl {
             String sql = "SELECT \n"
                     + "    PC.MAPC AS MAPHANCONG, \n"
                     + "    CH.MACH AS MACHUHO, \n"
+                    + "    DH.MADH AS MADONGHO, \n"
                     + "    CH.HOTEN AS TenCHUHO,\n"
                     + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
                     + "    CTKV.TENCHITIET AS DIACHIDONGHO,\n"
@@ -419,6 +603,7 @@ public class ChiTietPhanCongKhuVucCtrl {
 
             while (resultSet.next()) {
                 String maPhanCong = resultSet.getString("MAPHANCONG");
+                String maDongHo = resultSet.getString("MADONGHO");
                 String maNguoiQL = resultSet.getString("MANGUOIPHUTRACH");
                 String tenNguoiQL = resultSet.getString("TENNGUOIPHUTRACH");
                 String maNhanVien = resultSet.getString("MANHANVIEN");
@@ -428,7 +613,7 @@ public class ChiTietPhanCongKhuVucCtrl {
                 String diaChiDongHo = resultSet.getString("DIACHIDONGHO");
                 String tenLoaiNuoc = resultSet.getString("TenLOAINUOCSuDung");
 
-                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
+                PhanCongModel phanCongModel = new PhanCongModel(maPhanCong, maDongHo, maNguoiQL, tenNguoiQL, maNhanVien, tenNhanvien, maChuHo, tenChuHo, diaChiDongHo, tenLoaiNuoc);
                 dsChiTietPhanCongKhuVuc.add(phanCongModel);
 
             }
@@ -461,51 +646,159 @@ public class ChiTietPhanCongKhuVucCtrl {
         return dsChiTietPhanCongKhuVuc;
     }
 
-    public static void autoPhanCongNhanVien(String maKhuVuc, String TimeAssign, String Timeline) throws ClassNotFoundException {
+//    public static void autoPhanCongNhanVien(String maKhuVuc, String TimeAssign, String Timeline) throws ClassNotFoundException {
+//        Connection connection = null;
+//        PreparedStatement statement = null;
+//        ResultSet resultSet = null;
+//
+//        String maQL = DataGlobal.getDataGLobal.dataGlobal.getPhienQLHienTai().getMAQL();
+//
+//        try {
+//            connection = ConnectDB.getConnection();
+//            String sql = "SELECT PC.MANV AS IDNhanVien, PC.MADH AS IDDongHo\n"
+//                    + "FROM PHANCONG PC \n"
+//                    + "JOIN DONGHO DH ON DH.MADH = PC.MADH\n"
+//                    + "JOIN CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
+//                    + "WHERE CTKV.MAKHUVUC = ? AND DH.TRANGTHAI = 'True' AND PC.NGAYPHAN LIKE ?";
+//            statement = connection.prepareStatement(sql);
+//            statement.setString(1, maKhuVuc);
+//            statement.setString(2, "%" + Timeline + "%");
+//
+//            resultSet = statement.executeQuery();
+//
+//            while (resultSet.next()) {
+//                String maNhanVien = resultSet.getString("IDNhanVien");
+//
+//                UUID uuid = UUID.randomUUID();
+//                String maPC = "PC" + uuid.toString();
+//
+//                String maGhi = "MG" + uuid.toString();
+//
+//                String maDongHo = resultSet.getString("IDDongHo");
+//
+//                String SQL2 = "INSERT INTO PHANCONG (MAPC, MAQL, MANV, MADH, NGAYPHAN) VALUES (?,?,?,?,?)";
+//
+//                PreparedStatement insertStatement = connection.prepareStatement(SQL2);
+//                insertStatement.setString(1, maPC);
+//                insertStatement.setString(2, maQL);
+//                insertStatement.setString(3, maNhanVien);
+//                insertStatement.setString(4, maDongHo);
+//                insertStatement.setString(5, TimeAssign);
+//
+//                insertStatement.executeUpdate(); // Thực thi câu lệnh INSERT
+//
+//                String SQL3 = "INSERT INTO GHINUOC (MAGHI, MADH, MANV, KI, NGAYBATDAUGHI, NGAYHANGHI) VALUES (?, ?, ?, ?, ?, ?)";
+//
+//                PreparedStatement updateStatement = connection.prepareStatement(SQL3);
+//                updateStatement.setString(1, maGhi);
+//                updateStatement.setString(2, maDongHo);
+//                updateStatement.setString(3, maNhanVien);
+//                updateStatement.setString(4, TimeAssign.substring(2, 9));
+//                updateStatement.setString(5, "01/" + TimeAssign.substring(2));
+//                updateStatement.setString(6, "10/" + TimeAssign.substring(2));
+//
+//                updateStatement.executeUpdate(); // Thực thi câu lệnh UPDATE
+//
+//// Đóng statement updateStatement
+//                updateStatement.close();
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (resultSet != null) {
+//                    resultSet.close();
+//                }
+//                if (statement != null) {
+//                    statement.close();
+//                }
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
+    public static void autoPhanCongNhanVien(String maKhuVuc, String ngayThangNamHienTai, String kyPhanCongHienTai) throws ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        System.out.println("Hello");
-        System.out.println(Timeline);
+        String maQL = DataGlobal.getDataGLobal.dataGlobal.getPhienQLHienTai().getMAQL();
 
-        String maQL = "QL1";
-
-        System.out.println(Timeline);
+        List<String> nhanVienList = new ArrayList<>();
+        int nhanVienIndex = 0;
 
         try {
             connection = ConnectDB.getConnection();
-            String sql = "SELECT PC.MANV AS IDNhanVien, PC.MADH AS IDDongHo\n"
-                    + "FROM PHANCONG PC \n"
-                    + "JOIN DONGHO DH ON DH.MADH = PC.MADH\n"
-                    + "JOIN CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
-                    + "WHERE CTKV.MAKHUVUC = ? AND DH.TRANGTHAI = 'True' AND PC.NGAYPHAN LIKE ?";
+
+            // Lấy danh sách IDNhanVien từ bảng NhanVien với điều kiện MAKV = ?
+            String sqlNhanVien = "SELECT MANV FROM NhanVien WHERE MAKHUVUC = ?";
+            statement = connection.prepareStatement(sqlNhanVien);
+            statement.setString(1, maKhuVuc); // sử dụng maKhuVuc làm điều kiện MAKV
+            ResultSet rsNhanVien = statement.executeQuery();
+            while (rsNhanVien.next()) {
+                nhanVienList.add(rsNhanVien.getString("MANV"));
+            }
+            rsNhanVien.close();
+            statement.close();
+
+            if (nhanVienList.isEmpty()) {
+                throw new SQLException("No NhanVien found for MAKV = '" + maKhuVuc + "'");
+            }
+
+            String sql = "SELECT \n"
+                    + "    DH.MADH, \n"
+                    + "    CH.MACH AS MACHUHO, \n"
+                    + "    CH.HOTEN AS TenCHUHO,\n"
+                    + "    L.TENLOAI AS TenLOAINUOCSuDung,\n"
+                    + "    CTKV.TENCHITIET AS DIACHIDONGHO\n"
+                    + "FROM \n"
+                    + "    DONGHO DH\n"
+                    + "JOIN \n"
+                    + "    CHUHO CH ON CH.MACH = DH.MACH\n"
+                    + "JOIN \n"
+                    + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
+                    + "JOIN \n"
+                    + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
+                    + "LEFT JOIN \n"
+                    + "    PHANCONG PC ON DH.MADH = PC.MADH \n"
+                    + "    AND PC.KYPHANCONG = ?\n"
+                    + "WHERE \n"
+                    + "    CTKV.MAKHUVUC = ?\n"
+                    + "    AND PC.MADH IS NULL;";
+
             statement = connection.prepareStatement(sql);
-            statement.setString(1, maKhuVuc);
-            statement.setString(2, "%" + Timeline + "%");
+            statement.setString(1, kyPhanCongHienTai);
+            statement.setString(2, maKhuVuc);
 
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String maNhanVien = resultSet.getString("IDNhanVien");
+                String maNhanVien = nhanVienList.get(nhanVienIndex);
+                nhanVienIndex = (nhanVienIndex + 1) % nhanVienList.size(); // Round-robin
 
                 UUID uuid = UUID.randomUUID();
                 String maPC = "PC" + uuid.toString();
 
                 String maGhi = "MG" + uuid.toString();
 
-                String maDongHo = resultSet.getString("IDDongHo");
+                String maDongHo = resultSet.getString("MADH");
 
-                String SQL2 = "INSERT INTO PHANCONG (MAPC, MAQL, MANV, MADH, NGAYPHAN) VALUES (?,?,?,?,?)";
+                String SQL2 = "INSERT INTO PHANCONG (MAPC, MAQL, MANV, MADH, NGAYPHAN, KYPHANCONG) VALUES (?,?,?,?,?,?)";
 
                 PreparedStatement insertStatement = connection.prepareStatement(SQL2);
                 insertStatement.setString(1, maPC);
                 insertStatement.setString(2, maQL);
                 insertStatement.setString(3, maNhanVien);
                 insertStatement.setString(4, maDongHo);
-                insertStatement.setString(5, TimeAssign);
+                insertStatement.setString(5, ngayThangNamHienTai);
+                insertStatement.setString(6, kyPhanCongHienTai);
 
-                insertStatement.executeUpdate(); // Thực thi câu lệnh INSERT
+                insertStatement.executeUpdate();
+                insertStatement.close();
 
                 String SQL3 = "INSERT INTO GHINUOC (MAGHI, MADH, MANV, KI, NGAYBATDAUGHI, NGAYHANGHI) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -513,15 +806,12 @@ public class ChiTietPhanCongKhuVucCtrl {
                 updateStatement.setString(1, maGhi);
                 updateStatement.setString(2, maDongHo);
                 updateStatement.setString(3, maNhanVien);
-                updateStatement.setString(4, TimeAssign);
-                updateStatement.setString(5, "1/" + TimeAssign);
-                updateStatement.setString(6, "5/" + TimeAssign);
+                updateStatement.setString(4, kyPhanCongHienTai);
+                updateStatement.setString(5, ngayThangNamHienTai);
+                updateStatement.setString(6, "10/" + kyPhanCongHienTai);
 
-                updateStatement.executeUpdate(); // Thực thi câu lệnh UPDATE
-
-// Đóng statement updateStatement
+                updateStatement.executeUpdate();
                 updateStatement.close();
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChiTietPhanCongKhuVucCtrl.class.getName()).log(Level.SEVERE, null, ex);
@@ -542,7 +832,7 @@ public class ChiTietPhanCongKhuVucCtrl {
         }
     }
 
-    public static boolean kiemTraLichPhanCong(String TimeAssign, String maKhuVuc) throws ClassNotFoundException {
+    public static boolean kiemTraLichPhanCong(String kyPhanCong, String maKhuVuc) throws ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -553,9 +843,9 @@ public class ChiTietPhanCongKhuVucCtrl {
                     + "FROM PHANCONG AS PC\n"
                     + "JOIN DONGHO DH ON DH.MADH = PC.MADH\n"
                     + "JOIN CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
-                    + "WHERE PC.NGAYPHAN LIKE ? AND CTKV.MAKHUVUC = ?";
+                    + "WHERE PC.KYPHANCONG LIKE ? AND CTKV.MAKHUVUC = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, "%" + TimeAssign + "%");
+            statement.setString(1, "%" + kyPhanCong + "%");
             statement.setString(2, maKhuVuc);
             resultSet = statement.executeQuery();
 

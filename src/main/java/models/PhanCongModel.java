@@ -27,8 +27,9 @@ public class PhanCongModel {
         this.TENLOAINUOC = TENLOAINUOC;
     }
 
-    public PhanCongModel(String MAPC, String MAQL, String HOTENQL, String MANV, String HOTENNV, String MACH, String HOTENCH, String TENDIACHI, String TENLOAINUOC) {
+    public PhanCongModel(String MAPC, String MADH, String MAQL, String HOTENQL, String MANV, String HOTENNV, String MACH, String HOTENCH, String TENDIACHI, String TENLOAINUOC) {
         this.MAPC = MAPC;
+        this.MADH = MADH;
         this.MAQL = MAQL;
         this.HOTENQL = HOTENQL;
         this.MANV = MANV;
@@ -37,6 +38,20 @@ public class PhanCongModel {
         this.HOTENCH = HOTENCH;
         this.TENDIACHI = TENDIACHI;
         this.TENLOAINUOC = TENLOAINUOC;
+    }
+    
+    public PhanCongModel(String MAPC, String MADH, String MAQL, String HOTENQL, String MANV, String HOTENNV, String MACH, String HOTENCH, String TENDIACHI, String TENLOAINUOC, String KYPHANCONG) {
+        this.MAPC = MAPC;
+        this.MADH = MADH;
+        this.MAQL = MAQL;
+        this.HOTENQL = HOTENQL;
+        this.MANV = MANV;
+        this.HOTENNV = HOTENNV;
+        this.MACH = MACH;
+        this.HOTENCH = HOTENCH;
+        this.TENDIACHI = TENDIACHI;
+        this.TENLOAINUOC = TENLOAINUOC;
+        this.KYPHANCONG = KYPHANCONG;
     }
 
     public PhanCongModel(String MAPC, String MAQL, String HOTENQL, String MANV, String NGAYPHAN, String HOTENNV, String SDTNV, String MACH, String HOTENCH, String SDTCH, String TENDIACHI, String TENLOAINUOC) {
@@ -204,7 +219,23 @@ public class PhanCongModel {
     public void setTENLOAINUOC(String TENLOAINUOC) {
         this.TENLOAINUOC = TENLOAINUOC;
     }
-    private String MAPC, MAQL, HOTENQL, MANV, MAKHUVUC, NGAYPHAN, HOTENNV, SDTNV, EMAILNV, CCCDNV,MACH, HOTENCH, SDTCH, CCCDCH, EMAILCH, TENKHUVUC, MADIACHI, TENDIACHI, MALOAINUOC, TENLOAINUOC;
+    private String MAPC, MAQL, HOTENQL, MANV, MAKHUVUC, NGAYPHAN, HOTENNV, SDTNV, EMAILNV, CCCDNV,MACH, HOTENCH, SDTCH, CCCDCH, EMAILCH, TENKHUVUC, MADIACHI, TENDIACHI, MALOAINUOC, TENLOAINUOC, KYPHANCONG, MADH;
+
+    public String getMADH() {
+        return MADH;
+    }
+
+    public void setMADH(String MADH) {
+        this.MADH = MADH;
+    }
+
+    public String getKYPHANCONG() {
+        return KYPHANCONG;
+    }
+
+    public void setKYPHANCONG(String KYPHANCONG) {
+        this.KYPHANCONG = KYPHANCONG;
+    }
 
     public String getEMAILNV() {
         return EMAILNV;
