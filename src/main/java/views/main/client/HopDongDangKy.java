@@ -427,6 +427,7 @@ public class HopDongDangKy extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chuKyPanel.saveSignatureAsImage();
+                
                 frame.dispose(); // Đóng JFrame sau khi lưu
                 String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
                 System.out.println(".actionPerformed()" + linkChuKy);

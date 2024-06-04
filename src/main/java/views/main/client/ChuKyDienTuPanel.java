@@ -24,6 +24,8 @@ public class ChuKyDienTuPanel extends JPanel {
     private Point lastPoint;
     private BufferedImage image;
     private CloudinaryUploader uploader;
+    
+    public String linkChuKy;
 
     public ChuKyDienTuPanel() {
         setBackground(Color.WHITE);
@@ -90,7 +92,7 @@ public class ChuKyDienTuPanel extends JPanel {
 
                     DataGlobal.getDataGLobal.dataGlobal.setLinkChuKy(publicUrl);
                     
-                    String linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
+                    linkChuKy = DataGlobal.getDataGLobal.dataGlobal.getLinkChuKy();
                     
                     System.out.println("views.main.client.ChuKyDienTuPanel.saveSignatureAsImage()" + linkChuKy);
 //                    if (publicUrl != null) {
