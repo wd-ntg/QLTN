@@ -21,6 +21,7 @@ import models.DataGlobal;
 import models.NhanVienModel;
 
 import models.TaiKhoanModel;
+import utils.PasswordHashing;
 
 /**
  *
@@ -40,7 +41,8 @@ public class QuanLiNhanVienCtrl {
             PreparedStatement statement2 = connection.prepareStatement(sql2);
             statement2.setString(1, taikhoan.getMATK());
             statement2.setString(2, taikhoan.getEMAIL());
-            statement2.setString(3, nhanvien.getSDT());
+            String hashPassword = PasswordHashing.hashPassword(nhanvien.getSDT());
+            statement2.setString(3,hashPassword );
             statement2.setString(4, taikhoan.getMAPQ());
 // hashedPassword là chuỗi mật khẩu đã được băm
             statement2.executeUpdate();
