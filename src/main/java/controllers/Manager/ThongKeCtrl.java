@@ -127,8 +127,8 @@ public class ThongKeCtrl {
             connection = ConnectDB.getConnection();
             String sql = "SELECT \n"
                     + "    MONTH(NGAYDENHAN) AS THANG, \n"
-                    + "    SUM(CASE WHEN THANHTOAN = 'False' THEN TONGTIEN ELSE 0 END) AS CHUATHANHTOAN,\n"
-                    + "    SUM(CASE WHEN THANHTOAN = 'True' THEN TONGTIEN ELSE 0 END) AS DATHANHTOAN\n"
+                    + "    SUM(CASE WHEN THANHTOAN IN ('0') THEN TONGTIEN ELSE 0 END) AS CHUATHANHTOAN,\n"
+                    + "    SUM(CASE WHEN THANHTOAN IN ('1', '2', '3') THEN TONGTIEN ELSE 0 END) AS DATHANHTOAN\n"
                     + "FROM \n"
                     + "    HOADON\n"
                     + "WHERE \n"
