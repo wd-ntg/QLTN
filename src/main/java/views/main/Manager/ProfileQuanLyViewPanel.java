@@ -73,14 +73,27 @@ public class ProfileQuanLyViewPanel extends javax.swing.JPanel {
         CCCD = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         NGAYLAM = new javax.swing.JLabel();
+<<<<<<< HEAD
+
+        jPanel1.setBackground(new java.awt.Color(102, 153, 255));
+=======
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(134, 140, 255));
+>>>>>>> 0418001291a70d836392bf06bb3de362564e6701
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+<<<<<<< HEAD
+        jLabel1.setText("Tài khoản đang đăng nhập");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Quản lý tiền nước cho công ty dịch vụ nước đô thị");
+=======
         jLabel1.setText("Hồ sơ chủ hộ");
+>>>>>>> 0418001291a70d836392bf06bb3de362564e6701
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,7 +112,9 @@ public class ProfileQuanLyViewPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(134, 140, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setText("Họ và tên");

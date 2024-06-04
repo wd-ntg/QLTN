@@ -74,7 +74,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
 
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        AddClient = new javax.swing.JButton();
         UpdateInfoClient = new javax.swing.JButton();
         DeleteClient = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -92,16 +91,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("Danh sách chủ hộ");
-
-        AddClient.setBackground(new java.awt.Color(51, 102, 255));
-        AddClient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        AddClient.setForeground(new java.awt.Color(255, 255, 255));
-        AddClient.setText("Thêm chủ hộ");
-        AddClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddClientActionPerformed(evt);
-            }
-        });
 
         UpdateInfoClient.setBackground(new java.awt.Color(51, 102, 255));
         UpdateInfoClient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -168,9 +157,7 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                        .addComponent(AddClient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
                         .addComponent(UpdateInfoClient)
                         .addGap(18, 18, 18)
                         .addComponent(DeleteClient)
@@ -187,7 +174,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(AddClient)
                     .addComponent(UpdateInfoClient)
                     .addComponent(DeleteClient)
                     .addComponent(ReloadClientPage))
@@ -268,13 +254,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddClientActionPerformed
-        // TODO add your handling code here:
-
-        ThemChuHo addClientWindow = new ThemChuHo();
-        addClientWindow.setVisible(true);
-    }//GEN-LAST:event_AddClientActionPerformed
-
     private void UpdateInfoClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateInfoClientActionPerformed
         // TODO add your handling code here:
         SuaThongTinChuHo updateClientWindow = new SuaThongTinChuHo();
@@ -345,7 +324,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddClient;
     private javax.swing.JButton DeleteClient;
     private javax.swing.JButton ReloadClientPage;
     private javax.swing.JButton UpdateInfoClient;

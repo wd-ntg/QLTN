@@ -63,7 +63,7 @@ public class QLHopDong extends javax.swing.JPanel {
         initComponents();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         initTable();
-        fillTableHopDong("");
+            fillTableHopDong("");
     }
     private void initTable() {
         String[] header = new String[]{"MAHD","Tên Hợp Đồng","Tên Chủ Hộ", "Email","Địa Điểm Đăng Ký","Ngày Đăng Ký", "CCCD", "Ảnh Nhà Đất", "Chữ Ký","Duyệt"};

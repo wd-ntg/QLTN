@@ -47,18 +47,31 @@ public class QuanLiNhanVienCtrl {
 // hashedPassword là chuỗi mật khẩu đã được băm
             statement2.executeUpdate();
 
-            String sql = "INSERT INTO NHANVIEN (MANV, HOTEN, SDT, NGAYLAM, CCCD, GIOITINH, MAKHUVUC) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql);
+            if (taikhoan.getMAPQ().equals("R1")) {
+                String sql = "INSERT INTO QUANLY (MANV, HOTEN, SDT, NGAYLAM, CCCD) VALUES (?, ?, ?, ?, ?)";
+                statement = connection.prepareStatement(sql);
 
-            statement.setString(1, nhanvien.getMANV());
-            statement.setString(2, nhanvien.getHOTEN());
-            statement.setString(3, nhanvien.getSDT());
-            statement.setString(4, nhanvien.getNGAYLAM());
-            statement.setString(5, nhanvien.getCCCD());
-            statement.setString(6, nhanvien.getGIOITINH());
-            statement.setString(7, nhanvien.getMAKHUVUC());
+                statement.setString(1, nhanvien.getMANV());
+                statement.setString(2, nhanvien.getHOTEN());
+                statement.setString(3, nhanvien.getSDT());
+                statement.setString(4, nhanvien.getNGAYLAM());
+                statement.setString(5, nhanvien.getCCCD());
 //            String hashedPassword = PasswordHashing.hashPassword(nv.getMatKhau());
-            statement.executeUpdate();
+                statement.executeUpdate();
+            } else {
+                String sql = "INSERT INTO NHANVIEN (MANV, HOTEN, SDT, NGAYLAM, CCCD, GIOITINH, MAKHUVUC) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                statement = connection.prepareStatement(sql);
+
+                statement.setString(1, nhanvien.getMANV());
+                statement.setString(2, nhanvien.getHOTEN());
+                statement.setString(3, nhanvien.getSDT());
+                statement.setString(4, nhanvien.getNGAYLAM());
+                statement.setString(5, nhanvien.getCCCD());
+                statement.setString(6, nhanvien.getGIOITINH());
+                statement.setString(7, nhanvien.getMAKHUVUC());
+//            String hashedPassword = PasswordHashing.hashPassword(nv.getMatKhau());
+                statement.executeUpdate();
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(QuanLiNhanVienCtrl.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,12 +102,11 @@ public class QuanLiNhanVienCtrl {
         try {
             connection = ConnectDB.getConnection();
             String sql = "SELECT NV.MANV, NV.HOTEN, NV.SDT, NV.NGAYLAM, NV.CCCD, NV.GIOITINH, NV.MAKHUVUC, TAIKHOAN.EMAIL, TAIKHOAN.MAPQ, KV.TENKHUVUC, PQ.TENQUYEN "
-            + "FROM NHANVIEN NV "
-            + "JOIN KHUVUC KV ON KV.MAKHUVUC = NV.MAKHUVUC "
-            + "JOIN TAIKHOAN ON TAIKHOAN.MATK = NV.MANV "
-            + "JOIN PHANQUYEN PQ ON PQ.MAPQ = TAIKHOAN.MAPQ "
-            + "WHERE TAIKHOAN.TRANGTHAI = 'TRUE'";
-
+                    + "FROM NHANVIEN NV "
+                    + "JOIN KHUVUC KV ON KV.MAKHUVUC = NV.MAKHUVUC "
+                    + "JOIN TAIKHOAN ON TAIKHOAN.MATK = NV.MANV "
+                    + "JOIN PHANQUYEN PQ ON PQ.MAPQ = TAIKHOAN.MAPQ "
+                    + "WHERE TAIKHOAN.TRANGTHAI = 'TRUE'";
 
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -171,7 +183,7 @@ public class QuanLiNhanVienCtrl {
     public static void CapNhatNhanVien(NhanVienModel nhanvien, String email, String maNV) throws ClassNotFoundException {
         Connection connection = null;
         PreparedStatement statement = null;
-        
+
         System.out.println(nhanvien.getHOTEN());
 
         try {

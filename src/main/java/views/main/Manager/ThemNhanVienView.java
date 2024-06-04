@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.UUID;
 import models.KhuVucModel;
 import models.NhanVienModel;
 import models.TaiKhoanModel;
@@ -292,7 +293,7 @@ public class ThemNhanVienView extends javax.swing.JFrame {
         Date currentDate = new Date(System.currentTimeMillis());
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
         String dateString = dateFormat1.format(currentDate);
-        String MANV = "NV" + dateString;
+        String MANV;
       
 
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -313,8 +314,10 @@ public class ThemNhanVienView extends javax.swing.JFrame {
 
         if (String.valueOf(chucVu.getSelectedItem()).equals("Quản lí")) {
             MAPQ = "R1";
+            MANV = "QL" + UUID.randomUUID().toString().substring(0,12);
         } else {
             MAPQ = "R2";
+            MANV = "NV" + UUID.randomUUID().toString().substring(0,12);
         }
 
 
@@ -345,6 +348,12 @@ public class ThemNhanVienView extends javax.swing.JFrame {
 
     private void chucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chucVuActionPerformed
         // TODO add your handling code here:
+        if(chucVu.getSelectedItem().equals("Quản lí")) {
+            khuVucLamViec.setEnabled(false);
+        } else {
+            khuVucLamViec.setEnabled(true);
+        }
+        
     }//GEN-LAST:event_chucVuActionPerformed
 
     private void cccdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cccdActionPerformed
