@@ -226,9 +226,9 @@ public class TrangChu extends javax.swing.JPanel {
         txtNgayDenHan.setEditable(false);
         txtNgayDenHan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        lblTrangThaiThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTrangThaiThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTrangThaiThanhToan.setForeground(new java.awt.Color(255, 0, 0));
-        lblTrangThaiThanhToan.setText("Quá hạn");
+        lblTrangThaiThanhToan.setText("Quá hạn, vui lòng đến trụ sở để thanh toán");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -246,18 +246,22 @@ public class TrangChu extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
-                .addGap(50, 50, 50)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(txtDiaChi))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtDongHo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                                     .addComponent(txtMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtKi))
                                 .addGap(50, 50, 50))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblTrangThaiThanhToan)
+                                .addGap(2, 2, 2)
+                                .addComponent(lblTrangThaiThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -269,8 +273,7 @@ public class TrangChu extends javax.swing.JPanel {
                             .addComponent(txtTieuThu, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                             .addComponent(txtSoTien)
                             .addComponent(txtNgayDenHan)
-                            .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtDiaChi))
+                            .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(97, 97, 97))
         );
         jPanel2Layout.setVerticalGroup(
@@ -461,6 +464,7 @@ public class TrangChu extends javax.swing.JPanel {
             Date ngayHomNay = new Date();
             if (ngayHomNay.after(ngayDenHan)) {
                 lblTrangThaiThanhToan.setVisible(true);
+                btnThanhToan.setEnabled(false);
             } else {
                 lblTrangThaiThanhToan.setVisible(false);
             }
@@ -481,9 +485,9 @@ public class TrangChu extends javax.swing.JPanel {
         txtNgayDenHan.setText("");
         datThongBao();
         lblTrangThaiThanhToan.setVisible(false);
+        btnThanhToan.setEnabled(true);
         try {
             hienThiHoaDon();
-            hienThiDSCacHo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -2,6 +2,7 @@ package views.main.PaymentCenter;
 
 import controllers.PaymentCenter.PaymentCenterController;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ public class ThuTien extends javax.swing.JPanel {
         initComponents();
         tableModel = (DefaultTableModel) tblHoaDon.getModel();
         setingUITable();
+        lblNofication.setVisible(false);
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
     }
     
@@ -97,6 +99,7 @@ public class ThuTien extends javax.swing.JPanel {
         txtTienKhachDua = new javax.swing.JTextField();
         txtTienThoi = new javax.swing.JTextField();
         btnThanhToan = new javax.swing.JButton();
+        lblNofication = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -138,7 +141,15 @@ public class ThuTien extends javax.swing.JPanel {
             new String [] {
                 "Mã hóa đơn", "Mã địa chỉ", "Tên địa chỉ", "Mã đồng hồ", "Kì"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblHoaDonMouseClicked(evt);
@@ -385,6 +396,10 @@ public class ThuTien extends javax.swing.JPanel {
             }
         });
 
+        lblNofication.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNofication.setForeground(new java.awt.Color(255, 0, 51));
+        lblNofication.setText("Quá hạn, vui lòng ra trụ sở thanh toán");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -396,12 +411,17 @@ public class ThuTien extends javax.swing.JPanel {
                     .addComponent(jLabel20))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTienThoi, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTienThoi, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(157, 157, 157)
-                        .addComponent(btnThanhToan)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnThanhToan)
+                        .addContainerGap(155, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNofication)
+                        .addGap(80, 80, 80))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +434,8 @@ public class ThuTien extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(txtTienThoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTienThoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNofication))
                 .addGap(22, 22, 22))
         );
 
@@ -509,6 +530,14 @@ public class ThuTien extends javax.swing.JPanel {
                 lblKi.setText(hoaDon.getKi());
                 lblMaHoaDon.setText(hoaDon.getMaHoaDon());
                 lblTongTien.setText(String.valueOf(GenerateCode.generateMoneyCurrency(hoaDon.getTongTien())));
+                Date ngayDenHan = hoaDon.getNgayDenHan();
+                Date ngayHomNay = new Date();
+                if (ngayHomNay.after(ngayDenHan)) {
+                    btnThanhToan.setEnabled(false);
+                    lblNofication.setVisible(true);
+                } else {
+                    lblNofication.setVisible(false);
+                }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ThuTien.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -548,6 +577,8 @@ public class ThuTien extends javax.swing.JPanel {
         txtTienKhachDua.setText("");
         txtTienThoi.setText("");
         txtTimKiem.setText("");
+        btnThanhToan.setEnabled(true);
+        lblNofication.setVisible(false);
     }
     
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -646,6 +677,7 @@ public class ThuTien extends javax.swing.JPanel {
     private javax.swing.JLabel lblKi;
     private javax.swing.JLabel lblMaChuHo;
     private javax.swing.JLabel lblMaHoaDon;
+    private javax.swing.JLabel lblNofication;
     private javax.swing.JLabel lblTenChuHo;
     private javax.swing.JLabel lblThongBao;
     private javax.swing.JLabel lblTieuThu;

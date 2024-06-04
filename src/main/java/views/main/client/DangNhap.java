@@ -74,7 +74,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cboHienThiMatKhau = new javax.swing.JCheckBox();
+        chkHienThiMatKhau = new javax.swing.JCheckBox();
         lblQuenMatKhau = new javax.swing.JLabel();
         btnDangNhap = new javax.swing.JButton();
         txtMatKhau = new javax.swing.JPasswordField();
@@ -106,11 +106,11 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Công ty quản lý thu tiền nước Quận 9");
 
-        cboHienThiMatKhau.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        cboHienThiMatKhau.setText("Hiện mật khẩu");
-        cboHienThiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+        chkHienThiMatKhau.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        chkHienThiMatKhau.setText("Hiện mật khẩu");
+        chkHienThiMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboHienThiMatKhauActionPerformed(evt);
+                chkHienThiMatKhauActionPerformed(evt);
             }
         });
 
@@ -167,7 +167,7 @@ public class DangNhap extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(cboHienThiMatKhau)
+                                    .addComponent(chkHienThiMatKhau)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                                     .addComponent(lblQuenMatKhau)))
                             .addComponent(dangKyHopDongMoi))
@@ -193,7 +193,7 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboHienThiMatKhau)
+                    .addComponent(chkHienThiMatKhau)
                     .addComponent(lblQuenMatKhau))
                 .addGap(18, 18, 18)
                 .addComponent(dangKyHopDongMoi)
@@ -215,14 +215,14 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void cboHienThiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHienThiMatKhauActionPerformed
+    private void chkHienThiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkHienThiMatKhauActionPerformed
         // TODO add your handling code here:
-        if (cboHienThiMatKhau.isSelected()) {
+        if (chkHienThiMatKhau.isSelected()) {
             txtMatKhau.setEchoChar((char) 0);
         } else {
             txtMatKhau.setEchoChar('*');
         }
-    }//GEN-LAST:event_cboHienThiMatKhauActionPerformed
+    }//GEN-LAST:event_chkHienThiMatKhauActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
@@ -369,7 +369,7 @@ public class DangNhap extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnDangNhap;
-    private javax.swing.JCheckBox cboHienThiMatKhau;
+    private javax.swing.JCheckBox chkHienThiMatKhau;
     private javax.swing.JLabel dangKyHopDongMoi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

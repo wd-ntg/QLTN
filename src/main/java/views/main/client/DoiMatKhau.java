@@ -38,7 +38,7 @@ public class DoiMatKhau extends javax.swing.JPanel {
         txtMatKhauHienTai = new javax.swing.JPasswordField();
         txtMatKhauMoi = new javax.swing.JPasswordField();
         txtMatKhauNhapLai = new javax.swing.JPasswordField();
-        cboShowPassword = new javax.swing.JCheckBox();
+        chkShowPassword = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         btnLamMoi = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
@@ -90,11 +90,11 @@ public class DoiMatKhau extends javax.swing.JPanel {
 
         txtMatKhauNhapLai.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        cboShowPassword.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        cboShowPassword.setText("Hiển thị mật khẩu");
-        cboShowPassword.addActionListener(new java.awt.event.ActionListener() {
+        chkShowPassword.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        chkShowPassword.setText("Hiển thị mật khẩu");
+        chkShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboShowPasswordActionPerformed(evt);
+                chkShowPasswordActionPerformed(evt);
             }
         });
 
@@ -110,7 +110,7 @@ public class DoiMatKhau extends javax.swing.JPanel {
                     .addComponent(jLabel3))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboShowPassword)
+                    .addComponent(chkShowPassword)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtMatKhauNhapLai, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                         .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +133,7 @@ public class DoiMatKhau extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(txtMatKhauNhapLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addComponent(cboShowPassword)
+                .addComponent(chkShowPassword)
                 .addGap(17, 17, 17))
         );
 
@@ -279,9 +279,9 @@ public class DoiMatKhau extends javax.swing.JPanel {
         refresh();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
-    private void cboShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboShowPasswordActionPerformed
+    private void chkShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkShowPasswordActionPerformed
         // TODO add your handling code here:
-        if (cboShowPassword.isSelected()) {
+        if (chkShowPassword.isSelected()) {
             txtMatKhauHienTai.setEchoChar((char) 0);
             txtMatKhauMoi.setEchoChar((char) 0);
             txtMatKhauNhapLai.setEchoChar((char) 0);
@@ -290,13 +290,13 @@ public class DoiMatKhau extends javax.swing.JPanel {
             txtMatKhauMoi.setEchoChar('*');
             txtMatKhauNhapLai.setEchoChar('*');
         }
-    }//GEN-LAST:event_cboShowPasswordActionPerformed
+    }//GEN-LAST:event_chkShowPasswordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnXacNhan;
-    private javax.swing.JCheckBox cboShowPassword;
+    private javax.swing.JCheckBox chkShowPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

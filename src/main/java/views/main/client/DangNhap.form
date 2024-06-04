@@ -53,7 +53,7 @@
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="cboHienThiMatKhau" min="-2" max="-2" attributes="0"/>
+                                      <Component id="chkHienThiMatKhau" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace pref="194" max="32767" attributes="0"/>
                                       <Component id="lblQuenMatKhau" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -87,7 +87,7 @@
                   <Component id="txtMatKhau" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cboHienThiMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chkHienThiMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblQuenMatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -145,7 +145,7 @@
             <Property name="text" type="java.lang.String" value="C&#xf4;ng ty qu&#x1ea3;n l&#xfd; thu ti&#x1ec1;n n&#x1b0;&#x1edb;c Qu&#x1ead;n 9"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="cboHienThiMatKhau">
+        <Component class="javax.swing.JCheckBox" name="chkHienThiMatKhau">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="2"/>
@@ -153,7 +153,7 @@
             <Property name="text" type="java.lang.String" value="Hi&#x1ec7;n m&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboHienThiMatKhauActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkHienThiMatKhauActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblQuenMatKhau">

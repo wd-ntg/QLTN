@@ -31,6 +31,7 @@ public class LoaiNuocView extends javax.swing.JPanel {
         setingUITable1();
         setingUITable2();
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        TableCustom.apply(jScrollPane2, TableCustom.TableType.MULTI_LINE);
         try {
             hienThiCacLoaiNuoc();
         } catch (ClassNotFoundException ex) {
