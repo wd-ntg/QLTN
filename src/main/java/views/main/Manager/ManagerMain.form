@@ -40,9 +40,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jpnMenu" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jpnView" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="jpnView" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -71,26 +71,35 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jpnNhacNuoc" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jSeparator1" alignment="0" min="-2" pref="6" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="jpnQLHD" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jpnNhacNuoc" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="jpnInfo" alignment="1" min="-2" pref="196" max="-2" attributes="0"/>
+                                              <Component id="jpnHome" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jpnBill" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jpnChangePassword" max="32767" attributes="0"/>
+                                          <Component id="jpnAddWaterCategory" max="32767" attributes="0"/>
+                                          <Component id="jpnQuanli" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <Component id="jpnHome" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jpnBill" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jpnInfo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jpnChangePassword" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jpnLogOut" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jpnAddWaterCategory" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jpnQuanli" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jpnQLHD" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jpnLogOut" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -99,27 +108,27 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jpnHome" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jpnBill" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="jpnInfo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jpnChangePassword" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jpnAddWaterCategory" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="jpnQuanli" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="jpnNhacNuoc" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="jpnQLHD" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace pref="17" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="78" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jpnLogOut" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -147,12 +156,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbHome" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jlbHome" min="-2" pref="158" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbHome" alignment="1" pref="60" max="32767" attributes="0"/>
+                      <Component id="jlbHome" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -160,7 +172,7 @@
                 <Component class="javax.swing.JLabel" name="jlbHome">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Trang ch&#x1ee7;"/>
@@ -183,12 +195,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbBill" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jlbBill" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbBill" alignment="1" pref="60" max="32767" attributes="0"/>
+                      <Component id="jlbBill" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -196,7 +212,7 @@
                 <Component class="javax.swing.JLabel" name="jlbBill">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xed; nh&#xe2;n vi&#xea;n"/>
@@ -219,15 +235,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jlbInfo" pref="233" max="32767" attributes="0"/>
+                          <Component id="jlbInfo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbInfo" alignment="1" pref="60" max="32767" attributes="0"/>
+                      <Component id="jlbInfo" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -235,7 +252,7 @@
                 <Component class="javax.swing.JLabel" name="jlbInfo">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xed; ng&#x1b0;&#x1edd;i d&#xf9;ng"/>
@@ -258,12 +275,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbChangePassword" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jlbChangePassword" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbChangePassword" alignment="0" pref="60" max="32767" attributes="0"/>
+                      <Component id="jlbChangePassword" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -271,7 +291,7 @@
                 <Component class="javax.swing.JLabel" name="jlbChangePassword">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Ph&#xe2;n c&#xf4;ng"/>
@@ -294,12 +314,19 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbLogOut" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jlbLogOut" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbLogOut" alignment="0" pref="54" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jlbLogOut" min="-2" pref="53" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -307,7 +334,7 @@
                 <Component class="javax.swing.JLabel" name="jlbLogOut">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t"/>
@@ -348,7 +375,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbAddWaterCategory" alignment="0" pref="60" max="32767" attributes="0"/>
+                      <Component id="jlbAddWaterCategory" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -356,7 +383,7 @@
                 <Component class="javax.swing.JLabel" name="jlbAddWaterCategory">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i n&#x1b0;&#x1edb;c"/>
@@ -379,15 +406,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jlbQuanli" min="-2" pref="218" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jlbQuanli" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbQuanli" alignment="0" pref="54" max="32767" attributes="0"/>
+                      <Component id="jlbQuanli" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -395,7 +423,7 @@
                 <Component class="javax.swing.JLabel" name="jlbQuanli">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; qu&#x1ea3;n l&#xed;"/>
@@ -421,7 +449,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbNhacNuoc" alignment="0" pref="239" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jlbNhacNuoc" min="-2" pref="185" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -434,7 +465,7 @@
                 <Component class="javax.swing.JLabel" name="jlbNhacNuoc">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Nh&#x1eaf;c n&#x1b0;&#x1edb;c"/>
@@ -460,12 +491,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbQLHD" alignment="0" pref="239" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jlbQLHD" min="-2" pref="194" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jlbQLHD" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlbQLHD" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -473,7 +507,7 @@
                 <Component class="javax.swing.JLabel" name="jlbQLHD">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="24" style="1"/>
+                      <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n L&#xfd; H&#x1ee3;p &#x110;&#x1ed3;ng"/>
@@ -496,7 +530,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="931" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="961" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

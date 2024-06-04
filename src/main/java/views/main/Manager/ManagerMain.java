@@ -84,7 +84,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnHome.setBackground(new java.awt.Color(255, 255, 255));
         jpnHome.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbHome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbHome.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbHome.setText("Trang chủ");
 
@@ -92,17 +92,19 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnHome.setLayout(jpnHomeLayout);
         jpnHomeLayout.setHorizontalGroup(
             jpnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnHomeLayout.createSequentialGroup()
+                .addComponent(jlbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 18, Short.MAX_VALUE))
         );
         jpnHomeLayout.setVerticalGroup(
             jpnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jlbHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnBill.setBackground(new java.awt.Color(255, 255, 255));
         jpnBill.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbBill.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbBill.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbBill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbBill.setText("Quản lí nhân viên");
 
@@ -110,17 +112,20 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnBill.setLayout(jpnBillLayout);
         jpnBillLayout.setHorizontalGroup(
             jpnBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnBillLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbBill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jpnBillLayout.setVerticalGroup(
             jpnBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jlbBill, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnInfo.setBackground(new java.awt.Color(255, 255, 255));
         jpnInfo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbInfo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbInfo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbInfo.setText("Quản lí người dùng");
 
@@ -128,19 +133,20 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnInfo.setLayout(jpnInfoLayout);
         jpnInfoLayout.setHorizontalGroup(
             jpnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnInfoLayout.createSequentialGroup()
+            .addGroup(jpnInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
+                .addComponent(jlbInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpnInfoLayout.setVerticalGroup(
             jpnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jlbInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnChangePassword.setBackground(new java.awt.Color(255, 255, 255));
         jpnChangePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbChangePassword.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbChangePassword.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbChangePassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbChangePassword.setText("Phân công");
 
@@ -148,17 +154,19 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnChangePassword.setLayout(jpnChangePasswordLayout);
         jpnChangePasswordLayout.setHorizontalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnChangePasswordLayout.createSequentialGroup()
+                .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jpnChangePasswordLayout.setVerticalGroup(
             jpnChangePasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jlbChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnLogOut.setBackground(new java.awt.Color(255, 255, 255));
         jpnLogOut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbLogOut.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbLogOut.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbLogOut.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbLogOut.setText("Đăng xuất");
         jlbLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -171,11 +179,16 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnLogOut.setLayout(jpnLogOutLayout);
         jpnLogOutLayout.setHorizontalGroup(
             jpnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpnLogOutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jpnLogOutLayout.setVerticalGroup(
             jpnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+            .addGroup(jpnLogOutLayout.createSequentialGroup()
+                .addComponent(jlbLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -183,7 +196,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnAddWaterCategory.setBackground(new java.awt.Color(255, 255, 255));
         jpnAddWaterCategory.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbAddWaterCategory.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbAddWaterCategory.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbAddWaterCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbAddWaterCategory.setText("Loại nước");
 
@@ -197,13 +210,13 @@ public class ManagerMain extends javax.swing.JFrame {
         );
         jpnAddWaterCategoryLayout.setVerticalGroup(
             jpnAddWaterCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jlbAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnQuanli.setBackground(new java.awt.Color(255, 255, 255));
         jpnQuanli.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbQuanli.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbQuanli.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbQuanli.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbQuanli.setText("Hồ sơ quản lí");
         jlbQuanli.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -216,19 +229,20 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnQuanli.setLayout(jpnQuanliLayout);
         jpnQuanliLayout.setHorizontalGroup(
             jpnQuanliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnQuanliLayout.createSequentialGroup()
-                .addComponent(jlbQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnQuanliLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jpnQuanliLayout.setVerticalGroup(
             jpnQuanliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+            .addComponent(jlbQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jpnNhacNuoc.setBackground(new java.awt.Color(255, 255, 255));
         jpnNhacNuoc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbNhacNuoc.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbNhacNuoc.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbNhacNuoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbNhacNuoc.setText("Nhắc nước");
         jlbNhacNuoc.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -241,7 +255,9 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnNhacNuoc.setLayout(jpnNhacNuocLayout);
         jpnNhacNuocLayout.setHorizontalGroup(
             jpnNhacNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbNhacNuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addGroup(jpnNhacNuocLayout.createSequentialGroup()
+                .addComponent(jlbNhacNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jpnNhacNuocLayout.setVerticalGroup(
             jpnNhacNuocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +267,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnQLHD.setBackground(new java.awt.Color(255, 255, 255));
         jpnQLHD.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlbQLHD.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlbQLHD.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbQLHD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbQLHD.setText("Quản Lý Hợp Đồng");
         jlbQLHD.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -264,11 +280,13 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnQLHD.setLayout(jpnQLHDLayout);
         jpnQLHDLayout.setHorizontalGroup(
             jpnQLHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbQLHD, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addGroup(jpnQLHDLayout.createSequentialGroup()
+                .addComponent(jlbQLHD, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         jpnQLHDLayout.setVerticalGroup(
             jpnQLHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbQLHD)
+            .addComponent(jlbQLHD, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
@@ -276,22 +294,27 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnMenuLayout.setHorizontalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnMenuLayout.createSequentialGroup()
-                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnMenuLayout.createSequentialGroup()
-                            .addGap(35, 35, 35)
-                            .addComponent(jLabel1))
-                        .addComponent(jpnHome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnBill, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnChangePassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnLogOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jpnQuanli, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jpnQLHD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jpnQLHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jpnMenuLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jpnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jpnHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jpnBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jpnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jpnQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(jpnMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jpnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(13, 13, 13))
         );
         jpnMenuLayout.setVerticalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,25 +323,25 @@ public class ManagerMain extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpnHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(28, 28, 28)
                 .addComponent(jpnBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(32, 32, 32)
                 .addComponent(jpnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(28, 28, 28)
                 .addComponent(jpnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(jpnQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(26, 26, 26)
                 .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(32, 32, 32)
                 .addComponent(jpnQLHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         jpnView.setBackground(new java.awt.Color(255, 255, 255));
@@ -327,7 +350,7 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnView.setLayout(jpnViewLayout);
         jpnViewLayout.setHorizontalGroup(
             jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 931, Short.MAX_VALUE)
+            .addGap(0, 961, Short.MAX_VALUE)
         );
         jpnViewLayout.setVerticalGroup(
             jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,8 +364,8 @@ public class ManagerMain extends javax.swing.JFrame {
             .addGroup(jpnRootLayout.createSequentialGroup()
                 .addComponent(jpnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jpnRootLayout.setVerticalGroup(
             jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
