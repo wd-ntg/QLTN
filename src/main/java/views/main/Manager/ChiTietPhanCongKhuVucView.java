@@ -147,6 +147,7 @@ public class ChiTietPhanCongKhuVucView extends javax.swing.JFrame {
         String[] parts = TimeSelect.split("/");
 
         // Lấy tháng và năm từ mảng parts
+        
         int month = Integer.parseInt(parts[0]);
         int year = Integer.parseInt(parts[1]);
 

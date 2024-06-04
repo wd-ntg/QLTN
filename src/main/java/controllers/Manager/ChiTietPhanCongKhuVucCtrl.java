@@ -61,11 +61,13 @@ public class ChiTietPhanCongKhuVucCtrl {
                     + "JOIN \n"
                     + "    CHUHO CH ON CH.MACH = DH.MACH\n"
                     + "JOIN \n"
+                    + "    TAIKHOAN TK ON CH.MACH = TK.MATK\n"
+                    + "JOIN \n"
                     + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
                     + "JOIN \n"
                     + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
                     + "WHERE \n"
-                    + "    CTKV.MAKHUVUC = ? AND PC.NGAYPHAN LIKE ?";
+                    + "    CTKV.MAKHUVUC = ? AND PC.NGAYPHAN LIKE ? AND TK.TRANGTHAI = 'True'";
             statement = connection.prepareStatement(sql);
             statement.setString(1, maKhuVuc);
             statement.setString(2, "%" + TimeLine + "%");
@@ -294,6 +296,8 @@ public class ChiTietPhanCongKhuVucCtrl {
                     + "JOIN \n"
                     + "    CHUHO CH ON CH.MACH = DH.MACH\n"
                     + "JOIN \n"
+                    + "    TAIKHOAN TK ON CH.MACH = TK.MATK\n"
+                    + "JOIN \n"
                     + "    LOAI L ON L.MALOAI = DH.MALOAI\n"
                     + "JOIN \n"
                     + "    CHITIETKHUVUC CTKV ON CTKV.MACTKV = DH.MADIACHI\n"
@@ -302,7 +306,7 @@ public class ChiTietPhanCongKhuVucCtrl {
                     + "    AND PC.KYPHANCONG = ?\n"
                     + "WHERE \n"
                     + "    CTKV.MAKHUVUC = ?\n"
-                    + "    AND PC.MADH IS NULL;";
+                    + "    AND PC.MADH IS NULL AND TK.TRANGTHAI = 'True';";
 
             statement = connection.prepareStatement(sql);
             statement.setString(1, TimeLine);
@@ -366,7 +370,7 @@ public class ChiTietPhanCongKhuVucCtrl {
                     + "FROM NHANVIEN NV "
                     + "JOIN KHUVUC KV ON KV.MAKHUVUC = NV.MAKHUVUC "
                     + "JOIN TAIKHOAN TK ON TK.MATK = NV.MANV "
-                    + "WHERE KV.MAKHUVUC = ?";
+                    + "WHERE KV.MAKHUVUC = ? AND TK.TRANGTHAI = 'True'";
 
             statement = connection.prepareStatement(sql);
             statement.setString(1, maKhuVuc);
@@ -415,8 +419,15 @@ public class ChiTietPhanCongKhuVucCtrl {
         int monthCurrent = currentDate.getMonthValue();
         int dayCurrent = currentDate.getDayOfMonth();
 
-        String ngayThangNamHienTai = dayCurrent+"/"+monthCurrent+"/"+yearCurrent;
+        String ngayThangNamHienTai = dayCurrent + "/" + monthCurrent + "/" + yearCurrent;
         String kyPhanCongHienTai = monthCurrent + "/" + yearCurrent;
+        String kyGhiNuocHienTai;
+
+        if (monthCurrent == 1) {
+            kyGhiNuocHienTai = "12/" + (yearCurrent - 1);
+        } else {
+            kyGhiNuocHienTai = (monthCurrent - 1) + "/" + yearCurrent;
+        }
 
 //        Phải có nameDetailAddres khác nhau nữa 
 
@@ -429,6 +440,8 @@ public class ChiTietPhanCongKhuVucCtrl {
                 String maPC = phanCongModel.getMAPC();
 
                 String maNhanVien = phanCongModel.getMANV();
+                
+                
 
                 // Thực hiện truy vấn để lấy ngày phân công hiện tại
                 String layNgayQuery = "SELECT NGAYPHAN, MADH FROM PHANCONG WHERE MAPC = ?";
@@ -444,21 +457,12 @@ public class ChiTietPhanCongKhuVucCtrl {
                 preparedStatement.close();
 
                 String thayDoiNgay = ngayThangNamHienTai;
-
-                // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
-                String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ?  WHERE MAPC = ?";
-                updateStatement = connection.prepareStatement(updateQuery);
-                updateStatement.setString(1, maNhanVien);
-                updateStatement.setString(2, thayDoiNgay);
-                updateStatement.setString(3, maPC);
-
-                updateStatement.executeUpdate();
-
+                
                 // Kiểm tra sự tồn tại trong bảng GHINUOC
                 String checkExistQuery = "SELECT MANV, CSM FROM GHINUOC WHERE MADH = ? AND KI LIKE ?";
                 checkExistStatement = connection.prepareStatement(checkExistQuery);
                 checkExistStatement.setString(1, maDongHo);
-                checkExistStatement.setString(2, "%" + TimeAssign + "%");
+                checkExistStatement.setString(2, "%" + kyGhiNuocHienTai + "%");
                 ResultSet checkExistResult = checkExistStatement.executeQuery();
 
                 if (checkExistResult.next()) {
@@ -469,11 +473,22 @@ public class ChiTietPhanCongKhuVucCtrl {
                     }
                 }
 
+                // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
+                String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ?  WHERE MAPC = ?";
+                updateStatement = connection.prepareStatement(updateQuery);
+                updateStatement.setString(1, maNhanVien);
+                updateStatement.setString(2, thayDoiNgay);
+                updateStatement.setString(3, maPC);
+
+                updateStatement.executeUpdate();
+
+                
+
                 String updateBanGhiNuoc = "Update GHINUOC SET MANV = ? WHERE MADH = ? AND KI LIKE ?";
                 updateGhiNuoc = connection.prepareStatement(updateBanGhiNuoc);
                 updateGhiNuoc.setString(1, maNhanVien);
                 updateGhiNuoc.setString(2, maDongHo);
-                updateGhiNuoc.setString(3, "%" + kyPhanCongHienTai + "%");
+                updateGhiNuoc.setString(3, "%" + kyGhiNuocHienTai + "%");
 
                 updateGhiNuoc.executeUpdate();
             }
@@ -502,8 +517,15 @@ public class ChiTietPhanCongKhuVucCtrl {
         int monthCurrent = currentDate.getMonthValue();
         int dayCurrent = currentDate.getDayOfMonth();
 
-        String ngayThangNamHienTai = dayCurrent+"/"+monthCurrent+"/"+yearCurrent;
+        String ngayThangNamHienTai = dayCurrent + "/" + monthCurrent + "/" + yearCurrent;
         String kyPhanCongHienTai = monthCurrent + "/" + yearCurrent;
+        String kyGhiNuocHienTai;
+
+        if (monthCurrent == 1) {
+            kyGhiNuocHienTai = "12/" + (yearCurrent - 1);
+        } else {
+            kyGhiNuocHienTai = (monthCurrent - 1) + "/" + yearCurrent;
+        }
 
         String maQL = DataGlobal.getDataGLobal.dataGlobal.getPhienQLHienTai().getMAQL();
 
@@ -539,7 +561,7 @@ public class ChiTietPhanCongKhuVucCtrl {
                 ghiNuocStatement.setString(1, maGhi);
                 ghiNuocStatement.setString(2, maDongHo);
                 ghiNuocStatement.setString(3, maNhanVien);
-                ghiNuocStatement.setString(4, kyPhanCongHienTai);
+                ghiNuocStatement.setString(4, kyGhiNuocHienTai);
                 ghiNuocStatement.setString(5, ngayThangNamHienTai);
                 ghiNuocStatement.setString(6, "10/" + kyPhanCongHienTai);
 
@@ -730,12 +752,25 @@ public class ChiTietPhanCongKhuVucCtrl {
 
         List<String> nhanVienList = new ArrayList<>();
         int nhanVienIndex = 0;
+        
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiNuocHienTai;
 
+        if (monthCurrent == 1) {
+            kyGhiNuocHienTai = "12/" + (yearCurrent - 1);
+        } else {
+            kyGhiNuocHienTai = (monthCurrent - 1) + "/" + yearCurrent;
+        }
+        
         try {
             connection = ConnectDB.getConnection();
 
             // Lấy danh sách IDNhanVien từ bảng NhanVien với điều kiện MAKV = ?
-            String sqlNhanVien = "SELECT MANV FROM NhanVien WHERE MAKHUVUC = ?";
+            String sqlNhanVien = "SELECT MANV FROM NhanVien JOIN TAIKHOAN AS TK ON TK.MATK = NhanVien.MANV WHERE MAKHUVUC = ? AND TK.TRANGTHAI = 'True'";
             statement = connection.prepareStatement(sqlNhanVien);
             statement.setString(1, maKhuVuc); // sử dụng maKhuVuc làm điều kiện MAKV
             ResultSet rsNhanVien = statement.executeQuery();
@@ -806,7 +841,7 @@ public class ChiTietPhanCongKhuVucCtrl {
                 updateStatement.setString(1, maGhi);
                 updateStatement.setString(2, maDongHo);
                 updateStatement.setString(3, maNhanVien);
-                updateStatement.setString(4, kyPhanCongHienTai);
+                updateStatement.setString(4, kyGhiNuocHienTai);
                 updateStatement.setString(5, ngayThangNamHienTai);
                 updateStatement.setString(6, "10/" + kyPhanCongHienTai);
 

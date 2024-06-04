@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -100,7 +101,7 @@ public class XemHopDong extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lỗi tải file");
             return 0;
         }
-    }
+    } 
     
 
     @SuppressWarnings("unchecked")

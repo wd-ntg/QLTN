@@ -228,7 +228,7 @@ public class CapNhatPhanCongChiTietCtrl {
                     + "FROM NHANVIEN NV "
                     + "JOIN KHUVUC KV ON KV.MAKHUVUC = NV.MAKHUVUC "
                     + "JOIN TAIKHOAN TK ON TK.MATK = NV.MANV "
-                    + "WHERE KV.MAKHUVUC = ?";
+                    + "WHERE KV.MAKHUVUC = ? AND TK.TRANGTHAI = 'True'";
 
             statement = connection.prepareStatement(sql);
             statement.setString(1, maKhuVuc);
@@ -282,6 +282,12 @@ public class CapNhatPhanCongChiTietCtrl {
 
         String ngayThangNamHienTai = dayCurrent + "/" + monthCurrent + "/" + yearCurrent;
         String kyPhanCongHienTai = monthCurrent + "/" + yearCurrent;
+        String kyGhiNuocHienTai;
+        if (monthCurrent == 1) {
+            kyGhiNuocHienTai = "12/" + (yearCurrent - 1);
+        } else {
+            kyGhiNuocHienTai = (monthCurrent - 1) + "/" + yearCurrent;
+        }
 
         try {
             connection = ConnectDB.getConnection();
@@ -300,20 +306,12 @@ public class CapNhatPhanCongChiTietCtrl {
             }
 
             String thayDoiNgay = ngayThangNamHienTai;
-
-            // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
-            String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ? WHERE MAPC = ?";
-            updateStatement = connection.prepareStatement(updateQuery);
-            updateStatement.setString(1, maNhanVien);
-            updateStatement.setString(2, thayDoiNgay);
-            updateStatement.setString(3, maPhanCong);
-            updateStatement.executeUpdate();
-
+            
             // Kiểm tra sự tồn tại trong bảng GHINUOC
             String checkExistQuery = "SELECT MANV, CSM FROM GHINUOC WHERE MADH = ? AND KI LIKE ?";
             checkExistStatement = connection.prepareStatement(checkExistQuery);
             checkExistStatement.setString(1, maDongHo);
-            checkExistStatement.setString(2, "%" + TimeAssign + "%");
+            checkExistStatement.setString(2, "%" + kyGhiNuocHienTai + "%");
             checkExistResult = checkExistStatement.executeQuery();
 
             if (checkExistResult.next()) {
@@ -324,12 +322,22 @@ public class CapNhatPhanCongChiTietCtrl {
                 }
             }
 
+            // Thực hiện truy vấn UPDATE để cập nhật dữ liệu
+            String updateQuery = "UPDATE PHANCONG SET MANV = ?, NGAYPHAN = ? WHERE MAPC = ?";
+            updateStatement = connection.prepareStatement(updateQuery);
+            updateStatement.setString(1, maNhanVien);
+            updateStatement.setString(2, thayDoiNgay);
+            updateStatement.setString(3, maPhanCong);
+            updateStatement.executeUpdate();
+
+            
+
             // Cập nhật bảng GHINUOC
             String updateBanGhiNuoc = "UPDATE GHINUOC SET MANV = ? WHERE MADH = ? AND KI LIKE ?";
             updateGhiNuoc = connection.prepareStatement(updateBanGhiNuoc);
             updateGhiNuoc.setString(1, maNhanVien);
             updateGhiNuoc.setString(2, maDongHo);
-            updateGhiNuoc.setString(3, "%" + kyPhanCongHienTai + "%");
+            updateGhiNuoc.setString(3, "%" + kyGhiNuocHienTai + "%");
             updateGhiNuoc.executeUpdate();
 
         } catch (SQLException ex) {

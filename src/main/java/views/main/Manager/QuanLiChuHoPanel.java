@@ -76,8 +76,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         UpdateInfoClient = new javax.swing.JButton();
         DeleteClient = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         ReloadClientPage = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listClientTable = new javax.swing.JTable();
@@ -111,9 +109,6 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
                 DeleteClientActionPerformed(evt);
             }
         });
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Tìm kiếm");
 
         ReloadClientPage.setBackground(new java.awt.Color(51, 102, 255));
         ReloadClientPage.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -149,21 +144,14 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
-                        .addComponent(UpdateInfoClient)
-                        .addGap(18, 18, 18)
-                        .addComponent(DeleteClient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ReloadClientPage)
-                        .addGap(27, 27, 27))))
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addComponent(UpdateInfoClient)
+                .addGap(18, 18, 18)
+                .addComponent(DeleteClient)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ReloadClientPage)
+                .addGap(27, 27, 27))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1))
@@ -177,11 +165,7 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
                     .addComponent(UpdateInfoClient)
                     .addComponent(DeleteClient)
                     .addComponent(ReloadClientPage))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(56, 56, 56)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -330,12 +314,10 @@ public class QuanLiChuHoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable listClientTable;
     // End of variables declaration//GEN-END:variables
 }
