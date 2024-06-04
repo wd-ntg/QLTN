@@ -121,11 +121,15 @@
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="txtDiaChi" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="txtDongHo" alignment="0" pref="202" max="32767" attributes="0"/>
                                           <Component id="txtMaHoaDon" alignment="0" max="32767" attributes="0"/>
@@ -133,8 +137,9 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="lblTrangThaiThanhToan" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="lblTrangThaiThanhToan" min="-2" pref="290" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -152,7 +157,6 @@
                                   <Component id="btnLamMoi" alignment="1" min="-2" pref="123" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="txtDiaChi" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                   </Group>
@@ -368,12 +372,12 @@
             <Component class="javax.swing.JLabel" name="lblTrangThaiThanhToan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
+                  <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Qu&#xe1; h&#x1ea1;n"/>
+                <Property name="text" type="java.lang.String" value="Qu&#xe1; h&#x1ea1;n, vui l&#xf2;ng &#x111;&#x1ebf;n tr&#x1ee5; s&#x1edf; &#x111;&#x1ec3; thanh to&#xe1;n"/>
               </Properties>
             </Component>
           </SubComponents>
