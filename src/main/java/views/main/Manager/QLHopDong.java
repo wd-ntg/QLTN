@@ -258,9 +258,27 @@ public class QLHopDong extends javax.swing.JPanel {
             File imageFile = new File(imagePath);
 
             if (!imageFile.exists()) {
-                if(downLoadImg(hd.getDulieuCCCD(), imagePath)==0){
-                    return;
-                }
+                if(null != loai)switch (loai) {
+                case "cccd" -> {
+                    if(downLoadImg(hd.getDulieuCCCD(), imagePath)==0){
+                        return;
+                    }
+                    }
+                case "sodo" -> {
+                    if(downLoadImg(hd.getDuLieuChungMinhNhaDat(), imagePath)==0){
+                        return;
+                    }
+                    }
+                case "chukynd" -> {
+                    if(downLoadImg(hd.getDuLieuChuKy(), imagePath)==0){
+                        return;
+                    }
+                    }
+                default -> {
+                    }
+            }
+                        
+                
                 
             }
             // Tạo ImageIcon từ ảnh
