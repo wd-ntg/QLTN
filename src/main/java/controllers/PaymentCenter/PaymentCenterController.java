@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Client.HoaDonModel;
 import models.PaymentCenter.DiemThuModel;
+import utils.PasswordHashing;
 
 public class PaymentCenterController {
 
@@ -298,13 +299,15 @@ public class PaymentCenterController {
         boolean flag = false;
         String sql = "SELECT TK.MATKHAU FROM TAIKHOAN AS TK "
                 + "JOIN TRUNGGIAN AS TG ON TK.MATK = TG.MATG "
-                + "WHERE TG.MATG = ? AND TK.MATKHAU = ?";
+                + "WHERE TG.MATG = ?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maTrungGian);
-            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                flag = true;
+                String rightPassword = resultSet.getString("MATKHAU");
+                if (PasswordHashing.checkPassword(password, rightPassword)) {
+                    flag = true;
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(PaymentCenterController.class.getName()).log(Level.SEVERE, null, ex);
@@ -315,7 +318,8 @@ public class PaymentCenterController {
     public static void doiMatKhau(String password) throws ClassNotFoundException {
         String sql = "UPDATE TAIKHOAN SET MATKHAU=? WHERE MATK=? ";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, password);
+            String hashPassword = PasswordHashing.hashPassword(password);
+            statement.setString(1, hashPassword);
             statement.setString(2, maTrungGian);
             statement.executeUpdate();
         } catch (SQLException ex) {
