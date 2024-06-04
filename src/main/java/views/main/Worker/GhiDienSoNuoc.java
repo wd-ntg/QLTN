@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ import models.Worker.DinhMucModel;
 import models.Worker.GhiNuocModel;
 import models.Worker.GlobalData;
 import models.Worker.HoaDonModel;
+import utils.DialogHelper;
 
 
 
@@ -45,23 +47,24 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
             lb_phoneNo.setText(chuHoModel.getSdt());
             text_currentIndex.setText("");
             //----- set value of PrevIndex ----
-            GhiNuocModel ghiNuocModel = workerController.getGhiNuocMoiNhat(chuHoModel.getMaDH());
-            if(ghiNuocModel!= null){
-                text_preIndex.setText(String.valueOf(ghiNuocModel.getCSC()));
-                text_currentIndex.setText(String.valueOf(ghiNuocModel.getCSM()));
-                lb_ngayBatDauGhi.setText(ghiNuocModel.getNgayBatDauGhi());
-                lb_NgayDenHan.setText(ghiNuocModel.getNgayHanGhi());
+            GhiNuocModel ghiNuocModelMoi = workerController.getGhiNuocMoiNhat(chuHoModel.getMaDH());
+            GhiNuocModel ghiNuocModelCSC = workerController.getCSNCu(chuHoModel.getMaDH());
+            if(ghiNuocModelCSC!= null){
+                text_preIndex.setText(String.valueOf(ghiNuocModelCSC.getCSM()));
+                text_currentIndex.setText(String.valueOf(0));
+                lb_ngayBatDauGhi.setText(ghiNuocModelMoi.getNgayBatDauGhi());
+                lb_NgayDenHan.setText(ghiNuocModelMoi.getNgayHanGhi());
                 text_currentIndex.setEditable(true);
                 lb_notificaiton.setText("");
                 button_save.setEnabled(true);
             }else{    
                 text_preIndex.setText(String.valueOf(0));
                 text_currentIndex.setText(String.valueOf(0));
-                text_currentIndex.setEditable(false);
-                lb_notificaiton.setText("Tháng này chưa có đơn ghi nước, vui lòng liên hệ Quản Lý!");
-                lb_ngayBatDauGhi.setText("");
-                lb_NgayDenHan.setText("");
-                button_save.setEnabled(false);
+//                text_currentIndex.setEditable(false);
+//                lb_notificaiton.setText("Tháng này chưa có đơn ghi nước, vui lòng liên hệ Quản Lý!");
+                lb_ngayBatDauGhi.setText(ghiNuocModelMoi.getNgayBatDauGhi());
+                lb_NgayDenHan.setText(ghiNuocModelMoi.getNgayHanGhi());
+//                button_save.setEnabled(false);
             }
             
         }
@@ -308,9 +311,12 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
                     .addComponent(lb_NgayDenHan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(text_preIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(text_preIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(text_currentIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -415,21 +421,31 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dateNow = currentDate.format(formatter);
         String message = "Đã quá hạn ghi nước, vui lòng liên hệ quản lý để xử lý!";
+        String[] parts1 = lb_ngayBatDauGhi.getText().split("/");
+        String[] parts2 = lb_NgayDenHan.getText().split("/");
+        // Lấy tháng và năm từ mảng parts
+        int day1 = Integer.parseInt(parts1[0]);
+        int month1 = Integer.parseInt(parts1[1]);
+        int year1= Integer.parseInt(parts1[2]);
         
-        if(!dateNow.substring(6).equals(lb_NgayDenHan.getText().substring(6))){
+        int day2 = Integer.parseInt(parts2[0]);
+        int month2 = Integer.parseInt(parts2[1]);
+        int year2= Integer.parseInt(parts2[2]);
+        int currentYear = Integer.parseInt(dateNow.substring(6));
+        int currentMonth = Integer.parseInt(dateNow.substring(3, 5));
+        // Năm
+        if(currentYear != year2){
             JOptionPane.showMessageDialog(this, message, "Thông Báo", JOptionPane.OK_OPTION);
             return false;
         }
-        
-        if(!dateNow.substring(3, 5).equals(lb_NgayDenHan.getText().substring(3, 5))){
+
+        if(currentMonth != month2){
             JOptionPane.showMessageDialog(this, message, "Thông Báo", JOptionPane.OK_OPTION);
             return false;
         }
-        int beginDay = Integer.parseInt(lb_ngayBatDauGhi.getText().substring(0, 2));
-        int endDay = Integer.parseInt(lb_NgayDenHan.getText().substring(0, 2));
         int ngayGhi = Integer.parseInt(dateNow.substring(0, 2));
         
-        if(ngayGhi > endDay || ngayGhi < beginDay){
+        if(!(ngayGhi >= day1 && ngayGhi <= day2)){
             JOptionPane.showMessageDialog(this, message, "Thông Báo", JOptionPane.OK_OPTION);
             return false;
         }
@@ -442,9 +458,9 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
         return calendar.getTime();
     }
     
-    public double getGiaTienNuoc(int tieuthu){
+    public double getGiaTienNuoc(int tieuthu, String maDH){
         double giatien = 0.0;
-        List<DinhMucModel> dinhMucModels = workerController.getDinhMuc("DH1");
+        List<DinhMucModel> dinhMucModels = workerController.getDinhMuc(maDH);
         for(DinhMucModel dinhMucModel: dinhMucModels){
             if(tieuthu >= (dinhMucModel.getSoCuoi()-dinhMucModel.getSoDau())){
                 tieuthu -= (dinhMucModel.getSoCuoi()-dinhMucModel.getSoDau());
@@ -464,21 +480,22 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
             if(option == JOptionPane.OK_OPTION){
                 GhiNuocModel ghiNuocModel = workerController.getGhiNuocMoiNhat(chuHoModel.getMaDH());
                 int currentIndex = (int) Math.ceil(Double.parseDouble(String.valueOf(text_currentIndex.getText())));
+                int afterIndex = (int) Math.ceil(Double.parseDouble(String.valueOf(text_preIndex.getText())));
                 ghiNuocModel.setCSM(currentIndex);
+                ghiNuocModel.setCSC(afterIndex);
                 LocalDate currentDate = LocalDate.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                ghiNuocModel.setNgayGhi(currentDate.format(formatter));
+                java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
+                ghiNuocModel.setNgayGhi(sqlDate);
                 ghiNuocModel.setMaNV(GlobalData.getInstance().getNhanVienModel().getMaNV());
 
                 workerController.recordGhiNuocHoDan(ghiNuocModel);
-                java.sql.Date current = new java.sql.Date(System.currentTimeMillis());
-                SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
-                String dateString = dateFormat1.format(currentDate);
-                String MAHD = "HD" + dateString;
+                String MAHD = "HD" + UUID.randomUUID().toString().substring(0,12);
                 int tieuthu = Integer.parseInt(text_currentIndex.getText()) - Integer.parseInt(text_preIndex.getText());
+
                 HoaDonModel hoadon = new HoaDonModel(MAHD,
                         tieuthu,
-                        getGiaTienNuoc(tieuthu),
+                        getGiaTienNuoc(tieuthu, chuHoModel.getMaDH()),
                         getDateAfterFiveWeeks(),
                         null,
                         null,
@@ -488,7 +505,7 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
                         false,
                         null);
                 workerController.createHoaDon(hoadon);
-                JOptionPane.showMessageDialog(this, "Thành Công!", "Thông báo",JOptionPane.OK_OPTION);
+                DialogHelper.showMessage("Thành Công");
                 
                 setDefault();
                 wMain.setBillsChuHo_DienSoNuoc(chuHoModel);

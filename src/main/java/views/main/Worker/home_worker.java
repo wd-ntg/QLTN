@@ -192,7 +192,7 @@ public class home_worker extends javax.swing.JPanel {
     private void fillTableInforUser(String where, Object ... text){
         tblModel_userPendingPay.setRowCount(0);
         List<HoaDonModel> lsBills;
-        lsBills = workerController.getInforUsersPendingByBranch(GlobalData.getInstance().getBranch(),
+        lsBills = workerController.getInforUsersPending(GlobalData.getInstance().getNhanVienModel().getMaNV(),
                     where,
                     text);
             GlobalData.getInstance().setLsBill(lsBills);
@@ -203,7 +203,7 @@ public class home_worker extends javax.swing.JPanel {
                     String.valueOf(pm.getMaHoaDon()),
                     pm.getChuHo().getHoTen(),
                     pm.getDiaChiChiTiet(), 
-                    pm.getKi().substring(0, 7),
+                    pm.getKi(),
                     formattedDate,
                     String.valueOf(pm.getTongtien())}
                 );
@@ -309,7 +309,7 @@ public class home_worker extends javax.swing.JPanel {
                     pm.getMaDH(),
                     workerController.getInforCHbyMADH(pm.getMaDH()).getHoTen(), 
                     workerController.getInforCHbyMADH(pm.getMaDH()).getDiaChiDatNuoc(),
-                    pm.getKi().substring(0, 7),
+                    pm.getKi(),
                     hanGhi,
                 });
             }
@@ -325,26 +325,27 @@ public class home_worker extends javax.swing.JPanel {
                         LocalDate currentDate = LocalDate.now();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                         String formattedDate = currentDate.format(formatter);
-                        
-                        int startDay = Integer.parseInt(pm.getNgayBatDauGhi().substring(0, 2));
-                        int startMonth = Integer.parseInt(pm.getNgayBatDauGhi().substring(3, 5));
-                        int startYear = Integer.parseInt(pm.getNgayBatDauGhi().substring(6));
-                        int endDay = Integer.parseInt(pm.getNgayHanGhi().substring(0, 2));
-                        int endMonth = Integer.parseInt(pm.getNgayHanGhi().substring(3, 5));
-                        int endYear = Integer.parseInt(pm.getNgayHanGhi().substring(6));
-                        int ngayGhi = Integer.parseInt(formattedDate.substring(3, 5));
-                        int thangGhi = Integer.parseInt(formattedDate.substring(0, 2));
-                        int namGhi = Integer.parseInt(formattedDate.substring(6));
+
+                        String[] parts2 = pm.getNgayHanGhi().split("/");
+                        // Lấy tháng và năm từ mảng parts
+
+                        int day2 = Integer.parseInt(parts2[0]);
+                        int month2 = Integer.parseInt(parts2[1]);
+                        int year2= Integer.parseInt(parts2[2]);
+                        LocalDate currentDate1 = LocalDate.now();
+                        int yearCurrent = currentDate1.getYear();
+                        int monthCurrent = currentDate1.getMonthValue();
+                        int dayCurrent = currentDate1.getDayOfMonth();
                         String message = "Đã quá hạn ghi nước, vui lòng liên hệ quản lý để xử lý!";
-                        if(namGhi > endYear || namGhi > startYear){
+                        if(yearCurrent != year2){
                             JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
                             return;
                         }
-                        if(thangGhi > endMonth || thangGhi <startMonth){
+                        if(monthCurrent != month2){  
                             JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
                             return;
                         }
-                        if(ngayGhi > endDay || ngayGhi < startDay){
+                        if(dayCurrent > day2){
                             JOptionPane.showMessageDialog(home_worker.this, message, "Thông Báo", JOptionPane.OK_OPTION);
                             return;
                         }
@@ -722,15 +723,15 @@ public class home_worker extends javax.swing.JPanel {
                 .addComponent(button_next, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(55, 55, 55)
                 .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addGap(69, 69, 69))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
+                        .addGap(69, 69, 69)
                         .addComponent(panelLegend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );

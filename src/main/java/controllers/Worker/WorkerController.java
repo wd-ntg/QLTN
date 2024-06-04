@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -159,22 +160,37 @@ public class WorkerController {
         }
         return null;
     }
-    public List<ChuHoModel> getInforChuHoByBranch(String branch, String where, Object ... search){
+    public List<ChuHoModel> getInforChuHoByPHANCONG(String maNV, String where, Object ... search){
         List<ChuHoModel> lsChuHo = new ArrayList<>();
-        branch = "%" + branch +"%";
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiCSNCU;
+
+        if (monthCurrent == 1) {
+            kyGhiCSNCU = "12/" + (yearCurrent - 1);
+        }
+        else {
+            kyGhiCSNCU = (monthCurrent - 1) + "/" + yearCurrent;
+        }
         String sql = """
                     select ch.MACH, ch.HOTEN, ch.SDT, ch.CCCD, ch.GIOITINH, dh.MADH, l.TENLOAI,ctkv.TENCHITIET
-                    from CHUHO as ch
+                    from GHINUOC as gn
                     join DONGHO as dh
+                    on gn.MADH = dh.MADH
+                    join CHUHO as ch
                     on ch.MACH = dh.MACH
                     join CHITIETKHUVUC as ctkv
-                    on dh.MADIACHI = ctkv.MACTKV
+                    on ctkv.MACTKV = dh.MADIACHI
                     join LOAI as l
                     on l.MALOAI = dh.MALOAI
-                    where ctkv.TENCHITIET like ? and dh.TRANGTHAI = 1
+                    where gn.MANV = ? and gn.KI like ?
                      """ + where;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, branch);
+            statement.setString(1, maNV);
+            statement.setString(2, "%" +kyGhiCSNCU + "%");
             for(int i = 0; i< search.length; i++){
                 statement.setObject(i+2, search[i]);
             }
@@ -202,9 +218,21 @@ public class WorkerController {
         return null;
     }
     
-    public List<HoaDonModel> getInforUsersPendingByBranch(String branch, String where, Object ... search){
+    public List<HoaDonModel> getInforUsersPending(String maNV, String where, Object ... search){
         List<HoaDonModel> lsBills = new ArrayList<>();
-        branch = "%" + branch +"%";
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiCSNCU;
+
+        if (monthCurrent == 1) {
+            kyGhiCSNCU = "12/" + (yearCurrent - 1);
+        }
+        else {
+            kyGhiCSNCU = (monthCurrent - 1) + "/" + yearCurrent;
+        }
         String sql = """
                     select hd.MAHOADON, ch.MACH,ch.HOTEN, ctkv.TENCHITIET, hd.TONGTIEN, gn.KI, hd.NGAYDENHAN,dh.MADH
                     from CHUHO as ch
@@ -216,10 +244,11 @@ public class WorkerController {
                     on gn.MADH = dh.MADH
                     join HOADON as hd
                     on hd.MAGHI = gn.MAGHI
-                    where ctkv.TENCHITIET like ? and dh.TRANGTHAI = 1 and hd.THANHTOAN = 0
+                    where  gn.MANV = ? and dh.TRANGTHAI = 1 and hd.THANHTOAN = 0 and gn.KI like ?
                      """ + where;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, branch);
+            statement.setString(1, maNV);
+            statement.setString(2, "%" + kyGhiCSNCU +"%");
             for(int i = 0; i< search.length; i++){
                 statement.setObject(i+2, search[i]);
             }
@@ -232,7 +261,7 @@ public class WorkerController {
                 hoadon.getChuHo().setMaDH(resultSet.getString("MADH"));
                 hoadon.setDiaChiChiTiet(resultSet.getString("TENCHITIET"));
                 hoadon.setTongtien(resultSet.getDouble("TONGTIEN"));
-                hoadon.setKi(String.valueOf(resultSet.getDate("KI")));
+                hoadon.setKi((resultSet.getString("KI")));
                 hoadon.setNgayDenHan((Date) resultSet.getDate("NGAYDENHAN"));
                 lsBills.add(hoadon);
                               
@@ -248,14 +277,15 @@ public class WorkerController {
     public void recordGhiNuocHoDan(GhiNuocModel ghiNuocModel) {
         String sql = """
                      UPDATE GHINUOC
-                     SET CSM = ?, NGAYGHI = ?, MANV = ?
+                     SET CSC = ?,CSM = ?, NGAYGHI = ?, MANV = ?
                      WHERE MAGHI = ?;
                      """;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setInt(1, ghiNuocModel.getCSM());
-            statement.setString(2, ghiNuocModel.getNgayGhi());
-            statement.setString(3, ghiNuocModel.getMaNV());
-            statement.setString(4, ghiNuocModel.getMaGhi());
+            statement.setInt(1, ghiNuocModel.getCSC());
+            statement.setInt(2, ghiNuocModel.getCSM());
+            statement.setDate(3, ghiNuocModel.getNgayGhi());
+            statement.setString(4, ghiNuocModel.getMaNV());
+            statement.setString(5, ghiNuocModel.getMaGhi());
            
             int rs = statement.executeUpdate();
             System.out.println(rs);
@@ -282,8 +312,8 @@ public class WorkerController {
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getString("MANV")==null?"":resultSet.getString("MANV"),
-                        String.valueOf(resultSet.getDate("NGAYGHI")), 
-                        String.valueOf(resultSet.getDate("KI")),
+                        resultSet.getDate("NGAYGHI"), 
+                        resultSet.getString("KI"),
                         resultSet.getString("NGAYBATDAUGHI"),
                         resultSet.getString("NGAYHANGHI")
                 );
@@ -297,17 +327,30 @@ public class WorkerController {
         }
         return lsGhiNuoc;
     }
-    public GhiNuocModel getGhiNuocMoiNhat(String maDH) {
+    public GhiNuocModel getCSNCu(String maDH) {
         GhiNuocModel ghiNuocModel = null;
-        String sql = """
-                    select TOP 1 *  
-                    from GHINUOC as gn
-                    where gn.MADH = ? and YEAR(gn.KI) = YEAR(GETDATE()) and MONTH(gn.KI) = MONTH(GETDATE()) -1
-                    order by gn.CSC DESC
-                    
-                     """;
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiCSNCU;
+
+        if (monthCurrent == 2) {
+            kyGhiCSNCU = "12/" + (yearCurrent - 1);
+        }else if(monthCurrent == 1){
+            kyGhiCSNCU = "11/" + (yearCurrent - 1);
+        } 
+        else {
+            kyGhiCSNCU = (monthCurrent - 2) + "/" + yearCurrent;
+        }
+        String sql = "select *  \n" +
+"                    from GHINUOC as gn\n" +
+"                    where gn.MADH = ? and gn.KI like  ?\n" +
+"                    ";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, maDH);
+            statement.setString(2, "%" + kyGhiCSNCU + "%");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 GhiNuocModel ghiNuocModeltmp = new GhiNuocModel(
@@ -316,8 +359,51 @@ public class WorkerController {
                         resultSet.getInt("CSC"),
                         resultSet.getInt("CSM"),
                         resultSet.getString("MANV"),
-                        String.valueOf(resultSet.getDate("NGAYGHI")),
-                        String.valueOf(resultSet.getDate("KI")),
+                        (resultSet.getDate("NGAYGHI")),
+                        (resultSet.getString("KI")),
+                        resultSet.getString("NGAYBATDAUGHI"),
+                        resultSet.getString("NGAYHANGHI"));
+                ghiNuocModel = ghiNuocModeltmp;
+            }
+            return ghiNuocModel;
+        }
+        catch (SQLException | ClassNotFoundException ex) { 
+            Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ghiNuocModel;
+    }
+    public GhiNuocModel getGhiNuocMoiNhat(String maDH) {
+        GhiNuocModel ghiNuocModel = null;
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiCSNCU;
+
+        if (monthCurrent == 1) {
+            kyGhiCSNCU = "12/" + (yearCurrent - 1);
+        }
+        else {
+            kyGhiCSNCU = (monthCurrent - 1) + "/" + yearCurrent;
+        }
+        String sql = "select *  \n" +
+"                    from GHINUOC as gn\n" +
+"                    where gn.MADH = ? and gn.KI like  ?\n" +
+"                    ";
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, maDH);
+            statement.setString(2, "%" + kyGhiCSNCU + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                GhiNuocModel ghiNuocModeltmp = new GhiNuocModel(
+                        resultSet.getString("MAGHI"),
+                        maDH,
+                        resultSet.getInt("CSC"),
+                        resultSet.getInt("CSM"),
+                        resultSet.getString("MANV"),
+                        (resultSet.getDate("NGAYGHI")),
+                        (resultSet.getString("KI")),
                         resultSet.getString("NGAYBATDAUGHI"),
                         resultSet.getString("NGAYHANGHI"));
                 ghiNuocModel = ghiNuocModeltmp;
@@ -335,8 +421,8 @@ public class WorkerController {
         String idBill = "";
         int numflag = -1;
         String sql = """
-                     SELECT cm.CollectMoneyId
-                     FROM CollectMoney AS cm
+                     SELECT MAHOADON
+                     FROM HOADON
                      
                     """;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
@@ -504,22 +590,34 @@ public class WorkerController {
     }
     
     public List<GhiNuocModel> getGhiNuocNV(String maNV, String where, Object ... search){
-        List<GhiNuocModel> lsGhiNuoc = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        int yearCurrent = currentDate.getYear();
+        int monthCurrent = currentDate.getMonthValue();
+        int dayCurrent = currentDate.getDayOfMonth();
+        
+        String kyGhiCSNCU;
+
+        if (monthCurrent == 1) {
+            kyGhiCSNCU = "12/" + (yearCurrent - 1);
+        }
+        else {
+            kyGhiCSNCU = (monthCurrent - 1) + "/" + yearCurrent;
+        }List<GhiNuocModel> lsGhiNuoc = new ArrayList<>();
+        
         String sql = """
                      select gn.MAGHI, dh.MADH, gn.KI, gn.NGAYBATDAUGHI, gn.NGAYHANGHI, dh.MACH, gn.CSC, gn.CSM, ch.HOTEN, ctkv.TENCHITIET
                      from GHINUOC as gn
                      join DONGHO as dh
                      on gn.MADH = dh.MADH
-                     join PHANCONG as pc
-                     on pc.MADH = dh.MADH
                      join CHUHO as ch
                      on ch.MACH = dh.MACH
                      join CHITIETKHUVUC as ctkv
                      on ctkv.MACTKV = dh.MADIACHI
-                     where pc.MANV = ? and YEAR(gn.KI) = YEAR(GETDATE()) and MONTH(gn.KI) = MONTH(GETDATE()) - 1 and dh.TRANGTHAI = 1
+                     where gn.MANV = ? and gn.KI like ? and dh.TRANGTHAI = 1
                      """ + where;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, maNV);
+            statement.setString(2, kyGhiCSNCU);
             for(int i = 0; i< search.length; i++){
                 statement.setObject(i+2, search[i]);
             }
@@ -532,7 +630,7 @@ public class WorkerController {
                         resultSet.getInt("CSC"),
                         null,
                         null,
-                        String.valueOf(resultSet.getDate("KI")),
+                        resultSet.getString("KI"),
                         resultSet.getString("NGAYBATDAUGHI"),
                         resultSet.getString("NGAYHANGHI"));
                 ghiNuocModel.getChuHoModel().setHoTen(resultSet.getString("HOTEN"));
@@ -553,13 +651,22 @@ public class WorkerController {
                                 VALUES (?,?,?,?,null,?,0,?,?,0,null);
                      """;
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            java.util.Date utilDate = hoaDon.getNgayTao();
+
+            // Chuyển đổi java.util.Date sang java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            java.util.Date utilDate1 = hoaDon.getNgayDenHan();
+
+            // Chuyển đổi java.util.Date sang java.sql.Date
+            java.sql.Date sqlDate1 = new java.sql.Date(utilDate1.getTime());
+            
             statement.setString(1, hoaDon.getMaHoaDon());
             statement.setInt(2, hoaDon.getTieuthu());
             statement.setDouble(3, hoaDon.getTongtien());
-            statement.setDate(4,(java.sql.Date) hoaDon.getNgayDenHan());
+            statement.setDate(4, sqlDate1);
             statement.setString(5, hoaDon.getMaNV());
             statement.setString(6, hoaDon.getMaGhi());
-            statement.setDate(7,(java.sql.Date)  hoaDon.getNgayTao());
+            statement.setDate(7, sqlDate);
             int rs = statement.executeUpdate();
             return rs;
         }
