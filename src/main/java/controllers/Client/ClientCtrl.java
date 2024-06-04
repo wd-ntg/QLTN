@@ -31,6 +31,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import utils.PasswordHashing;
 
 /**
  *
@@ -116,7 +117,7 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 0 AND DH.MADIACHI = ? " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN = 0 AND DH.MADIACHI = ? "
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
@@ -178,14 +179,14 @@ public class ClientCtrl {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static String traVeEmail() throws ClassNotFoundException{
+
+    public static String traVeEmail() throws ClassNotFoundException {
         String sql = "SELECT * FROM TAIKHOAN WHERE MATK = ?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String email =  resultSet.getString("EMAIL");
+                String email = resultSet.getString("EMAIL");
                 return email;
             }
         } catch (SQLException ex) {
@@ -238,7 +239,7 @@ public class ClientCtrl {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 HoModel house = new HoModel(
-                        resultSet.getString("MACTKV"), 
+                        resultSet.getString("MACTKV"),
                         resultSet.getString("TENCHITIET"),
                         resultSet.getString("MAKHUVUC"),
                         resultSet.getString("TENKHUVUC"),
@@ -253,7 +254,7 @@ public class ClientCtrl {
         }
         return dsCacHo;
     }
-    
+
     //Log in
     public static String dangNhap(String email, String matKhau) throws ClassNotFoundException {
         String sql = "SELECT MATKHAU, MAPQ FROM TAIKHOAN AS TK "
@@ -262,8 +263,8 @@ public class ClientCtrl {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String rightPassword = resultSet.getString("MATKHAU");
-                if (rightPassword.equals(matKhau)) {
+                String hashPassword = resultSet.getString("MATKHAU");
+                if (PasswordHashing.checkPassword(matKhau, hashPassword)) {
                     return resultSet.getString("MAPQ");
                 }
             }
@@ -272,8 +273,8 @@ public class ClientCtrl {
         }
         return null;
     }
-    
-    public static void ganMaChuHo(String email) throws ClassNotFoundException{
+
+    public static void ganMaChuHo(String email) throws ClassNotFoundException {
         String sql = "SELECT * FROM TAIKHOAN WHERE EMAIL = ?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
@@ -285,7 +286,7 @@ public class ClientCtrl {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static boolean kiemTraEmailCoTonTai(String email) throws ClassNotFoundException {
         boolean flag = false;
         //  RolePerson = 'R3' 
@@ -301,17 +302,19 @@ public class ClientCtrl {
         }
         return flag;
     }
-    
+
     public static boolean kiemTraMatKhauCoChinhXac(String email, String password) throws ClassNotFoundException {
         boolean flag = false;
-        String sql = "SELECT * FROM TAIKHOAN "
-                + "WHERE EMAIL = ? AND MATKHAU = ?";
+        String sql = "SELECT MATKHAU FROM TAIKHOAN "
+                + "WHERE EMAIL = ? ";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
-            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                flag = true;
+                String rightPassword = resultSet.getString("MATKHAU");
+                if (PasswordHashing.checkPassword(password, rightPassword)) {
+                    flag = true;
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
@@ -322,7 +325,8 @@ public class ClientCtrl {
     public static void taoMatKhauMoi(String matKhau, String email) throws ClassNotFoundException {
         String sql = "UPDATE MATKHAU SET TAIKHOAN=? WHERE EMAIL=?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, matKhau);
+            String hashPassword = PasswordHashing.hashPassword(matKhau);
+            statement.setString(1, hashPassword);
             statement.setString(2, email);
             statement.executeUpdate();
         } catch (SQLException ex) {
@@ -349,7 +353,7 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 "
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
@@ -406,7 +410,7 @@ public class ClientCtrl {
                 + "JOIN CHUHO AS CH ON DH.MACH = CH.MACH "
                 + "JOIN CHITIETKHUVUC AS CTKV ON CTKV.MACTKV = DH.MADIACHI "
                 + "JOIN KHUVUC AS KV ON KV.MAKHUVUC = CTKV.MAKHUVUC "
-                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 AND CTKV.MACTKV = ? " 
+                + "WHERE CH.MACH = ? AND HD.THANHTOAN != 0 AND CTKV.MACTKV = ? "
                 + "ORDER BY HD.NGAYTAO, GN.NGAYGHI";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
@@ -445,7 +449,7 @@ public class ClientCtrl {
         }
         return dsHoaDon;
     }
-    
+
     private static String traVeHinhThucTrungGian(String maHD) throws ClassNotFoundException {
         String output = null;
         String sql = "SELECT HD.MAHOADON, HT.TENHT, TG.MATG, TG.MACTKV,TG.TENTG "
@@ -465,7 +469,7 @@ public class ClientCtrl {
         }
         return output;
     }
-    
+
     private static String traVeHinhThucKhac(String maHD) throws ClassNotFoundException {
         String output = null;
         String sql = "SELECT HD.MAHOADON, HT.TENHT "
@@ -484,8 +488,8 @@ public class ClientCtrl {
         }
         return output;
     }
-    
-    public static String traVeHinhThucThanhToan(String maHD) throws ClassNotFoundException{
+
+    public static String traVeHinhThucThanhToan(String maHD) throws ClassNotFoundException {
         String sql = "SELECT THANHTOAN FROM HOADON "
                 + "WHERE MAHOADON = ? AND THANHTOAN != 0";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -493,9 +497,9 @@ public class ClientCtrl {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 int thanhToan = resultSet.getInt("THANHTOAN");
-                if (thanhToan == 2){
+                if (thanhToan == 2) {
                     return traVeHinhThucTrungGian(maHD);
-                } else if (thanhToan == 1 || thanhToan == 3){
+                } else if (thanhToan == 1 || thanhToan == 3) {
                     return traVeHinhThucKhac(maHD);
                 }
             }
@@ -520,13 +524,15 @@ public class ClientCtrl {
         boolean flag = false;
         String sql = "SELECT TK.MATKHAU FROM TAIKHOAN AS TK "
                 + "JOIN CHUHO AS CH ON TK.MATK = CH.MACH "
-                + "WHERE CH.MACH = ? AND TK.MATKHAU = ?";
+                + "WHERE CH.MACH = ?";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, maChuHo);
-            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                flag = true;
+                String rightPassword = resultSet.getString("MATKHAU");
+                if (PasswordHashing.checkPassword(password, rightPassword)) {
+                    flag = true;
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClientCtrl.class.getName()).log(Level.SEVERE, null, ex);
@@ -537,7 +543,8 @@ public class ClientCtrl {
     public static void doiMatKhau(String password) throws ClassNotFoundException {
         String sql = "UPDATE TAIKHOAN SET MATKHAU=? WHERE MATK=? ";
         try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, password);
+            String newHashPassword = PasswordHashing.hashPassword(password);
+            statement.setString(1, newHashPassword);
             statement.setString(2, maChuHo);
             statement.executeUpdate();
         } catch (SQLException ex) {

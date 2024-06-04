@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import models.ChuHoModel;
 import models.QuanLyModel;
 import models.TaiKhoanModel;
+import utils.PasswordHashing;
 
 
 /**
@@ -42,7 +43,8 @@ public class QuanLiChuHoCtrl {
             PreparedStatement statement2 = connection.prepareStatement(sql2);
             statement2.setString(1, taikhoan.getMATK());
             statement2.setString(2, taikhoan.getEMAIL());
-            statement2.setString(3, chuho.getSDT());
+            String hashPassword = PasswordHashing.hashPassword(chuho.getSDT());
+            statement2.setString(3, hashPassword);
             statement2.setString(4, taikhoan.getMAPQ());
             statement2.setBoolean(5, true);
             statement2.executeUpdate();

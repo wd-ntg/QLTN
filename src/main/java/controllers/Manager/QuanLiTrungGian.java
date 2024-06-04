@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import models.NhanVienModel;
 import models.TaiKhoanModel;
 import models.TrungGianModel;
+import utils.PasswordHashing;
 
 /**
  *
@@ -48,7 +49,8 @@ public class QuanLiTrungGian {
             statement2 = connection.prepareStatement(sql2);
             statement2.setString(1, taikhoan.getMATK());
             statement2.setString(2, taikhoan.getEMAIL());
-            statement2.setString(3, taikhoan.getEMAIL());
+            String hashPassword = PasswordHashing.hashPassword(taikhoan.getEMAIL());
+            statement2.setString(3, hashPassword);
             statement2.setString(4, taikhoan.getMAPQ());
             statement2.executeUpdate();
 

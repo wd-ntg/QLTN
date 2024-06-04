@@ -49,16 +49,16 @@ public class NhacNhoTienNuoc extends javax.swing.JPanel {
     }
 
     private void kiemTraNgay() {
-        LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
-        int dayOfMonth = today.getDayOfMonth(); // Lấy ngày trong tháng
-        if (dayOfMonth >= 23 && dayOfMonth <= 25) {
-            btnGuiHangLoat.setEnabled(true);
-            btnGuiMail.setEnabled(true);
-        } else {
-            btnGuiHangLoat.setEnabled(false);
-            btnGuiMail.setEnabled(false);
-            lblThongBao.setText("Hôm nay không phải là ngày gửi email");
-        }
+//        LocalDate today = LocalDate.now(); // Lấy ngày hiện tại
+//        int dayOfMonth = today.getDayOfMonth(); // Lấy ngày trong tháng
+//        if (dayOfMonth >= 23 && dayOfMonth <= 25) {
+//            btnGuiHangLoat.setEnabled(true);
+//            btnGuiMail.setEnabled(true);
+//        } else {
+//            btnGuiHangLoat.setEnabled(false);
+//            btnGuiMail.setEnabled(false);
+//            lblThongBao.setText("Hôm nay không phải là ngày gửi email");
+//        }
     }
 
     private void guiEmailHangLoat() {
