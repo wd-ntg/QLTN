@@ -192,7 +192,7 @@ public class WorkerController {
             statement.setString(1, maNV);
             statement.setString(2, "%" +kyGhiCSNCU + "%");
             for(int i = 0; i< search.length; i++){
-                statement.setObject(i+2, search[i]);
+                statement.setObject(i+3, search[i]);
             }
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -250,7 +250,7 @@ public class WorkerController {
             statement.setString(1, maNV);
             statement.setString(2, "%" + kyGhiCSNCU +"%");
             for(int i = 0; i< search.length; i++){
-                statement.setObject(i+2, search[i]);
+                statement.setObject(i+3, search[i]);
             }
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -619,7 +619,7 @@ public class WorkerController {
             statement.setString(1, maNV);
             statement.setString(2, kyGhiCSNCU);
             for(int i = 0; i< search.length; i++){
-                statement.setObject(i+2, search[i]);
+                statement.setObject(i+3, search[i]);
             }
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
