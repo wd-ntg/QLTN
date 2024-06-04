@@ -4,6 +4,7 @@ package views.main.Worker;
 import controllers.Worker.WorkerController;
 import java.awt.Font;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,7 +105,13 @@ public class DienSoNuoc extends javax.swing.JPanel {
                 List<GhiNuocModel> lsBillModels = workerController.getLsGhiNuocChuHo(chuHoModel.getMaDH());
                 if(lsBillModels != null){
                     for(GhiNuocModel bm: lsBillModels){
-                        String ki = bm.getKi().substring(0, 7);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String formattedDate = "";
+                        if(bm.getNgayGhi() != null){
+                            formattedDate = sdf.format(bm.getNgayGhi());
+                        }
+                        
+                        String ki = bm.getKi();
                         NhanVienModel workerBill = workerController.getInforNVbyID(bm.getMaNV());
                         String hanGhi = "Từ " + bm.getNgayBatDauGhi() + " Đến " + bm.getNgayHanGhi();
                         tblModel.addRow(new String[]{
@@ -113,7 +120,7 @@ public class DienSoNuoc extends javax.swing.JPanel {
                             workerBill==null?"":workerBill.getHoTen(),
                             String.valueOf(bm.getCSC()),
                             bm.getCSM()==0?"":String.valueOf(bm.getCSM()),
-                            bm.getNgayGhi().equals("null")?"":bm.getNgayGhi(),
+                            formattedDate,
                             ki,
                             hanGhi,
                             });

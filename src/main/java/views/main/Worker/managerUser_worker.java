@@ -93,7 +93,7 @@ public class managerUser_worker extends javax.swing.JPanel {
     private void fillTableInforUser(String where, Object ... text){
         tblModel.setRowCount(0);
         List<ChuHoModel> lsChuHoInfor = new ArrayList<>();
-        lsChuHoInfor = workerController.getInforChuHoByBranch(GlobalData.getInstance().getBranch(),where,text);
+        lsChuHoInfor = workerController.getInforChuHoByPHANCONG(GlobalData.getInstance().getNhanVienModel().getMaNV(),where,text);
             GlobalData.getInstance().setLsChuHoInfor(lsChuHoInfor);
             for (ChuHoModel pm : lsChuHoInfor) {
             tblModel.addRow(new String[]{

@@ -1,24 +1,26 @@
 
 package models.Worker;
 
+import java.sql.Date;
+
 
 public class GhiNuocModel {
-    private String maGhi = "";
-    private String maDH = "";
-    private int CSC = 0;
-    private int CSM = 0;
-    private String maNV = "";
-    private String ngayGhi = "";
-    private String ki = "";
-    private String ngayBatDauGhi = "";
-    private String ngayHanGhi = "";
+    private String maGhi;
+    private String maDH;
+    private int CSC;
+    private int CSM;
+    private String maNV;
+    private Date ngayGhi;
+    private String ki;
+    private String ngayBatDauGhi;
+    private String ngayHanGhi;
     
     private ChuHoModel chuHoModel = new ChuHoModel();
 
     public GhiNuocModel() {
     }
 
-    public GhiNuocModel(String maGhi, String maDH, int CSC, int CSM, String maNV, String ngayGhi, String ki, String ngayBatDauGhi, String ngayHanGhi) {
+    public GhiNuocModel(String maGhi, String maDH, int CSC, int CSM, String maNV, Date ngayGhi, String ki, String ngayBatDauGhi, String ngayHanGhi) {
         this.maGhi = maGhi;
         this.maDH = maDH;
         this.CSC = CSC;
@@ -29,6 +31,8 @@ public class GhiNuocModel {
         this.ngayBatDauGhi = ngayBatDauGhi;
         this.ngayHanGhi = ngayHanGhi;
     }
+
+    
 
     public ChuHoModel getChuHoModel() {
         return chuHoModel;
@@ -79,14 +83,6 @@ public class GhiNuocModel {
         this.maNV = maNV;
     }
 
-    public String getNgayGhi() {
-        return ngayGhi;
-    }
-
-    public void setNgayGhi(String ngayGhi) {
-        this.ngayGhi = ngayGhi;
-    }
-
     public String getKi() {
         return ki;
     }
@@ -109,6 +105,14 @@ public class GhiNuocModel {
 
     public void setNgayHanGhi(String ngayHanGhi) {
         this.ngayHanGhi = ngayHanGhi;
+    }
+
+    public Date getNgayGhi() {
+        return ngayGhi;
+    }
+
+    public void setNgayGhi(Date ngayGhi) {
+        this.ngayGhi = ngayGhi;
     }
     
     
