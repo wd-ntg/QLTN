@@ -46,7 +46,7 @@ public class ManagerMain extends javax.swing.JFrame {
         listItem.add(new DanhMucModel("Nhac nuoc", jpnNhacNuoc, jlbNhacNuoc));
 
         listItem.add(new DanhMucModel("QL Hop Dong", jpnQLHD, jlbQLHD));
-
+        listItem.add(new DanhMucModel("QL Diem Thu", jpnQLDT, jlbQLDT));  
         listItem.add(new DanhMucModel("LogOut", jpnLogOut, jlbLogOut));
         controller.setEvent(listItem);
     }
@@ -82,6 +82,8 @@ public class ManagerMain extends javax.swing.JFrame {
         jlbNhacNuoc = new javax.swing.JLabel();
         jpnQLHD = new javax.swing.JPanel();
         jlbQLHD = new javax.swing.JLabel();
+        jpnQLDT = new javax.swing.JPanel();
+        jlbQLDT = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,7 +118,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jlbBill.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbBill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbBill.setText("Quản lí nhân viên");
+        jlbBill.setText("Quản lý nhân viên");
 
         javax.swing.GroupLayout jpnBillLayout = new javax.swing.GroupLayout(jpnBill);
         jpnBill.setLayout(jpnBillLayout);
@@ -137,7 +139,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jlbInfo.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbInfo.setText("Quản lí người dùng");
+        jlbInfo.setText("Quản lý người dùng");
 
         javax.swing.GroupLayout jpnInfoLayout = new javax.swing.GroupLayout(jpnInfo);
         jpnInfo.setLayout(jpnInfoLayout);
@@ -190,15 +192,14 @@ public class ManagerMain extends javax.swing.JFrame {
         jpnLogOutLayout.setHorizontalGroup(
             jpnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnLogOutLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlbLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jlbLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         jpnLogOutLayout.setVerticalGroup(
             jpnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnLogOutLayout.createSequentialGroup()
-                .addComponent(jlbLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnLogOutLayout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(jlbLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -228,7 +229,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jlbQuanli.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbQuanli.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbQuanli.setText("Hồ sơ quản lí");
+        jlbQuanli.setText("Hồ sơ quản lý");
         jlbQuanli.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlbQuanliMouseClicked(evt);
@@ -279,7 +280,7 @@ public class ManagerMain extends javax.swing.JFrame {
 
         jlbQLHD.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jlbQLHD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlbQLHD.setText("Quản Lý Hợp Đồng");
+        jlbQLHD.setText("Quản lý hợp đồng");
         jlbQLHD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlbQLHDMouseClicked(evt);
@@ -299,13 +300,37 @@ public class ManagerMain extends javax.swing.JFrame {
             .addComponent(jlbQLHD, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
+        jpnQLDT.setBackground(new java.awt.Color(255, 255, 255));
+        jpnQLDT.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jlbQLDT.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jlbQLDT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbQLDT.setText("Quản lý điểm thu");
+        jlbQLDT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbQLDTMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpnQLDTLayout = new javax.swing.GroupLayout(jpnQLDT);
+        jpnQLDT.setLayout(jpnQLDTLayout);
+        jpnQLDTLayout.setHorizontalGroup(
+            jpnQLDTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnQLDTLayout.createSequentialGroup()
+                .addComponent(jlbQLDT, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+        jpnQLDTLayout.setVerticalGroup(
+            jpnQLDTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbQLDT, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnMenuLayout.createSequentialGroup()
-                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jpnQLHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -320,38 +345,45 @@ public class ManagerMain extends javax.swing.JFrame {
                                         .addComponent(jpnBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jpnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jpnQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(jpnQuanli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jpnQLDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpnMenuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(13, 13, 13))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         jpnMenuLayout.setVerticalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addComponent(jpnHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(31, 31, 31)
                 .addComponent(jpnBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(29, 29, 29)
                 .addComponent(jpnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(31, 31, 31)
                 .addComponent(jpnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jpnAddWaterCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(31, 31, 31)
                 .addComponent(jpnQuanli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addComponent(jpnNhacNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jpnQLHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGap(30, 30, 30)
+                .addComponent(jpnQLDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnMenuLayout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnMenuLayout.createSequentialGroup()
+                        .addComponent(jpnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48))))
         );
 
         jpnView.setBackground(new java.awt.Color(255, 255, 255));
@@ -419,6 +451,10 @@ public class ManagerMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jlbQLHDMouseClicked
 
+    private void jlbQLDTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbQLDTMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlbQLDTMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -465,6 +501,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JLabel jlbInfo;
     private javax.swing.JLabel jlbLogOut;
     private javax.swing.JLabel jlbNhacNuoc;
+    private javax.swing.JLabel jlbQLDT;
     private javax.swing.JLabel jlbQLHD;
     private javax.swing.JLabel jlbQuanli;
     private javax.swing.JPanel jpnAddWaterCategory;
@@ -475,6 +512,7 @@ public class ManagerMain extends javax.swing.JFrame {
     private javax.swing.JPanel jpnLogOut;
     private javax.swing.JPanel jpnMenu;
     private javax.swing.JPanel jpnNhacNuoc;
+    private javax.swing.JPanel jpnQLDT;
     private javax.swing.JPanel jpnQLHD;
     private javax.swing.JPanel jpnQuanli;
     private javax.swing.JPanel jpnRoot;

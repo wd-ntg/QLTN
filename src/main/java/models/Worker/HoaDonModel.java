@@ -5,15 +5,17 @@ import java.util.Date;
 
 
 public class HoaDonModel {
-    private String maHoaDon = "";
-    private int tieuthu = 0;
-    private double tongtien = 0.0;
-    private Date ngayDenHan = null;
-    private Date ngayTra = null;
-    private String maNV = "";
-    private boolean thanhToan = false;
-    private String maGhi = "";
-    private Date ngayTao = null;
+    private String maHoaDon;
+    private int tieuthu;
+    private double tongtien;
+    private Date ngayDenHan;
+    private Date ngayTra;
+    private String maNV;
+    private int thanhToan;
+    private String maGhi;
+    private Date ngayTao;
+    private boolean nhacNho;
+    private String maTG;
     private ChuHoModel chuHo = new ChuHoModel();
     
     //Thêm các trường của các bảng khác
@@ -24,9 +26,7 @@ public class HoaDonModel {
     public HoaDonModel() {
     }
 
-    
-    
-    public HoaDonModel(String maHoaDon, int tieuthu, double tongtien, Date ngayDenHan, Date ngayTra, String maNV, boolean thanhToan, String maGhi, Date ngayTao) {
+    public HoaDonModel(String maHoaDon, int tieuthu, double tongtien, Date ngayDenHan, Date ngayTra, String maNV, int thanhToan, String maGhi, Date ngayTao, boolean nhacNho, String maTG) {
         this.maHoaDon = maHoaDon;
         this.tieuthu = tieuthu;
         this.tongtien = tongtien;
@@ -36,7 +36,15 @@ public class HoaDonModel {
         this.thanhToan = thanhToan;
         this.maGhi = maGhi;
         this.ngayTao = ngayTao;
+        this.nhacNho = nhacNho;
+        this.maTG = maTG;
     }
+
+    
+
+    
+    
+    
 
     public String getDiaChiChiTiet() {
         return diaChiChiTiet;
@@ -122,14 +130,6 @@ public class HoaDonModel {
         this.maNV = maNV;
     }
 
-    public boolean isThanhToan() {
-        return thanhToan;
-    }
-
-    public void setThanhToan(boolean thanhToan) {
-        this.thanhToan = thanhToan;
-    }
-
     public String getMaGhi() {
         return maGhi;
     }
@@ -144,6 +144,30 @@ public class HoaDonModel {
 
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
+    }
+
+    public int getThanhToan() {
+        return thanhToan;
+    }
+
+    public void setThanhToan(int thanhToan) {
+        this.thanhToan = thanhToan;
+    }
+
+    public boolean isNhacNho() {
+        return nhacNho;
+    }
+
+    public void setNhacNho(boolean nhacNho) {
+        this.nhacNho = nhacNho;
+    }
+
+    public String getMaTG() {
+        return maTG;
+    }
+
+    public void setMaTG(String maTG) {
+        this.maTG = maTG;
     }
     
     

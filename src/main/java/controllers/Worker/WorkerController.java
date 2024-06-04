@@ -545,4 +545,25 @@ public class WorkerController {
         }
         return lsGhiNuoc;
     }
+    public int createHoaDon(HoaDonModel hoaDon){
+        String sql = """
+                     INSERT INTO HOADON(MAHOADON, TIEUTHU, TONGTIEN, NGAYDENHAN,NGAYTRA, MANV,THANHTOAN, MAGHI,NGAYTAO,NHACNHO,MATG)
+                                VALUES (?,?,?,?,null,?,0,?,?,0,null);
+                     """;
+        try (Connection connection = ConnectDB.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, hoaDon.getMaHoaDon());
+            statement.setInt(2, hoaDon.getTieuthu());
+            statement.setDouble(3, hoaDon.getTongtien());
+            statement.setDate(4,(java.sql.Date) hoaDon.getNgayDenHan());
+            statement.setString(5, hoaDon.getMaNV());
+            statement.setString(6, hoaDon.getMaGhi());
+            statement.setDate(7,(java.sql.Date)  hoaDon.getNgayTao());
+            int rs = statement.executeUpdate();
+            return rs;
+        }
+        catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(WorkerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 }

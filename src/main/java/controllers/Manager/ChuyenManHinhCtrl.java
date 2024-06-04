@@ -17,6 +17,7 @@ import views.main.Manager.QLHopDong;
 import views.main.Manager.QuanLiChuHoPanel;
 import views.main.Manager.TrangNhanVien;
 import views.main.Manager.TrangPhanCong;
+import views.main.Manager.TrangTrungGianView;
 import views.main.Manager.TrangchuTK;
 /*import views.main.client.ClientBill;
 import views.main.client.ClientChangePassword;
@@ -100,7 +101,11 @@ public class ChuyenManHinhCtrl {
                     break;
                 case "QL Hop Dong":
                     node = new QLHopDong();
-//                case "LogOut":
+                    break;
+                case "QL Diem Thu":
+                    node = new TrangTrungGianView();
+                    break;
+//              case "LogOut":
 ////                    node = new DangNhap();
 //                    break;                 
                 default:

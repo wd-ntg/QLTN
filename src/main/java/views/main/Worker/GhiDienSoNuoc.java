@@ -2,17 +2,21 @@
 package views.main.Worker;
 
 import controllers.Worker.WorkerController;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.Worker.ChuHoModel;
+import models.Worker.DinhMucModel;
 import models.Worker.GhiNuocModel;
 import models.Worker.GlobalData;
+import models.Worker.HoaDonModel;
 
 
 
@@ -432,6 +436,17 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
         
         return true;
     }
+    public static Date getDateAfterFiveWeeks() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.WEEK_OF_YEAR, 5);
+        return calendar.getTime();
+    }
+    
+    public double getGiaTienNuoc(int tieuthu){
+        double giatien = 0.0;
+        List<DinhMucModel> dinhMucModels = workerController.getDinhMuc(chuHoModel.getMaDH());
+        return giatien;
+    }
     
     
     private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
@@ -447,6 +462,23 @@ public class GhiDienSoNuoc extends javax.swing.JPanel {
                 ghiNuocModel.setMaNV(GlobalData.getInstance().getNhanVienModel().getMaNV());
 
                 workerController.recordGhiNuocHoDan(ghiNuocModel);
+                java.sql.Date current = new java.sql.Date(System.currentTimeMillis());
+                SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
+                String dateString = dateFormat1.format(currentDate);
+                String MAHD = "HD" + dateString;
+                int tieuthu = Integer.parseInt(text_currentIndex.getText()) - Integer.parseInt(text_preIndex.getText());
+                HoaDonModel hoadon = new HoaDonModel(MAHD,
+                        tieuthu,
+                        123,
+                        getDateAfterFiveWeeks(),
+                        null,
+                        null,
+                        0,
+                        ghiNuocModel.getMaGhi(),
+                        new Date(),
+                        false,
+                        null);
+                workerController.createHoaDon(hoadon);
                 JOptionPane.showMessageDialog(this, "Thành Công!", "Thông báo",JOptionPane.OK_OPTION);
                 
                 setDefault();
